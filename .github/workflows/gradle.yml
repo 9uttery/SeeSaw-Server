@@ -84,7 +84,7 @@ jobs:
     - name: Deploy to prod
       uses: appleboy/ssh-action@master
       id: deploy-prod
-      if: contains(github.ref, 'main')
+      if: contains(github.ref, 'master')
       with:
           host: ec2-3-36-172-10.ap-northeast-2.compute.amazonaws.com
           username: ubuntu
