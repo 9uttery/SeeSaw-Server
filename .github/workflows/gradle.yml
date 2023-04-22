@@ -77,9 +77,8 @@ jobs:
       if: contains(github.ref, 'master')
       run: |
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          docker build -f Dockerfile -t mkkim999/seesaw-prod .
-          docker image tag seesaw/seesaw-prod mkkim999/seesaw/seesaw-prod
-          docker push seesaw/seesaw-prod
+          docker build -f Dockerfile -t mkkim999/seesaw .
+          docker push mkkim999/seesaw
 
     ## deploy to production
     - name: Deploy to prod
