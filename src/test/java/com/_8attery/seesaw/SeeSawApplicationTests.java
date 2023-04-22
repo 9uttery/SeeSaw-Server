@@ -1,4 +1,4 @@
-package com._8atterry.seesaw;
+package com._8attery.seesaw;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
