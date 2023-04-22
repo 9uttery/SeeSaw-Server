@@ -77,14 +77,14 @@ jobs:
       if: contains(github.ref, 'master')
       run: |
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          docker build -f Dockerfile -t ${{ secrets.DOCKER_REPO }}/seesaw-prod .
-          docker push ${{ secrets.DOCKER_REPO }}/seesaw-prod
+          docker build -f Dockerfile -t mkkim999/seesaw .
+          docker push mkkim999/seesaw
 
     ## deploy to production
     - name: Deploy to prod
       uses: appleboy/ssh-action@master
       id: deploy-prod
-      if: contains(github.ref, 'main')
+      if: contains(github.ref, 'master')
       with:
           host: ec2-3-36-172-10.ap-northeast-2.compute.amazonaws.com
           username: ubuntu
@@ -92,7 +92,7 @@ jobs:
           envs: GITHUB_SHA
           script: |
               sudo docker rm -f $(docker ps -qa)
-              sudo docker pull ${{ secrets.DOCKER_REPO }}/seesaw-prod
+              sudo docker pull mkkim999/seesaw
               docker-compose up -d
               docker image prune -f
 
