@@ -1,9 +1,9 @@
-package com._8attery.seesaw.controller.exception;
+package com._8attery.seesaw.exception.advice;
 
 import com._8attery.seesaw.dto.exception.response.ErrorResponseDto;
-import com._8attery.seesaw.exception.InvalidRequestException;
-import com._8attery.seesaw.exception.ResourceNotFoundException;
-import com._8attery.seesaw.exception.UserUnauthorizedException;
+import com._8attery.seesaw.exception.custom.InvalidRequestException;
+import com._8attery.seesaw.exception.custom.ResourceNotFoundException;
+import com._8attery.seesaw.exception.custom.UserUnauthorizedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
