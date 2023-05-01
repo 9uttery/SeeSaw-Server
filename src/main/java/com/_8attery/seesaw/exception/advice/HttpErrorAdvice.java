@@ -48,8 +48,9 @@ public class HttpErrorAdvice {
                 .body(ErrorResponseDto.of(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage(), request));
     }
 
-    @ExceptionHandler(InvalidRequestException.class)
-    public ResponseEntity<ErrorResponseDto> handlerException(final InvalidRequestException e, final HttpServletRequest request) {
+
+    @ExceptionHandler(ConflictRequestException.class)
+    public ResponseEntity<ErrorResponseDto> handlerException(final ConflictRequestException e, final HttpServletRequest request) {
         return ResponseEntity.status(HttpStatus.CONFLICT)
                 .body(ErrorResponseDto.of(HttpStatus.CONFLICT, e.getMessage(), request));
     }

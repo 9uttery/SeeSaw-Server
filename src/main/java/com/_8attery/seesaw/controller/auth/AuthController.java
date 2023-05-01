@@ -1,6 +1,7 @@
 package com._8attery.seesaw.controller.auth;
 
 import com._8attery.seesaw.dto.auth.request.LoginRequestDto;
+import com._8attery.seesaw.dto.auth.request.RefreshTokenRequestDto;
 import com._8attery.seesaw.dto.auth.response.LoginResponseDto;
 import com._8attery.seesaw.service.auth.AuthServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -29,5 +30,10 @@ public class AuthController {
         else {
             throw new IllegalArgumentException("Provider값이 KAKAO 또는 APPLE이 아닙니다.");
         }
+    }
+
+    @PostMapping("/regenerate-token")
+    public ResponseEntity<LoginResponseDto> regenerateAccessToken(@Valid @RequestBody RefreshTokenRequestDto refreshTokenRequestDto) {
+        return ResponseEntity.ok(authService.regenerateAccessToken(refreshTokenRequestDto));
     }
 }
