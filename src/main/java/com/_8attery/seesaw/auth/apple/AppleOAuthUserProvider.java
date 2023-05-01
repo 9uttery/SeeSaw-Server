@@ -18,7 +18,7 @@ public class AppleOAuthUserProvider {
     private final PublicKeyGenerator publicKeyGenerator;
     private final AppleClaimsValidator appleClaimsValidator;
 
-    public String getApplePlatformMember(String identityToken) {
+    public String getEmailFromToken(String identityToken) {
         Map<String, String> headers = appleJwtParser.parseHeaders(identityToken);
         ApplePublicKeys applePublicKeys = appleClient.getApplePublicKeys();
 
