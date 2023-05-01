@@ -1,6 +1,8 @@
 package com._8attery.seesaw.filter.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -26,6 +28,8 @@ public class JwtExceptionFilter extends OncePerRequestFilter {
             log.error("JwtExceptionFilter: {}", e.getMessage());
             final Map<String, Object> body = new HashMap<>();
             final ObjectMapper mapper = new ObjectMapper();
+            mapper.registerModule(new JavaTimeModule());
+            mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.setContentType("application/json");
             body.put("timestamp", LocalDateTime.now());
