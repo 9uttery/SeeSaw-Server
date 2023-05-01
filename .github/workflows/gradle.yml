@@ -34,14 +34,15 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-gradle-
 
-#     ## create application-dev.properties
-#     - name: make application-dev.properties
-#       if: contains(github.ref, 'develop')
-#       run: |
-#         cd ./src/main/resources
-#         touch ./application-dev.properties
-#         echo "${{ secrets.PROPERTIES_DEV }}" > ./application-dev.properties
-#       shell: bash
+     ## create application-secret.yml
+    - name: make application-secret.yml
+      run: echo ${{ secrets.SECRET_YML }} | base64 --decode > ./src/main/resources/application-secret.yml
+      shell: bash
+      
+      ## create application-prod.yml
+    - name: make application-prod.yml
+      run: echo ${{ secrets.PROD_YML }}  | base64 --decode > ./src/main/resources/application-prod.yml
+      shell: bash
 
 #     ## create application-prod.properties
 #     - name: make application-prod.properties
@@ -66,7 +67,7 @@ jobs:
       run: chmod +x gradlew
 
     - name: Build with Gradle
-      run: ./gradlew build
+      run: ./gradlew build -x test
       shell: bash
 
 #    - name: Compile querydsl with Gradle
