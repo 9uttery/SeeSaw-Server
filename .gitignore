@@ -38,3 +38,7 @@ out/
 
 ### Security Files ###
 src/main/resources/application-secret.yml
+src/main/resources/application-prod.yml
+
+### Log Files ###
+*.log
