@@ -39,9 +39,9 @@ jobs:
       run: echo ${{ secrets.SECRET_YML }} | base64 --decode > ./src/main/resources/application-secret.yml
       shell: bash
       
-      ## create application-secret.yml
+      ## create application-prod.yml
     - name: make application-prod.yml
-      run: echo ${{ secrets.PROD_YML }}  | base64 --decode > ./application-prod.yml
+      run: echo ${{ secrets.PROD_YML }}  | base64 --decode > ./src/main/resources/application-prod.yml
       shell: bash
 
 #     ## create application-prod.properties
