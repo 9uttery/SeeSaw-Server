@@ -39,7 +39,7 @@ public class HealthCheckController {
 //    @GetMapping("/invalid-request/{id}")
 //    public ResponseEntity<String> triggerInvalidRequestException(@PathVariable("id") Integer id) {
 //        if (id < 0) {
-//            throw new InvalidRequestException("InvalidRequestException triggered.");
+//            throw new ConflictRequestException("ConflictRequestException triggered.");
 //        }
 //        return ResponseEntity.ok("Valid request.");
 //    }
