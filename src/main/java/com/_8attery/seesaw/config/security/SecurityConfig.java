@@ -72,7 +72,7 @@ public class SecurityConfig {
 
                 .and()
                 .authorizeRequests() // http servletRequest 를 사용하는 요청들에 대한 접근제한을 설정
-                .antMatchers("/auth/login", "/auth/regenerate-access-token", "/auth/sign-up").permitAll()
+                .antMatchers("/auth/login", "/auth/regenerate-token", "/auth/sign-up").permitAll()
                 .anyRequest().authenticated()   // 나머지 API 는 전부 인증 필요
 
                 .and()

@@ -42,7 +42,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         String[] excludePath = {"/auth/login", "/auth/sign-up",
-                "/auth/regenerate-access-token"}; // TODO: JWT 안쓰는 API 추가 필요
+                "/auth/regenerate-token"}; // TODO: JWT 안쓰는 API 추가 필요
         String path = request.getRequestURI();
         return Arrays.stream(excludePath).anyMatch(path::startsWith);
     }
