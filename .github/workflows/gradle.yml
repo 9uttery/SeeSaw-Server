@@ -36,18 +36,12 @@ jobs:
 
      ## create application-secret.yml
     - name: make application-secret.yml
-      run: |
-         cd ./src/main/resources
-         touch ./application-secret.yml
-         echo "${{ secrets.SECRET_YML }}" > ./application-secret.yml
+      run: echo "${{ secrets.SECRET_YML }}" > ./src/main/resources/application-secret.yml
       shell: bash
       
       ## create application-secret.yml
     - name: make application-prod.yml
-      run: |
-         cd ./src/main/resources
-         touch ./application-prod.yml
-         echo "${{ secrets.PROD_YML }}" > ./application-prod.yml
+      run: echo "${{ secrets.PROD_YML }}" > ./application-prod.yml
       shell: bash
 
 #     ## create application-prod.properties
