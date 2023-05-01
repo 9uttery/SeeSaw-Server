@@ -1,9 +1,7 @@
 package com._8attery.seesaw.exception.advice;
 
 import com._8attery.seesaw.dto.exception.response.ErrorResponseDto;
-import com._8attery.seesaw.exception.custom.InvalidRequestException;
-import com._8attery.seesaw.exception.custom.ResourceNotFoundException;
-import com._8attery.seesaw.exception.custom.UserUnauthorizedException;
+import com._8attery.seesaw.exception.custom.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -24,6 +22,18 @@ public class HttpErrorAdvice {
     public ResponseEntity<ErrorResponseDto> handlerException(final ResourceNotFoundException e, final HttpServletRequest request) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(ErrorResponseDto.of(HttpStatus.NOT_FOUND, e.getMessage(), request));
+    }
+
+    @ExceptionHandler(InvalidTokenException.class)
+    public ResponseEntity<ErrorResponseDto> handlerException(final InvalidTokenException e, final HttpServletRequest request) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ErrorResponseDto.of(HttpStatus.BAD_REQUEST, e.getMessage(), request));
+    }
+
+    @ExceptionHandler(TokenExpiredException.class)
+    public ResponseEntity<ErrorResponseDto> handlerException(final TokenExpiredException e, final HttpServletRequest request) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ErrorResponseDto.of(HttpStatus.BAD_REQUEST, e.getMessage(), request));
     }
 
     @ExceptionHandler(UserUnauthorizedException.class)
