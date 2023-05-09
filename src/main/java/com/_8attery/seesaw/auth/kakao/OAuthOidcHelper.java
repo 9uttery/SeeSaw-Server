@@ -11,19 +11,23 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class OAuthOidcHelper {
 
+    private final KakaoClient kakaoClient;
+    @Value("oauth.kakao.iss")
+    private String iss;
+
     private final JwtOidcProvider jwtOIDCProvider;
+    @Value("oauth.kakao.client_id")
+    private String aud;
 
     // kid를 토큰에서 가져온다.
     private String getKidFromUnsignedIdToken(String token, String iss, String aud) {
         return jwtOIDCProvider.getKidFromUnsignedTokenHeader(token, iss, aud);
     }
 
-    public OidcDecodePayload getPayloadFromIdToken(
-            String token,
-            @Value("oauth.kakao.iss") String iss,
-            @Value("oauth.kakao.client_id") String aud,
-            KakaoPublicKeys kakaoPublicKeys) {
+    public OidcDecodePayload getPayloadFromIdToken(String token) {
         String kid = getKidFromUnsignedIdToken(token, iss, aud);
+        KakaoPublicKeys kakaoPublicKeys = kakaoClient.getKakaoOIDCOpenKeys();
+
         // KakaoOauthHelper 에서 공개키를 조회했고 해당 DTO를 넘겨준다.
         KakaoPublicKey kakaoPublicKey =
                 kakaoPublicKeys.getKeys().stream()
