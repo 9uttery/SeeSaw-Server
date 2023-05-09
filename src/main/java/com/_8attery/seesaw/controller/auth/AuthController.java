@@ -23,11 +23,9 @@ public class AuthController {
     public ResponseEntity<LoginResponseDto> login(@Valid @RequestBody LoginRequestDto loginRequestDto) {
         if (loginRequestDto.getProvider().equalsIgnoreCase("APPLE")) {
             return ResponseEntity.ok(authService.appleLogin(loginRequestDto));
-        }
-//        else if (loginRequestDto.getProvider().equalsIgnoreCase("KAKAO")) {
-//            return ResponseEntity.ok(authService.kakaoLogin(loginRequestDto));
-//        }
-        else {
+        } else if (loginRequestDto.getProvider().equalsIgnoreCase("KAKAO")) {
+            return ResponseEntity.ok(authService.kakaoLogin(loginRequestDto));
+        } else {
             throw new IllegalArgumentException("Provider값이 KAKAO 또는 APPLE이 아닙니다.");
         }
     }
@@ -35,5 +33,10 @@ public class AuthController {
     @PostMapping("/regenerate-token")
     public ResponseEntity<LoginResponseDto> regenerateAccessToken(@Valid @RequestBody RefreshTokenRequestDto refreshTokenRequestDto) {
         return ResponseEntity.ok(authService.regenerateAccessToken(refreshTokenRequestDto));
+    }
+
+    @PostMapping("/test/generate-token")
+    public ResponseEntity<LoginResponseDto> generateAccessTokenByUserId(@RequestBody Long userId) {
+        return ResponseEntity.ok(authService.generateAccessTokenByUserId(userId));
     }
 }
