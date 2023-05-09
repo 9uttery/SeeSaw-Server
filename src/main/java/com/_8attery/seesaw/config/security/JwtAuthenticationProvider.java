@@ -1,6 +1,7 @@
 package com._8attery.seesaw.config.security;
 
 import com._8attery.seesaw.config.util.JwtTokenUtil;
+import com._8attery.seesaw.exception.custom.TokenExpiredException;
 import com._8attery.seesaw.exception.custom.UserUnauthorizedException;
 import com._8attery.seesaw.service.user.account.UserAccountService;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +26,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
         }
 
         if (jwtTokenUtil.isExpiredToken(authentication.getPrincipal().toString())) {
-            throw new UserUnauthorizedException("인증되지 않은 사용자입니다.");
+            throw new TokenExpiredException("만료된 토큰입니다.");
         }
 
 

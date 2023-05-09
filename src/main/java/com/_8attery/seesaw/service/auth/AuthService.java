@@ -18,5 +18,9 @@ public interface AuthService {
 
     LoginResponseDto regenerateAccessToken(RefreshTokenRequestDto refreshTokenRequestDto);
 
-//    LoginResponseDto kakaoLogin(LoginRequestDto loginRequestDto);
+    LoginResponseDto kakaoLogin(LoginRequestDto loginRequestDto);
+
+    LoginResponseDto getLoginResponseDto(User user);
+
+    LoginResponseDto generateAccessTokenByUserId(Long userId);
 }
