@@ -19,7 +19,7 @@ public class JwtTokenUtil {
 
     public static final String AUTHORIZATION_HEADER = "Authorization";
     public static final String BEARER_PREFIX = "Bearer ";
-    private static final int ACCESS_TOKEN_EXPIRATION_MS = 24 * 60 * 60 * 1000;
+    private static final long ACCESS_TOKEN_EXPIRATION_MS = 24 * 60 * 60 * 1000;
     private static final long REFRESH_TOKEN_EXPIRATION_MS = 30L * 24 * 60 * 60 * 1000;
     @Value("${jwt.secret}")
     private String jwtSecret;
@@ -71,7 +71,7 @@ public class JwtTokenUtil {
 
     public boolean isExpiredToken(String token) {
         Jws<Claims> claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);
-        return !claims.getBody().getExpiration().before(new Date());
+        return claims.getBody().getExpiration().before(new Date());
     }
 
     public Long getUserIdFromRefreshToken(String token) {
