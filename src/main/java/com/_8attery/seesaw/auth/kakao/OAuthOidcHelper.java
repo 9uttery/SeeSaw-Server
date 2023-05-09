@@ -4,10 +4,10 @@ import com._8attery.seesaw.dto.auth.kakao.KakaoPublicKey;
 import com._8attery.seesaw.dto.auth.kakao.KakaoPublicKeys;
 import com._8attery.seesaw.dto.auth.kakao.OidcDecodePayload;
 import lombok.RequiredArgsConstructor;
-import lombok.experimental.Helper;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
-@Helper
+@Component
 @RequiredArgsConstructor
 public class OAuthOidcHelper {
 
