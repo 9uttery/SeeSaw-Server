@@ -15,7 +15,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static javax.persistence.FetchType.*;
+import static javax.persistence.FetchType.LAZY;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -33,14 +33,14 @@ public class User {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "role")
+    @Column(name = "role", nullable = false)
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @Column(name = "agree_marketing", nullable = false)
+    @Column(name = "agree_marketing")
     private Boolean agreeMarketing; // 마케팅 약관 동의 여부
 
-    @Column(name = "provider")
+    @Column(name = "provider", nullable = false)
     @Enumerated(EnumType.STRING)
     private Provider provider;
 

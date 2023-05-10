@@ -12,11 +12,11 @@ import org.springframework.stereotype.Component;
 public class OAuthOidcHelper {
 
     private final KakaoClient kakaoClient;
-    @Value("oauth.kakao.iss")
+    @Value("${oauth.kakao.iss}")
     private String iss;
 
     private final JwtOidcProvider jwtOIDCProvider;
-    @Value("oauth.kakao.client_id")
+    @Value("${oauth.kakao.client-id}")
     private String aud;
 
     // kid를 토큰에서 가져온다.
