@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -45,10 +46,17 @@ public class ValueService {
         return count;
     }
 
-    public ValueResponseDto get3Values(Long userId) {
-        List<String> values = valueRepository.getUser3Values(userId);
-        ValueResponseDto res = new ValueResponseDto(values);
+    public List<ValueResponseDto> get3Values(Long userId) {
+        List<Object[]> values = valueRepository.getUser3Values(userId);
 
-        return res;
+        List<ValueResponseDto> list = new ArrayList<>();
+
+        for (Object[] row : values) {
+            Number valueId = (Number) row[0];
+            String valueName = (String) row[1];
+            list.add(new ValueResponseDto(valueId.intValue(), valueName));
+        }
+
+        return list;
     }
 }
