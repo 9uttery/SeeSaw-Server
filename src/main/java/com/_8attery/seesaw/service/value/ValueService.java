@@ -48,6 +48,7 @@ public class ValueService {
     public ValueRes get3Values(Long userId) {
         List<String> values = valueRepository.getUser3Values(userId);
         ValueRes res = new ValueRes(values);
+        System.out.println(res.getValues());
 
         return res;
     }

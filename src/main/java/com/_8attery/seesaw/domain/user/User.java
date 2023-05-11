@@ -30,8 +30,8 @@ public class User {
     @Column(name = "email", unique = true, nullable = false)
     private String email;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "nick_name")
+    private String nickName;
 
     @Column(name = "role", nullable = false)
     @Enumerated(EnumType.STRING)
@@ -45,16 +45,16 @@ public class User {
     private Provider provider;
 
     @Builder
-    public User(Long id, String name, String email, Role role, Provider provider, Boolean agreeMarketing) {
+    public User(Long id, String nickName, String email, Role role, Provider provider, Boolean agreeMarketing) {
         this.id = id;
-        this.name = name;
+        this.nickName = nickName;
         this.email = email;
         this.role = role;
         this.provider = provider;
         this.agreeMarketing = agreeMarketing;
     }
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Value> values = new ArrayList<>();
 
     @OneToOne(mappedBy = "user", fetch = LAZY)
