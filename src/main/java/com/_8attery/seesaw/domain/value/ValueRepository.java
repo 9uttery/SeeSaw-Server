@@ -17,6 +17,6 @@ public interface ValueRepository extends JpaRepository<Value, Long> {
     @Query(value = "select count(*) from ss_value where user_id=:userId", nativeQuery = true)
     int checkValuesExist(@Param("userId") Long userId);
 
-    @Query(value = "select value_name from ss_value where user_id=:userId", nativeQuery = true)
-    List<String> getUser3Values(@Param("userId") Long userId);
+    @Query(value = "select value_id, value_name from ss_value where user_id=:userId", nativeQuery = true)
+    List<Object[]> getUser3Values(@Param("userId") Long userId);
 }
