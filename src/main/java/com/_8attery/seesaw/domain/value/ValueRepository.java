@@ -12,12 +12,12 @@ import java.util.List;
 public interface ValueRepository extends JpaRepository<Value, Long> {
 
     @Modifying(clearAutomatically = true)
-    @Query(value = "insert into ss_value(created_at, name, user_id) values(:currentDateTime, :value, :userId)" , nativeQuery = true)
+    @Query(value = "insert into ss_value(created_at, value_name, user_id) values(:currentDateTime, :value, :userId)" , nativeQuery = true)
     int setUser3Values(@Param("value") String value, @Param("currentDateTime") LocalDateTime currentDateTime, @Param("userId") Long userId);
 
     @Query(value = "select count(*) from ss_value where user_id=:userId", nativeQuery = true)
     int checkValuesExist(@Param("userId") Long userId);
 
-    @Query(value = "select name from ss_value where user_id=:userId", nativeQuery = true)
+    @Query(value = "select value_name from ss_value where user_id=:userId", nativeQuery = true)
     List<String> getUser3Values(@Param("userId") Long userId);
 }
