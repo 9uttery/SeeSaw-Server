@@ -9,7 +9,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ValueReq {
+public class ValueRequestDto {
 
     private List<String> values;
 }
