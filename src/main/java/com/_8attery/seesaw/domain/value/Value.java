@@ -28,8 +28,8 @@ public class Value {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(name = "name", nullable = false)
-    private String name; // 가치 이름
+    @Column(name = "value_name", nullable = false)
+    private String valueName; // 가치 이름
 
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt; // 생성 날짜
@@ -41,8 +41,9 @@ public class Value {
     private Project project;
 
     @Builder
-    public Value(String name, LocalDateTime createdAt) {
-        this.name = name;
+    public Value(String valueName, LocalDateTime createdAt) {
+        this.valueName = valueName;
         this.createdAt = createdAt;
     }
+
 }
