@@ -1,6 +1,5 @@
 package com._8attery.seesaw.domain.value;
 
-import com._8attery.seesaw.dto.api.response.ValueRes;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
