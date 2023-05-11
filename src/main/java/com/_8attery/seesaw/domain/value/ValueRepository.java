@@ -1,5 +1,6 @@
 package com._8attery.seesaw.domain.value;
 
+import com._8attery.seesaw.dto.api.response.ValueRes;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -16,4 +17,7 @@ public interface ValueRepository extends JpaRepository<Value, Long> {
 
     @Query(value = "select count(*) from ss_value where user_id=:userId", nativeQuery = true)
     int checkValuesExist(@Param("userId") Long userId);
+
+    @Query(value = "select name from ss_value where user_id=:userId", nativeQuery = true)
+    List<String> getUser3Values(@Param("userId") Long userId);
 }
