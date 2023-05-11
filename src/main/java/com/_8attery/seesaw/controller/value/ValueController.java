@@ -1,8 +1,8 @@
 package com._8attery.seesaw.controller.value;
 
 import com._8attery.seesaw.domain.user.account.UserAccount;
-import com._8attery.seesaw.dto.api.request.ValueReq;
-import com._8attery.seesaw.dto.api.response.ValueRes;
+import com._8attery.seesaw.dto.api.request.ValueRequestDto;
+import com._8attery.seesaw.dto.api.response.ValueResponseDto;
 import com._8attery.seesaw.exception.BaseException;
 import com._8attery.seesaw.exception.BaseResponse;
 import com._8attery.seesaw.service.user.UserService;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
-//@Api(tags = {"2.Video"})
+//@Api(tags = {"3. Value"})
 @RestController
 @RequiredArgsConstructor
 public class ValueController {
@@ -26,7 +26,7 @@ public class ValueController {
     private final ValueService valueService;
 
     @PostMapping("/api/value")
-    public BaseResponse<Integer> setValues(@RequestBody ValueReq req, @AuthenticationPrincipal UserAccount userAccount) throws BaseException {
+    public BaseResponse<Integer> setValues(@RequestBody ValueRequestDto req, @AuthenticationPrincipal UserAccount userAccount) throws BaseException {
 
         Long userId = userService.resolveUserById(userAccount.getUserId()).getId();
 
@@ -39,11 +39,11 @@ public class ValueController {
     }
 
     @GetMapping("/api/value")
-    public BaseResponse<ValueRes> getValues(@AuthenticationPrincipal UserAccount userAccount) throws BaseException {
+    public BaseResponse<ValueResponseDto> getValues(@AuthenticationPrincipal UserAccount userAccount) throws BaseException {
 
         Long userId = userService.resolveUserById(userAccount.getUserId()).getId();
 
-        ValueRes res = valueService.get3Values(userId);
+        ValueResponseDto res = valueService.get3Values(userId);
 
         return new BaseResponse<>(res);
     }
