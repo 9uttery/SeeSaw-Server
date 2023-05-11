@@ -1,6 +1,7 @@
 package com._8attery.seesaw.service.value;
 
 import com._8attery.seesaw.domain.value.ValueRepository;
+import com._8attery.seesaw.dto.api.response.ValueRes;
 import com._8attery.seesaw.exception.BaseException;
 import com._8attery.seesaw.exception.BaseResponseStatus;
 import lombok.RequiredArgsConstructor;
@@ -42,5 +43,12 @@ public class ValueService {
         int count = valueRepository.checkValuesExist(userId);
 
         return count;
+    }
+
+    public ValueRes get3Values(Long userId) {
+        List<String> values = valueRepository.getUser3Values(userId);
+        ValueRes res = new ValueRes(values);
+
+        return res;
     }
 }
