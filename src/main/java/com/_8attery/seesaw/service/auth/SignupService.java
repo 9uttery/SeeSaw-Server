@@ -45,8 +45,12 @@ public class SignupService {
                 res = new SignupResponseDto(agreeMarketingResult.booleanValue(), nickNameResult);
             }
 
+            // 배터리 초기 값 80 설정
+            signupRepository.setBattery(userId);
+
             return res;
         } catch (Exception exception) {
+            exception.printStackTrace();
             throw new BaseException(BaseResponseStatus.DATABASE_ERROR);
         }
     }
