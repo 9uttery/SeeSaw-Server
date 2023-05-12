@@ -20,6 +20,10 @@ public enum BaseResponseStatus {
     // Value
     VALUES_EXIST(false, 2010, "사용자의 가치 3개가 이미 존재합니다."),
 
+    // Project
+    POSTS_EMPTY_POST_ID(false, 2020, "프로젝트 아이디 값을 확인해주세요."),
+    USERS_FAILED_POST_ID(false, 2021, "해당 포스트를 작성한 유저가 아닙니다."),
+    DELETE_FAIL_POST(false, 2022, "게시물 삭제를 실패했습니다."),
 
     /**
      * 4000 : Database, Server 오류
