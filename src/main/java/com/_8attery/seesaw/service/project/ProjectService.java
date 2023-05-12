@@ -13,6 +13,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import static com._8attery.seesaw.exception.BaseResponseStatus.*;
+
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -31,7 +33,7 @@ public class ProjectService {
 
         } catch (Exception exception) {
             exception.printStackTrace();
-            throw new BaseException(BaseResponseStatus.DATABASE_ERROR);
+            throw new BaseException(DATABASE_ERROR);
         }
     }
 
@@ -41,7 +43,7 @@ public class ProjectService {
             return list;
         } catch (Exception exception) {
             exception.printStackTrace();
-            throw new BaseException(BaseResponseStatus.DATABASE_ERROR);
+            throw new BaseException(DATABASE_ERROR);
         }
     }
 
@@ -51,7 +53,29 @@ public class ProjectService {
             return list;
         } catch (Exception exception) {
             exception.printStackTrace();
-            throw new BaseException(BaseResponseStatus.DATABASE_ERROR);
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
+    public Long retrieveUserId(Long projectId) throws BaseException{
+        try{
+            Long userId = projectRepository.getUserId(projectId);
+            if (userId == null)
+                throw new BaseException(POSTS_EMPTY_POST_ID);
+            return userId;
+        } catch (Exception exception){
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
+    public void deleteUserProject(Long projectId) throws BaseException {
+        try{
+            int result = projectRepository.deleteProjectByProjectId(projectId);
+            if (result == 0)
+                throw new BaseException(DELETE_FAIL_POST);
+        }
+        catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
         }
     }
 }

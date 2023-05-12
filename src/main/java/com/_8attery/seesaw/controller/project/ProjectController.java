@@ -11,12 +11,11 @@ import com._8attery.seesaw.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static com._8attery.seesaw.exception.BaseResponseStatus.USERS_FAILED_POST_ID;
 
 @Slf4j
 //@Api(tags = {"4. Project"})
@@ -67,6 +66,25 @@ public class ProjectController {
             return new BaseResponse<>(res);
         } catch(BaseException exception){
             return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
+    // 프로젝트 삭제
+    @DeleteMapping("api/project/{projectId}")
+    public BaseResponse<String> deleteProject(@PathVariable("projectId") Long projectId, @AuthenticationPrincipal UserAccount userAccount) throws BaseException {
+        Long userId = userService.resolveUserById(userAccount.getUserId()).getId();
+
+        try {
+            Long postUserId = projectService.retrieveUserId(projectId);
+            if (userId != postUserId) {
+                return new BaseResponse<>(USERS_FAILED_POST_ID);
+            }
+            projectService.deleteUserProject(projectId);
+            String result = "프로젝트 삭제를 성공했습니다.";
+            return new BaseResponse<>(result);
+
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
         }
     }
 
