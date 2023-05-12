@@ -41,6 +41,44 @@ public class ProjectController {
         }
     }
 
+    // 프로젝트 수정
+    @PutMapping("/api/project/{projectId}")
+    public BaseResponse<ProjectResponseDto> updateProject(@PathVariable("projectId") Long projectId, @RequestBody ProjectRequestDto req, @AuthenticationPrincipal UserAccount userAccount) throws BaseException {
+        Long userId = userService.resolveUserById(userAccount.getUserId()).getId();
+
+        try {
+            Long postUserId = projectService.retrieveUserId(projectId);
+            if (userId != postUserId) {
+                return new BaseResponse<>(USERS_FAILED_POST_ID);
+            }
+
+            ProjectResponseDto res = projectService.updateUserProject(projectId, userId, req.getValueId(), req.getProjectName(), req.getStartedAt(), req.getEndedAt(), req.getIntensity(), req.getGoal());
+
+            return new BaseResponse<>(res);
+        } catch(BaseException exception){
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
+    // 프로젝트 삭제
+    @DeleteMapping("api/project/{projectId}")
+    public BaseResponse<String> deleteProject(@PathVariable("projectId") Long projectId, @AuthenticationPrincipal UserAccount userAccount) throws BaseException {
+        Long userId = userService.resolveUserById(userAccount.getUserId()).getId();
+
+        try {
+            Long postUserId = projectService.retrieveUserId(projectId);
+            if (userId != postUserId) {
+                return new BaseResponse<>(USERS_FAILED_POST_ID);
+            }
+            projectService.deleteUserProject(projectId);
+            String result = "프로젝트 삭제를 성공했습니다.";
+            return new BaseResponse<>(result);
+
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
+
     // 진행 중인 프로젝트 조회
     @GetMapping("api/project/progress")
     public BaseResponse<List<ProjectCardResponseDto>> getProgressProject(@AuthenticationPrincipal UserAccount userAccount) throws BaseException {
@@ -69,23 +107,6 @@ public class ProjectController {
         }
     }
 
-    // 프로젝트 삭제
-    @DeleteMapping("api/project/{projectId}")
-    public BaseResponse<String> deleteProject(@PathVariable("projectId") Long projectId, @AuthenticationPrincipal UserAccount userAccount) throws BaseException {
-        Long userId = userService.resolveUserById(userAccount.getUserId()).getId();
 
-        try {
-            Long postUserId = projectService.retrieveUserId(projectId);
-            if (userId != postUserId) {
-                return new BaseResponse<>(USERS_FAILED_POST_ID);
-            }
-            projectService.deleteUserProject(projectId);
-            String result = "프로젝트 삭제를 성공했습니다.";
-            return new BaseResponse<>(result);
-
-        } catch (BaseException exception) {
-            return new BaseResponse<>(exception.getStatus());
-        }
-    }
 
 }
