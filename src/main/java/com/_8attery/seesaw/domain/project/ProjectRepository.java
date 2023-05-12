@@ -17,6 +17,17 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
     @Query(value = "insert into ss_project(user_id, value_id, started_at, ended_at, project_name, intensity, goal) values(:userId, :valueId, :startedAt, :endedAt, :projectName, :intensity, :goal)", nativeQuery = true)
     void addIngProject(@Param("userId") Long userId, @Param("valueId") Long valueId, @Param("projectName") String projectName, @Param("startedAt") LocalDateTime startedAt, @Param("endedAt") LocalDateTime endedAt, @Param("intensity") String intensity, @Param("goal") String goal);
 
+    @Modifying(clearAutomatically = true)
+    @Query(value = "UPDATE ss_project SET value_id=:valueId, project_name=:projectName, started_at=:startedAt, ended_at=:endedAt, intensity=:intensity, goal=:goal  WHERE project_id=:projectId", nativeQuery = true)
+    void updateIngProject(@Param("projectId") Long projectId, @Param("valueId") Long valueId, @Param("projectName") String projectName, @Param("startedAt") LocalDateTime startedAt, @Param("endedAt") LocalDateTime endedAt, @Param("intensity") String intensity, @Param("goal") String goal);
+
+    @Query(value = "select user_id from ss_project where project_id=:projectId", nativeQuery = true)
+    Long getUserId(@Param("projectId") Long projectId);
+
+    @Modifying(clearAutomatically = true)
+    @Query(value = "delete from ss_project where project_id=:projectId", nativeQuery = true)
+    int deleteProjectByProjectId(@Param("projectId") Long projectId);
+
     @Query(value = "select new com._8attery.seesaw.dto.api.response.ProjectResponseDto(p.value.id, p.projectName, p.startedAt, p.endedAt, p.intensity, p.goal, p.isFinished) from Project p where p.user.id=:userId and p.value.id=:valueId and p.projectName=:projectName")
     Optional<ProjectResponseDto> getProject(@Param("userId") Long userId, @Param("valueId") Long valueId, @Param("projectName") String projectName);
 
@@ -25,11 +36,4 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
 
     @Query(value = "select new com._8attery.seesaw.dto.api.response.ProjectCardResponseDto(p.id, p.projectName, p.startedAt, p.endedAt, p.intensity, v.valueName) from Project p join p.value v where p.user.id=:userId and p.isFinished=true")
     List<ProjectCardResponseDto> findCompleteProjectList(@Param("userId") Long userId);
-
-    @Query(value = "select user_id from ss_project where project_id=:projectId", nativeQuery = true)
-    Long getUserId(@Param("projectId") Long projectId);
-
-    @Modifying(clearAutomatically = true)
-    @Query(value = "delete from ss_project where project_id=:projectId", nativeQuery = true)
-    int deleteProjectByProjectId(@Param("projectId") Long projectId);
 }

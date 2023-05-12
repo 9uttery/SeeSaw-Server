@@ -37,20 +37,14 @@ public class ProjectService {
         }
     }
 
-    public List<ProjectCardResponseDto> getProgressProjectList(Long userId) throws BaseException {
+    @Transactional
+    public ProjectResponseDto updateUserProject(Long projectId, Long userId, Long valueId, String projectName, LocalDateTime startedAt, LocalDateTime endedAt, String intensity, String goal) throws BaseException {
         try {
-            List<ProjectCardResponseDto> list = projectRepository.findProgressProjectList(userId);
-            return list;
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            throw new BaseException(DATABASE_ERROR);
-        }
-    }
+            projectRepository.updateIngProject(projectId, valueId, projectName, startedAt, endedAt, intensity, goal);
 
-    public List<ProjectCardResponseDto> getCompleteProjectList(Long userId) throws BaseException {
-        try {
-            List<ProjectCardResponseDto> list = projectRepository.findCompleteProjectList(userId);
-            return list;
+            Optional<ProjectResponseDto> projectResponseDto = projectRepository.getProject(userId, valueId, projectName);
+            return projectResponseDto.orElse(new ProjectResponseDto(0L, null, null, null, null, null, false));
+
         } catch (Exception exception) {
             exception.printStackTrace();
             throw new BaseException(DATABASE_ERROR);
@@ -81,4 +75,25 @@ public class ProjectService {
             throw new BaseException(DATABASE_ERROR);
         }
     }
+
+    public List<ProjectCardResponseDto> getProgressProjectList(Long userId) throws BaseException {
+        try {
+            List<ProjectCardResponseDto> list = projectRepository.findProgressProjectList(userId);
+            return list;
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
+    public List<ProjectCardResponseDto> getCompleteProjectList(Long userId) throws BaseException {
+        try {
+            List<ProjectCardResponseDto> list = projectRepository.findCompleteProjectList(userId);
+            return list;
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
 }
