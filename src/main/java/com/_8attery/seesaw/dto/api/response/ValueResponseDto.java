@@ -11,8 +11,6 @@ import java.util.List;
 @NoArgsConstructor
 public class ValueResponseDto {
 
-//    private List<String> values;
-
     private Integer valueId;
     private String valueName;
 }

@@ -21,7 +21,6 @@ public class ValueService {
 
     @Transactional
     public int set3Values(List<String> values, Long userId) throws BaseException {
-
         int count = checkValues(userId);
         if (count == 3) {
             // 가치 3개 이미 존재
