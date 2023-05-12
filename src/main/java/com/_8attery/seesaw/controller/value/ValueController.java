@@ -29,7 +29,6 @@ public class ValueController {
 
     @PostMapping("/api/value")
     public BaseResponse<Integer> setValues(@RequestBody ValueRequestDto req, @AuthenticationPrincipal UserAccount userAccount) throws BaseException {
-
         Long userId = userService.resolveUserById(userAccount.getUserId()).getId();
 
         try {
@@ -42,11 +41,9 @@ public class ValueController {
 
     @GetMapping("/api/value")
     public BaseResponse<List<ValueResponseDto>> getValues(@AuthenticationPrincipal UserAccount userAccount) throws BaseException {
-
         Long userId = userService.resolveUserById(userAccount.getUserId()).getId();
 
         List<ValueResponseDto> res = valueService.get3Values(userId);
-
         return new BaseResponse<>(res);
     }
 

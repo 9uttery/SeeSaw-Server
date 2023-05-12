@@ -1,11 +1,12 @@
-package com._8attery.seesaw.controller.auth;
+package com._8attery.seesaw.controller.project;
 
+import com._8attery.seesaw.domain.project.Intensity;
 import com._8attery.seesaw.domain.user.account.UserAccount;
-import com._8attery.seesaw.dto.auth.request.SignupRequestDto;
-import com._8attery.seesaw.dto.auth.response.SignupResponseDto;
+import com._8attery.seesaw.dto.api.request.ProjectRequestDto;
+import com._8attery.seesaw.dto.api.response.ProjectResponseDto;
 import com._8attery.seesaw.exception.BaseException;
 import com._8attery.seesaw.exception.BaseResponse;
-import com._8attery.seesaw.service.auth.SignupService;
+import com._8attery.seesaw.service.project.ProjectService;
 import com._8attery.seesaw.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,24 +16,26 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
-//@Api(tags = {"1. Auth"})
+//@Api(tags = {"4. Project"})
 @RestController
 @RequiredArgsConstructor
-public class SignupController {
+public class ProjectController {
 
     private final UserService userService;
 
-    private final SignupService signupService;
+    private final ProjectService projectService;
 
-    @PostMapping("/auth/signup")
-    public BaseResponse<SignupResponseDto> signup(@RequestBody SignupRequestDto req, @AuthenticationPrincipal UserAccount userAccount) throws BaseException {
+    @PostMapping("/api/project")
+    public BaseResponse<ProjectResponseDto> addProject(@RequestBody ProjectRequestDto req, @AuthenticationPrincipal UserAccount userAccount) throws BaseException {
         Long userId = userService.resolveUserById(userAccount.getUserId()).getId();
 
         try {
-            SignupResponseDto res = signupService.userSignup(req.getAgreeMarketing(), req.getEmail(), req.getNickName(), userId);
+            ProjectResponseDto res = projectService.addUserProject(userId, req.getValueId(), req.getProjectName(), req.getStartedAt(), req.getEndedAt(), req.getIntensity(), req.getGoal());
+
             return new BaseResponse<>(res);
         } catch(BaseException exception){
             return new BaseResponse<>((exception.getStatus()));
         }
     }
+
 }

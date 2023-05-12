@@ -40,8 +40,8 @@ public class Project {
     @JoinColumn(name = "value_id")
     private Value value;
 
-    @Column(name = "name", nullable = false)
-    private String name; // 프로젝트 이름
+    @Column(name = "project_name", nullable = false)
+    private String projectName; // 프로젝트 이름
 
     @Column(name = "started_at", nullable = false)
     private LocalDateTime startedAt; // 시작 날짜
@@ -70,8 +70,8 @@ public class Project {
     private List<ProjectRemembrance> projectRemembrances = new ArrayList<>();
 
     @Builder
-    public Project(String name, LocalDateTime startedAt, LocalDateTime endedAt, Intensity intensity, String goal, Boolean isFinished) {
-        this.name = name;
+    public Project(String projectName, LocalDateTime startedAt, LocalDateTime endedAt, Intensity intensity, String goal, Boolean isFinished) {
+        this.projectName = projectName;
         this.startedAt = startedAt;
         this.endedAt = endedAt;
         this.intensity = intensity;
