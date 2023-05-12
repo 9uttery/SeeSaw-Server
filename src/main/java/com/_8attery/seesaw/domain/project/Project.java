@@ -60,13 +60,13 @@ public class Project {
     @Column(name = "is_finished", nullable = false)
     private Boolean isFinished; // 프로젝트 완료 여부
 
-    @OneToOne(mappedBy = "project", fetch = LAZY)
+    @OneToOne(mappedBy = "project", fetch = LAZY, orphanRemoval = true)
     private ProjectEmotion projectEmotion;
 
-    @OneToOne(mappedBy = "project", fetch = LAZY)
+    @OneToOne(mappedBy = "project", fetch = LAZY, orphanRemoval = true)
     private ProjectRecord projectRecord;
 
-    @OneToMany(mappedBy = "project")
+    @OneToMany(mappedBy = "project", orphanRemoval = true)
     private List<ProjectRemembrance> projectRemembrances = new ArrayList<>();
 
     @Builder
