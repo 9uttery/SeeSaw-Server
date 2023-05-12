@@ -64,10 +64,12 @@ public class ProjectService {
                 throw new BaseException(POSTS_EMPTY_POST_ID);
             return userId;
         } catch (Exception exception){
+            exception.printStackTrace();
             throw new BaseException(DATABASE_ERROR);
         }
     }
 
+    @Transactional
     public void deleteUserProject(Long projectId) throws BaseException {
         try{
             int result = projectRepository.deleteProjectByProjectId(projectId);
@@ -75,6 +77,7 @@ public class ProjectService {
                 throw new BaseException(DELETE_FAIL_POST);
         }
         catch (Exception exception) {
+            exception.printStackTrace();
             throw new BaseException(DATABASE_ERROR);
         }
     }
