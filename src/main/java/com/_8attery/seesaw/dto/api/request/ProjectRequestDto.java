@@ -1,6 +1,5 @@
 package com._8attery.seesaw.dto.api.request;
 
-import com._8attery.seesaw.domain.project.Intensity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

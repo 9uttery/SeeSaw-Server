@@ -1,6 +1,7 @@
 package com._8attery.seesaw.controller;
 
 import com._8attery.seesaw.domain.user.account.UserAccount;
+import com._8attery.seesaw.dto.api.request.BatteryRequestDto;
 import com._8attery.seesaw.exception.BaseException;
 import com._8attery.seesaw.exception.BaseResponse;
 import com._8attery.seesaw.service.battery.BatteryService;
@@ -24,11 +25,11 @@ public class BatteryController {
 
     // 활동량 목표 설정
     @PostMapping("/api/battery/goal/activity")
-    public BaseResponse<Integer> setActivityGoal(@RequestBody Integer req, @AuthenticationPrincipal UserAccount userAccount) throws BaseException {
+    public BaseResponse<Integer> setActivityGoal(@RequestBody BatteryRequestDto req, @AuthenticationPrincipal UserAccount userAccount) throws BaseException {
         Long userId = userService.resolveUserById(userAccount.getUserId()).getId();
 
         try {
-            Integer res = batteryService.setUserActivityGoal(userId, req);
+            Integer res = batteryService.setUserActivityGoal(userId, req.getValue());
 
             return new BaseResponse<>(res);
         } catch(BaseException exception){
@@ -38,11 +39,11 @@ public class BatteryController {
 
     // 수면량 목표 설정
     @PostMapping("/api/battery/goal/sleep")
-    public BaseResponse<Integer> setSleepGoal(@RequestBody Integer req, @AuthenticationPrincipal UserAccount userAccount) throws BaseException {
+    public BaseResponse<Integer> setSleepGoal(@RequestBody BatteryRequestDto req, @AuthenticationPrincipal UserAccount userAccount) throws BaseException {
         Long userId = userService.resolveUserById(userAccount.getUserId()).getId();
 
         try {
-            Integer res = batteryService.setUserSleepGoal(userId, req);
+            Integer res = batteryService.setUserSleepGoal(userId, req.getValue());
 
             return new BaseResponse<>(res);
         } catch(BaseException exception){
@@ -52,11 +53,11 @@ public class BatteryController {
 
     // 현재 활동량 설정
     @PostMapping("/api/battery/activity")
-    public BaseResponse<Integer> setCurActivity(@RequestBody Integer req, @AuthenticationPrincipal UserAccount userAccount) throws BaseException {
+    public BaseResponse<Integer> setCurActivity(@RequestBody BatteryRequestDto req, @AuthenticationPrincipal UserAccount userAccount) throws BaseException {
         Long userId = userService.resolveUserById(userAccount.getUserId()).getId();
 
         try {
-            Integer res = batteryService.setUserCurActivity(userId, req);
+            Integer res = batteryService.setUserCurActivity(userId, req.getValue());
 
             return new BaseResponse<>(res);
         } catch(BaseException exception){
@@ -66,11 +67,11 @@ public class BatteryController {
 
     // 오늘 수면량 설정
     @PostMapping("/api/battery/sleep")
-    public BaseResponse<Integer> setCurSleep(@RequestBody Integer req, @AuthenticationPrincipal UserAccount userAccount) throws BaseException {
+    public BaseResponse<Integer> setCurSleep(@RequestBody BatteryRequestDto req, @AuthenticationPrincipal UserAccount userAccount) throws BaseException {
         Long userId = userService.resolveUserById(userAccount.getUserId()).getId();
 
         try {
-            Integer res = batteryService.setUserCurSleep(userId, req);
+            Integer res = batteryService.setUserCurSleep(userId, req.getValue());
 
             return new BaseResponse<>(res);
         } catch(BaseException exception){
