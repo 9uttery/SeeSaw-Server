@@ -59,6 +59,7 @@ public class BatteryService {
     }
 
     // 오늘 수면량 설정
+    @Transactional
     public Integer setUserCurSleep(Long userId, Integer req) throws BaseException {
         try {
             batteryRepository.addUserCurSleep(userId, req);
