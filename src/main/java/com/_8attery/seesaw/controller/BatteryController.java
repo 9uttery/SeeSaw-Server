@@ -2,6 +2,7 @@ package com._8attery.seesaw.controller;
 
 import com._8attery.seesaw.domain.user.account.UserAccount;
 import com._8attery.seesaw.dto.api.request.BatteryRequestDto;
+import com._8attery.seesaw.dto.api.response.BatteryPercentResponseDto;
 import com._8attery.seesaw.exception.BaseException;
 import com._8attery.seesaw.exception.BaseResponse;
 import com._8attery.seesaw.service.battery.BatteryService;
@@ -9,9 +10,12 @@ import com._8attery.seesaw.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @Slf4j
 //@Api(tags = {"5. Battery"})
@@ -72,6 +76,20 @@ public class BatteryController {
 
         try {
             Integer res = batteryService.setUserCurSleep(userId, req.getValue());
+
+            return new BaseResponse<>(res);
+        } catch(BaseException exception){
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
+    // 배터리 수준 조회 (7일 퍼센트)
+    @GetMapping("/api/battery/history")
+    public BaseResponse<List<BatteryPercentResponseDto>> getBatteryHistory(@AuthenticationPrincipal UserAccount userAccount) throws BaseException {
+        Long userId = userService.resolveUserById(userAccount.getUserId()).getId();
+
+        try {
+            List<BatteryPercentResponseDto> res = batteryService.getUserBatteryHistory(userId);
 
             return new BaseResponse<>(res);
         } catch(BaseException exception){

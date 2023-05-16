@@ -1,10 +1,14 @@
 package com._8attery.seesaw.domain.battery;
 
+import com._8attery.seesaw.domain.battery_history.BatteryHistory;
 import com._8attery.seesaw.domain.project.Project;
+import com._8attery.seesaw.dto.api.response.BatteryPercentResponseDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+
+import java.util.List;
 
 public interface BatteryRepository extends JpaRepository<Battery, Long> {
 
@@ -39,5 +43,12 @@ public interface BatteryRepository extends JpaRepository<Battery, Long> {
 
     @Query(value = "select cur_sleep from ss_battery where user_id=:userId", nativeQuery = true)
     Integer findUserCurSleep(@Param("userId") Long userId);
+
+    // 배터리 수준 조회 (7일 퍼센트)
+    @Query(value = "select new com._8attery.seesaw.dto.api.response.BatteryPercentResponseDto(b1.createdAt, b1.batteryPercentage) from BatteryHistory b1 join b1.battery b2 " +
+            "where b2.user.id=:userId " +
+            "and b1.createdAt >= current_date - 7 " +
+            "and b1.createdAt < current_date")
+    List<BatteryPercentResponseDto> findUserBatteryHistory(@Param("userId") Long userId);
 
 }
