@@ -14,10 +14,10 @@ import java.time.LocalDateTime;
 public class BatteryPercentResponseDto {
 
     private LocalDate date; // 날짜
-    private Integer value; // 배터리 퍼센트
+    private Integer batteryPercentage; // 배터리 퍼센트
 
-    public BatteryPercentResponseDto(LocalDateTime date, Integer value) {
+    public BatteryPercentResponseDto(LocalDateTime date, Integer batteryPercentage) {
         this.date = date.toLocalDate();
-        this.value = value;
+        this.batteryPercentage = batteryPercentage;
     }
 }
