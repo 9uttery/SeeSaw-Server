@@ -1,11 +1,16 @@
 package com._8attery.seesaw.service.battery;
 
 import com._8attery.seesaw.domain.battery.BatteryRepository;
+import com._8attery.seesaw.domain.battery_history.BatteryHistory;
+import com._8attery.seesaw.dto.api.response.BatteryPercentResponseDto;
 import com._8attery.seesaw.dto.api.response.ProjectResponseDto;
 import com._8attery.seesaw.exception.BaseException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static com._8attery.seesaw.exception.BaseResponseStatus.DATABASE_ERROR;
 
@@ -71,4 +76,17 @@ public class BatteryService {
             throw new BaseException(DATABASE_ERROR);
         }
     }
+
+    // 배터리 수준 조회 (7일 퍼센트)
+    @Transactional
+    public List<BatteryPercentResponseDto> getUserBatteryHistory(Long userId) throws BaseException {
+        try {
+            return batteryRepository.findUserBatteryHistory(userId);
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
 }
