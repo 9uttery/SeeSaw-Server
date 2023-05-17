@@ -31,6 +31,15 @@ public class ProjectEmotion {
     @Column(name = "nice_cnt", nullable = false)
     private Integer niceCnt; // 멋져요 개수
 
+    @Column(name = "idk_cnt", nullable = false)
+    private Integer idkCnt; // 모르겠어요 개수
+
+    @Column(name = "angry_cnt", nullable = false)
+    private Integer angryCnt; // 화나요 개수
+
+    @Column(name = "sad_cnt", nullable = false)
+    private Integer sadCnt; // 슬퍼요 개수
+
     @Builder
     public ProjectEmotion(Integer likeCnt, Integer niceCnt) {
         this.likeCnt = likeCnt;
