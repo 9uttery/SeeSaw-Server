@@ -1,7 +1,5 @@
 package com._8attery.seesaw.domain.battery;
 
-import com._8attery.seesaw.domain.battery_history.BatteryHistory;
-import com._8attery.seesaw.domain.project.Project;
 import com._8attery.seesaw.dto.api.response.BatteryPercentResponseDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
