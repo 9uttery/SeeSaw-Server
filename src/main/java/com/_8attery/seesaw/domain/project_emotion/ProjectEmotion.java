@@ -41,8 +41,12 @@ public class ProjectEmotion {
     private Integer sadCnt; // 슬퍼요 개수
 
     @Builder
-    public ProjectEmotion(Integer likeCnt, Integer niceCnt) {
+    public ProjectEmotion(Project project, Integer likeCnt, Integer niceCnt, Integer idkCnt, Integer angryCnt, Integer sadCnt) {
+        this.project = project;
         this.likeCnt = likeCnt;
         this.niceCnt = niceCnt;
+        this.idkCnt = idkCnt;
+        this.angryCnt = angryCnt;
+        this.sadCnt = sadCnt;
     }
 }
