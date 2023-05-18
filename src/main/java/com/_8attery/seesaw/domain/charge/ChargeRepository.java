@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -30,6 +31,10 @@ public interface ChargeRepository extends JpaRepository<Charge, Long> {
     @Query(value = "select new com._8attery.seesaw.dto.api.response.ChargeResponseDto(c.value.id, c.name, c.createdAt) from Charge c where c.user.id=:userId and c.value.id=:valueId and c.name = :chargeName and c.createdAt =:createdAt")
     Optional<ChargeResponseDto> findUserCharge(@Param("userId") Long userId, @Param("valueId") Long valueId, @Param("chargeName") String chargeName, @Param("createdAt") LocalDateTime createdAt);
 
-
+    // 고속충전 조회
+    @Query(value = "select new com._8attery.seesaw.dto.api.response.ChargeResponseDto(c.value.id, c.name, c.createdAt) from Charge c " +
+            "where c.user.id=:userId " +
+            "and c.createdAt between :startDate and :endDate ")
+    Optional<ChargeResponseDto> findTodayCharge(@Param("userId") Long userId, @Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
 
 }
