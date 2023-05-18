@@ -1,26 +1,36 @@
 package com._8attery.seesaw.service.project;
 
 import com._8attery.seesaw.domain.project.ProjectRepository;
+import com._8attery.seesaw.domain.project.ProjectRepositoryCustom;
+import com._8attery.seesaw.domain.project_emotion.ProjectEmotionRepository;
+import com._8attery.seesaw.domain.project_emotion.ProjectEmotionRepositoryCustom;
+import com._8attery.seesaw.dto.api.request.ProjectEmotionRequestDto;
 import com._8attery.seesaw.dto.api.response.ProjectCardResponseDto;
+import com._8attery.seesaw.dto.api.response.ProjectDetailsResponseDto;
+import com._8attery.seesaw.dto.api.response.ProjectEmotionResponseDto;
 import com._8attery.seesaw.dto.api.response.ProjectResponseDto;
 import com._8attery.seesaw.exception.BaseException;
-import com._8attery.seesaw.exception.BaseResponseStatus;
+import com._8attery.seesaw.service.util.ServiceUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 
 import static com._8attery.seesaw.exception.BaseResponseStatus.*;
 
 @Service
-@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class ProjectService {
 
     private final ProjectRepository projectRepository;
+    private final ProjectRepositoryCustom projectRepositoryCustom;
+    private final ProjectEmotionRepository projectEmotionRepository;
+    private final ProjectEmotionRepositoryCustom projectEmotionRepositoryCustom;
+    private final ServiceUtils serviceUtils;
 
     @Transactional
     public ProjectResponseDto addUserProject(Long userId, Long valueId, String projectName, LocalDateTime startedAt, LocalDateTime endedAt, String intensity, String goal) throws BaseException {
@@ -96,4 +106,23 @@ public class ProjectService {
         }
     }
 
+    public ProjectDetailsResponseDto getProjectDetails(Long userId, Long projectId) {
+        serviceUtils.retrieveUserById(userId);
+        serviceUtils.retrieveProjectById(projectId);
+        ProjectDetailsResponseDto result = projectRepositoryCustom.getProjectDetails(projectId);
+
+        if (!result.getIsFinished()) {
+            LocalDateTime middleDate = result.getStartedAt().plusSeconds(ChronoUnit.SECONDS.between(result.getStartedAt(), result.getEndedAt()) / 2).truncatedTo(ChronoUnit.DAYS);
+            result.setIsHalfProgressed(LocalDateTime.now().toLocalDate().isAfter(middleDate.toLocalDate()));
+        }
+
+        return result;
+    }
+
+    public ProjectEmotionResponseDto addEmotionToProject(Long userId, ProjectEmotionRequestDto projectEmotionRequestDto) {
+        serviceUtils.retrieveUserById(userId);
+        serviceUtils.retrieveProjectById(projectEmotionRequestDto.getProjectId());
+
+        return projectEmotionRepositoryCustom.updateProjectEmotion(projectEmotionRequestDto);
+    }
 }
