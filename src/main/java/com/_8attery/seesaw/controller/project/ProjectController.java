@@ -128,4 +128,10 @@ public class ProjectController {
 
         return ResponseEntity.ok().body(projectService.addRecordToProject(userAccount.getUserId(), projectRecordRequestDto));
     }
+
+    @GetMapping("/{projectId}/record")
+    public ResponseEntity<List<ProjectRecordResponseDto>> getProjectRecordList(@AuthenticationPrincipal UserAccount userAccount, @PathVariable("projectId") Long projectId) {
+
+        return ResponseEntity.ok().body(projectService.getProjectRecordList(userAccount.getUserId(), projectId));
+    }
 }
