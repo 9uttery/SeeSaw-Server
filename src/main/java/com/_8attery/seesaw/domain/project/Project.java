@@ -1,9 +1,5 @@
 package com._8attery.seesaw.domain.project;
 
-import com._8attery.seesaw.domain.battery.Battery;
-import com._8attery.seesaw.domain.battery_variation.BatteryVariation;
-import com._8attery.seesaw.domain.project_emotion.ProjectEmotion;
-import com._8attery.seesaw.domain.project_record.ProjectRecord;
 import com._8attery.seesaw.domain.project_remembrance.ProjectRemembrance;
 import com._8attery.seesaw.domain.user.User;
 import com._8attery.seesaw.domain.value.Value;
@@ -14,7 +10,6 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -60,11 +55,11 @@ public class Project {
     @Column(name = "is_finished", nullable = false)
     private Boolean isFinished; // 프로젝트 완료 여부
 
-    @OneToOne(mappedBy = "project", fetch = LAZY, orphanRemoval = true)
-    private ProjectEmotion projectEmotion;
-
-    @OneToOne(mappedBy = "project", fetch = LAZY, orphanRemoval = true)
-    private ProjectRecord projectRecord;
+//    @OneToOne(mappedBy = "project", fetch = LAZY, orphanRemoval = true)
+//    private ProjectEmotion projectEmotion;
+//
+//    @OneToOne(mappedBy = "project", fetch = LAZY, orphanRemoval = true)
+//    private ProjectRecord projectRecord;
 
     @OneToMany(mappedBy = "project", orphanRemoval = true)
     private List<ProjectRemembrance> projectRemembrances = new ArrayList<>();
