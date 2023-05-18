@@ -58,9 +58,9 @@ public class User {
     private List<Value> values = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", fetch = LAZY)
-    private List<Charge> charges = new ArrayList<>();
+    private List<Charge> charge;
 
-    @OneToOne(mappedBy = "user", fetch = LAZY)
+    @OneToOne(mappedBy = "user")
     private Battery battery;
 
     @OneToMany(mappedBy = "user")

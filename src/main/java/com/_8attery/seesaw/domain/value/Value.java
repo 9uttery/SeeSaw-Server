@@ -10,8 +10,9 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
-import static javax.persistence.FetchType.*;
+import static javax.persistence.FetchType.LAZY;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -34,8 +35,8 @@ public class Value {
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt; // 생성 날짜
 
-    @OneToOne(mappedBy = "value", fetch = LAZY)
-    private Charge charge;
+    @OneToMany(mappedBy = "value", fetch = LAZY)
+    private List<Charge> charge;
 
     @OneToOne(mappedBy = "value", fetch = LAZY)
     private Project project;

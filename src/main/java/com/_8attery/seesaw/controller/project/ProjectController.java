@@ -1,8 +1,11 @@
 package com._8attery.seesaw.controller.project;
 
 import com._8attery.seesaw.domain.user.account.UserAccount;
+import com._8attery.seesaw.dto.api.request.ProjectEmotionRequestDto;
 import com._8attery.seesaw.dto.api.request.ProjectRequestDto;
 import com._8attery.seesaw.dto.api.response.ProjectCardResponseDto;
+import com._8attery.seesaw.dto.api.response.ProjectDetailsResponseDto;
+import com._8attery.seesaw.dto.api.response.ProjectEmotionResponseDto;
 import com._8attery.seesaw.dto.api.response.ProjectResponseDto;
 import com._8attery.seesaw.exception.BaseException;
 import com._8attery.seesaw.exception.BaseResponse;
@@ -10,6 +13,7 @@ import com._8attery.seesaw.service.project.ProjectService;
 import com._8attery.seesaw.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +25,7 @@ import static com._8attery.seesaw.exception.BaseResponseStatus.USERS_FAILED_POST
 //@Api(tags = {"4. Project"})
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/project")
 public class ProjectController {
 
     private final UserService userService;
@@ -28,7 +33,7 @@ public class ProjectController {
     private final ProjectService projectService;
 
     // 프로젝트 추가
-    @PostMapping("/api/project")
+    @PostMapping()
     public BaseResponse<ProjectResponseDto> addProject(@RequestBody ProjectRequestDto req, @AuthenticationPrincipal UserAccount userAccount) throws BaseException {
         Long userId = userService.resolveUserById(userAccount.getUserId()).getId();
 
@@ -42,7 +47,7 @@ public class ProjectController {
     }
 
     // 프로젝트 수정
-    @PutMapping("/api/project/{projectId}")
+    @PutMapping("/{projectId}")
     public BaseResponse<ProjectResponseDto> updateProject(@PathVariable("projectId") Long projectId, @RequestBody ProjectRequestDto req, @AuthenticationPrincipal UserAccount userAccount) throws BaseException {
         Long userId = userService.resolveUserById(userAccount.getUserId()).getId();
 
@@ -61,7 +66,7 @@ public class ProjectController {
     }
 
     // 프로젝트 삭제
-    @DeleteMapping("api/project/{projectId}")
+    @DeleteMapping("/{projectId}")
     public BaseResponse<String> deleteProject(@PathVariable("projectId") Long projectId, @AuthenticationPrincipal UserAccount userAccount) throws BaseException {
         Long userId = userService.resolveUserById(userAccount.getUserId()).getId();
 
@@ -80,7 +85,7 @@ public class ProjectController {
     }
 
     // 진행 중인 프로젝트 조회
-    @GetMapping("api/project/progress")
+    @GetMapping("/progress")
     public BaseResponse<List<ProjectCardResponseDto>> getProgressProject(@AuthenticationPrincipal UserAccount userAccount) throws BaseException {
         Long userId = userService.resolveUserById(userAccount.getUserId()).getId();
 
@@ -94,7 +99,7 @@ public class ProjectController {
     }
 
     // 완료된 프로젝트 조회
-    @GetMapping("api/project/complete")
+    @GetMapping("/complete")
     public BaseResponse<List<ProjectCardResponseDto>> getCompleteProject(@AuthenticationPrincipal UserAccount userAccount) throws BaseException {
         Long userId = userService.resolveUserById(userAccount.getUserId()).getId();
 
@@ -102,11 +107,21 @@ public class ProjectController {
             List<ProjectCardResponseDto> res = projectService.getCompleteProjectList(userId);
 
             return new BaseResponse<>(res);
-        } catch(BaseException exception){
+        } catch (BaseException exception) {
             return new BaseResponse<>((exception.getStatus()));
         }
     }
 
+    @GetMapping("/{projectId}")
+    public ResponseEntity<ProjectDetailsResponseDto> getProjectDetails(@AuthenticationPrincipal UserAccount userAccount, @PathVariable("projectId") Long projectId) {
 
+        return ResponseEntity.ok().body(projectService.getProjectDetails(userAccount.getUserId(), projectId));
+    }
+
+    @PostMapping("/emotion")
+    public ResponseEntity<ProjectEmotionResponseDto> addEmotionToProject(@AuthenticationPrincipal UserAccount userAccount, @RequestBody ProjectEmotionRequestDto projectEmotionRequestDto) {
+
+        return ResponseEntity.ok().body(projectService.addEmotionToProject(userAccount.getUserId(), projectEmotionRequestDto));
+    }
 
 }
