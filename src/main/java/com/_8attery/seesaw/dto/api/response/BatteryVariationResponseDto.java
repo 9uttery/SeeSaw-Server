@@ -13,24 +13,22 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class BatteryVariationResponseDto {
 
-    // 수면 -> 고속충전 -> 활동량
     private LocalDate date; // 날짜
-    private String chargeName;
-//    private String valueName;
-    private Long valueId; // 일단 아이디로
     private Integer curSleep;
     private Integer goalSleep;
+    private Integer sleepVariation; // 수면에 따른 배터리 증감량
     private Integer curActivity;
     private Integer goalActivity;
+    private Integer activityVariation; // 활동량에 따른 배터리 증감량
 
-    public BatteryVariationResponseDto(LocalDateTime date, String chargeName, Long valueId, Integer curSleep, Integer goalSleep, Integer curActivity, Integer goalActivity) {
+    public BatteryVariationResponseDto(LocalDateTime date, Integer curSleep, Integer goalSleep, Integer sleepVariation, Integer curActivity, Integer goalActivity, Integer activityVariation) {
         this.date = date.toLocalDate();
-        this.chargeName = chargeName;
-        this.valueId = valueId;
         this.curSleep = curSleep;
         this.goalSleep = goalSleep;
+        this.sleepVariation = sleepVariation;
         this.curActivity = curActivity;
         this.goalActivity = goalActivity;
+        this.activityVariation = activityVariation;
     }
 
 }

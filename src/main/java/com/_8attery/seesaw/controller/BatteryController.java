@@ -3,7 +3,7 @@ package com._8attery.seesaw.controller;
 import com._8attery.seesaw.domain.user.account.UserAccount;
 import com._8attery.seesaw.dto.api.request.BatteryRequestDto;
 import com._8attery.seesaw.dto.api.response.BatteryPercentResponseDto;
-import com._8attery.seesaw.dto.api.response.BatteryVariationResponseDto;
+import com._8attery.seesaw.dto.api.response.CombinedBatteryVariationResponseDto;
 import com._8attery.seesaw.exception.BaseException;
 import com._8attery.seesaw.exception.BaseResponse;
 import com._8attery.seesaw.service.battery.BatteryService;
@@ -99,12 +99,12 @@ public class BatteryController {
     }
 
     // 배터리 증감 조회 (30일 증감 내역)
-    @GetMapping("api/battery/variation")
-    public BaseResponse<List<BatteryVariationResponseDto>> getBatteryVariation(@AuthenticationPrincipal UserAccount userAccount) throws BaseException {
+    @GetMapping("/api/battery/variation")
+    public BaseResponse<List<CombinedBatteryVariationResponseDto>> getBatteryCombine(@AuthenticationPrincipal UserAccount userAccount) throws BaseException {
         Long userId = userService.resolveUserById(userAccount.getUserId()).getId();
 
         try {
-            List<BatteryVariationResponseDto> res = batteryService.getUserBatteryVariation(userId);
+            List<CombinedBatteryVariationResponseDto> res = batteryService.getUserBatteryData(userId);
 
             return new BaseResponse<>(res);
         } catch(BaseException exception){
