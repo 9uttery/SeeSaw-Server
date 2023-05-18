@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 import static com._8attery.seesaw.exception.BaseResponseStatus.USERS_FAILED_POST_ID;
@@ -119,7 +120,7 @@ public class ProjectController {
     }
 
     @PostMapping("/emotion")
-    public ResponseEntity<ProjectEmotionResponseDto> addEmotionToProject(@AuthenticationPrincipal UserAccount userAccount, @RequestBody ProjectEmotionRequestDto projectEmotionRequestDto) {
+    public ResponseEntity<ProjectEmotionResponseDto> addEmotionToProject(@AuthenticationPrincipal UserAccount userAccount, @Valid @RequestBody ProjectEmotionRequestDto projectEmotionRequestDto) {
 
         return ResponseEntity.ok().body(projectService.addEmotionToProject(userAccount.getUserId(), projectEmotionRequestDto));
     }
