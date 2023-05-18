@@ -1,14 +1,15 @@
 package com._8attery.seesaw.service.project;
 
+import com._8attery.seesaw.domain.project.Project;
 import com._8attery.seesaw.domain.project.ProjectRepository;
 import com._8attery.seesaw.domain.project.ProjectRepositoryCustom;
 import com._8attery.seesaw.domain.project_emotion.ProjectEmotionRepository;
 import com._8attery.seesaw.domain.project_emotion.ProjectEmotionRepositoryCustom;
+import com._8attery.seesaw.domain.project_record.ProjectRecord;
+import com._8attery.seesaw.domain.project_record.ProjectRecordRepository;
 import com._8attery.seesaw.dto.api.request.ProjectEmotionRequestDto;
-import com._8attery.seesaw.dto.api.response.ProjectCardResponseDto;
-import com._8attery.seesaw.dto.api.response.ProjectDetailsResponseDto;
-import com._8attery.seesaw.dto.api.response.ProjectEmotionResponseDto;
-import com._8attery.seesaw.dto.api.response.ProjectResponseDto;
+import com._8attery.seesaw.dto.api.request.ProjectRecordRequestDto;
+import com._8attery.seesaw.dto.api.response.*;
 import com._8attery.seesaw.exception.BaseException;
 import com._8attery.seesaw.service.util.ServiceUtils;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +31,7 @@ public class ProjectService {
     private final ProjectRepositoryCustom projectRepositoryCustom;
     private final ProjectEmotionRepository projectEmotionRepository;
     private final ProjectEmotionRepositoryCustom projectEmotionRepositoryCustom;
+    private final ProjectRecordRepository projectRecordRepository;
     private final ServiceUtils serviceUtils;
 
     @Transactional
@@ -124,5 +126,23 @@ public class ProjectService {
         serviceUtils.retrieveProjectById(projectEmotionRequestDto.getProjectId());
 
         return projectEmotionRepositoryCustom.updateProjectEmotion(projectEmotionRequestDto);
+    }
+
+    public ProjectRecordResponseDto addRecordToProject(Long userId, ProjectRecordRequestDto projectRecordRequestDto) {
+        serviceUtils.retrieveUserById(userId);
+        Project retrievedProject = serviceUtils.retrieveProjectById(projectRecordRequestDto.getProjectId());
+
+        ProjectRecord projectRecord = projectRecordRepository.save(
+                ProjectRecord
+                        .projectRecordBuilder()
+                        .project(retrievedProject)
+                        .question(projectRecordRequestDto.getQuestion())
+                        .contents(projectRecordRequestDto.getContents())
+                        .temp(projectRecordRequestDto.getTemp())
+                        .createdAt(LocalDateTime.now())
+                        .build()
+        );
+
+        return ProjectRecordResponseDto.from(projectRecordRepository.save(projectRecord));
     }
 }
