@@ -4,13 +4,14 @@ import com._8attery.seesaw.domain.battery.BatteryRepository;
 import com._8attery.seesaw.dto.api.response.BatteryChargeResponseDto;
 import com._8attery.seesaw.dto.api.response.BatteryPercentResponseDto;
 import com._8attery.seesaw.dto.api.response.BatteryVariationResponseDto;
+import com._8attery.seesaw.dto.api.response.CombinedBatteryVariationResponseDto;
 import com._8attery.seesaw.exception.BaseException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.*;
 
 import static com._8attery.seesaw.exception.BaseResponseStatus.DATABASE_ERROR;
 
@@ -111,18 +112,43 @@ public class BatteryService {
 
     // 배터리 증감 조회 (30일 증감 내역)
     @Transactional
-    public List<BatteryVariationResponseDto> getUserBatteryVariation(Long userId) throws BaseException {
+    public List<CombinedBatteryVariationResponseDto> getUserBatteryData(Long userId) throws BaseException {
         try {
             Long batteryId = batteryRepository.findUserBatteryId(userId);
 
-//            BatteryVariationResponseDto res = new BatteryVariationResponseDto();
-
-
             LocalDateTime endDate = LocalDateTime.now();  // Current date and time
-            LocalDateTime startDate = endDate.minusDays(3);  // 3 days ago -> 일단 3으로
-//            LocalDateTime startDate = endDate.minusDays(30);  // 30 days ago
+            LocalDateTime startDate = endDate.minusDays(30);  // 30 days ago
 
-            return batteryRepository.findUserBatteryVariation(batteryId, startDate, endDate);
+            List<BatteryVariationResponseDto> variationData = batteryRepository.findUserBatteryVariation(batteryId, startDate, endDate);
+            List<BatteryChargeResponseDto> chargeData = batteryRepository.findUserBatteryCharge(userId, startDate, endDate);
+
+            List<CombinedBatteryVariationResponseDto> combinedData = new ArrayList<>();
+
+            // Merge variation and charge data based on the date
+            for (BatteryVariationResponseDto variation : variationData) {
+                CombinedBatteryVariationResponseDto combinedDto = new CombinedBatteryVariationResponseDto();
+                combinedDto.setDate(variation.getDate());
+                combinedDto.setCurSleep(variation.getCurSleep());
+                combinedDto.setGoalSleep(variation.getGoalSleep());
+                combinedDto.setSleepVariation(variation.getSleepVariation());
+                combinedDto.setCurActivity(variation.getCurActivity());
+                combinedDto.setGoalActivity(variation.getGoalActivity());
+                combinedDto.setActivityVariation(variation.getActivityVariation());
+
+                // Find matching charge data for the date
+                for (BatteryChargeResponseDto charge : chargeData) {
+                    if (charge.getDate().isEqual(variation.getDate())) {
+                        combinedDto.setChargeName(charge.getChargeName());
+                        combinedDto.setValueName(charge.getValueName());
+                        combinedDto.setChargeVariation(charge.getChargeVariation());
+                        break;  // Found a matching charge, exit the loop
+                    }
+                }
+
+                combinedData.add(combinedDto);
+            }
+
+            return combinedData;
 
         } catch (Exception exception) {
             exception.printStackTrace();
@@ -130,17 +156,5 @@ public class BatteryService {
         }
     }
 
-    public List<BatteryChargeResponseDto> getUserBatteryCharge(Long userId) throws BaseException {
-        try {
-            LocalDateTime endDate = LocalDateTime.now();  // Current date and time
-            LocalDateTime startDate = endDate.minusDays(3);  // 3 days ago -> 일단 3으로
-//            LocalDateTime startDate = endDate.minusDays(30);  // 30 days ago
 
-            return batteryRepository.findUserBatteryCharge(userId, startDate, endDate);
-
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            throw new BaseException(DATABASE_ERROR);
-        }
-    }
 }
