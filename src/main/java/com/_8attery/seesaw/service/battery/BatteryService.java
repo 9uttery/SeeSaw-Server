@@ -3,6 +3,7 @@ package com._8attery.seesaw.service.battery;
 import com._8attery.seesaw.domain.battery.BatteryRepository;
 import com._8attery.seesaw.domain.battery_history.BatteryHistory;
 import com._8attery.seesaw.dto.api.response.BatteryPercentResponseDto;
+import com._8attery.seesaw.dto.api.response.BatteryVariationResponseDto;
 import com._8attery.seesaw.dto.api.response.ProjectResponseDto;
 import com._8attery.seesaw.exception.BaseException;
 import lombok.RequiredArgsConstructor;
@@ -94,4 +95,18 @@ public class BatteryService {
         }
     }
 
+    // 배터리 증감 조회 (30일 증감 내역)
+    @Transactional
+    public List<BatteryVariationResponseDto> getUserBatteryVariation(Long userId) throws BaseException {
+        try {
+            LocalDateTime endDate = LocalDateTime.now();  // Current date and time
+            LocalDateTime startDate = endDate.minusDays(30);  // 7 days ago
+
+            return batteryRepository.findUserBatteryVariation(userId, startDate, endDate);
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
 }

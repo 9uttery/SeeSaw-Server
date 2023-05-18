@@ -36,6 +36,12 @@ public class BatteryHistory {
     @Column(name = "activity")
     private Integer activity; // 활동량
 
+    @Column(name = "activity_goal")
+    private Integer activityGoal; // 목표 활동량
+
+    @Column(name = "sleep_goal")
+    private Integer sleepGoal; // 목표 수면량
+
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt; // 생성 날짜
 
