@@ -1,6 +1,7 @@
 package com._8attery.seesaw.service.battery;
 
 import com._8attery.seesaw.domain.battery.BatteryRepository;
+import com._8attery.seesaw.dto.api.response.BatteryChargeResponseDto;
 import com._8attery.seesaw.dto.api.response.BatteryPercentResponseDto;
 import com._8attery.seesaw.dto.api.response.BatteryVariationResponseDto;
 import com._8attery.seesaw.exception.BaseException;
@@ -112,10 +113,30 @@ public class BatteryService {
     @Transactional
     public List<BatteryVariationResponseDto> getUserBatteryVariation(Long userId) throws BaseException {
         try {
-            LocalDateTime endDate = LocalDateTime.now();  // Current date and time
-            LocalDateTime startDate = endDate.minusDays(30);  // 7 days ago
+            Long batteryId = batteryRepository.findUserBatteryId(userId);
 
-            return batteryRepository.findUserBatteryVariation(userId, startDate, endDate);
+//            BatteryVariationResponseDto res = new BatteryVariationResponseDto();
+
+
+            LocalDateTime endDate = LocalDateTime.now();  // Current date and time
+            LocalDateTime startDate = endDate.minusDays(3);  // 3 days ago -> 일단 3으로
+//            LocalDateTime startDate = endDate.minusDays(30);  // 30 days ago
+
+            return batteryRepository.findUserBatteryVariation(batteryId, startDate, endDate);
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
+    public List<BatteryChargeResponseDto> getUserBatteryCharge(Long userId) throws BaseException {
+        try {
+            LocalDateTime endDate = LocalDateTime.now();  // Current date and time
+            LocalDateTime startDate = endDate.minusDays(3);  // 3 days ago -> 일단 3으로
+//            LocalDateTime startDate = endDate.minusDays(30);  // 30 days ago
+
+            return batteryRepository.findUserBatteryCharge(userId, startDate, endDate);
 
         } catch (Exception exception) {
             exception.printStackTrace();

@@ -2,6 +2,7 @@ package com._8attery.seesaw.controller;
 
 import com._8attery.seesaw.domain.user.account.UserAccount;
 import com._8attery.seesaw.dto.api.request.BatteryRequestDto;
+import com._8attery.seesaw.dto.api.response.BatteryChargeResponseDto;
 import com._8attery.seesaw.dto.api.response.BatteryPercentResponseDto;
 import com._8attery.seesaw.dto.api.response.BatteryVariationResponseDto;
 import com._8attery.seesaw.exception.BaseException;
@@ -105,6 +106,19 @@ public class BatteryController {
 
         try {
             List<BatteryVariationResponseDto> res = batteryService.getUserBatteryVariation(userId);
+
+            return new BaseResponse<>(res);
+        } catch(BaseException exception){
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
+    @GetMapping("api/battery/chargeVariation")
+    public BaseResponse<List<BatteryChargeResponseDto>> getBatteryCharge(@AuthenticationPrincipal UserAccount userAccount) throws BaseException {
+        Long userId = userService.resolveUserById(userAccount.getUserId()).getId();
+
+        try {
+            List<BatteryChargeResponseDto> res = batteryService.getUserBatteryCharge(userId);
 
             return new BaseResponse<>(res);
         } catch(BaseException exception){

@@ -38,13 +38,13 @@ public class BatteryVariation {
     private Integer variationPercentage; // 증감량
 
     @Column(name = "created_at")
-    private LocalDateTime CreatedAt; // 생성 날짜
+    private LocalDateTime createdAt; // 생성 날짜
 
     @Builder
     public BatteryVariation(BatteryType type, String name, Integer variationPercentage, LocalDateTime createdAt) {
         this.type = type;
         this.name = name;
         this.variationPercentage = variationPercentage;
-        CreatedAt = createdAt;
+        this.createdAt = createdAt;
     }
 }
