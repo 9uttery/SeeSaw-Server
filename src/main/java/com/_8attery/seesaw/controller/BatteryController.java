@@ -99,17 +99,17 @@ public class BatteryController {
     }
 
     // 배터리 증감 조회 (30일 증감 내역)
-//    @GetMapping("api/battery/variation")
-//    public BaseResponse<List<BatteryVariationResponseDto>> getBatteryVariation(@AuthenticationPrincipal UserAccount userAccount) throws BaseException {
-//        Long userId = userService.resolveUserById(userAccount.getUserId()).getId();
-//
-//        try {
-//            List<BatteryVariationResponseDto> res = batteryService.getUserBatteryVariation(userId);
-//
-//            return new BaseResponse<>(res);
-//        } catch(BaseException exception){
-//            return new BaseResponse<>((exception.getStatus()));
-//        }
-//    }
+    @GetMapping("api/battery/variation")
+    public BaseResponse<List<BatteryVariationResponseDto>> getBatteryVariation(@AuthenticationPrincipal UserAccount userAccount) throws BaseException {
+        Long userId = userService.resolveUserById(userAccount.getUserId()).getId();
+
+        try {
+            List<BatteryVariationResponseDto> res = batteryService.getUserBatteryVariation(userId);
+
+            return new BaseResponse<>(res);
+        } catch(BaseException exception){
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
 
 }
