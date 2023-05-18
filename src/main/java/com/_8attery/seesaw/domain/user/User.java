@@ -57,10 +57,10 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Value> values = new ArrayList<>();
 
-    @OneToOne(mappedBy = "user", fetch = LAZY)
-    private Charge charge;
+    @OneToMany(mappedBy = "user", fetch = LAZY)
+    private List<Charge> charge;
 
-    @OneToOne(mappedBy = "user", fetch = LAZY)
+    @OneToOne(mappedBy = "user")
     private Battery battery;
 
     @OneToMany(mappedBy = "user")
