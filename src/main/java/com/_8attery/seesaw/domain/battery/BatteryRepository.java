@@ -1,6 +1,7 @@
 package com._8attery.seesaw.domain.battery;
 
 import com._8attery.seesaw.dto.api.response.BatteryPercentResponseDto;
+import com._8attery.seesaw.dto.api.response.BatteryVariationResponseDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -49,5 +50,16 @@ public interface BatteryRepository extends JpaRepository<Battery, Long> {
             "where b2.user.id=:userId " +
             "and b1.createdAt between :startDate and :endDate ")
     List<BatteryPercentResponseDto> findUserBatteryHistory(@Param("userId") Long userId, @Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
+
+    // 배터리 증감 조회 (30일 증감 내역)
+    @Query(value = "select distinct new com._8attery.seesaw.dto.api.response.BatteryVariationResponseDto(b1.createdAt, c.name, c.value.id, b1.sleepTime, b2.sleepGoal, b1.activity, b2.activityGoal) " +
+            "from BatteryHistory b1 " +
+            "JOIN b1.battery b2 " +
+            "JOIN Charge c ON TRUNC(c.createdAt) = TRUNC(b1.createdAt) " +
+            "where b2.user.id=:userId " +
+            "and b1.createdAt between :startDate and :endDate")
+    List<BatteryVariationResponseDto> findUserBatteryVariation(@Param("userId") Long userId, @Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
+
+
 
 }
