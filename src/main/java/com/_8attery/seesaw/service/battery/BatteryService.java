@@ -77,7 +77,7 @@ public class BatteryService {
             Integer sleepGoal = batteryRepository.findUserSleepGoal(userId);
             if (req < sleepGoal*0.5) {
                 variation = -20;
-            } else if (sleepGoal*0.5 < req && req < sleepGoal) {
+            } else if (sleepGoal*0.5 <= req && req < sleepGoal) {
                 variation = -10;
             } else if (req >= sleepGoal) {
                 variation = 10;
