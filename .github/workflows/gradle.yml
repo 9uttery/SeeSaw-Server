@@ -70,8 +70,8 @@ jobs:
       run: ./gradlew build -x test
       shell: bash
 
-#    - name: Compile querydsl with Gradle
-#      run: ./gradlew compilequerydsl
+   - name: Compile querydsl with Gradle
+     run: ./gradlew compilequerydsl
 
     ## docker build & push to production
     - name: Docker build & push to prod
