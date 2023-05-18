@@ -37,7 +37,7 @@ public class BatteryVariation {
     @Column(name = "variation_percentage")
     private Integer variationPercentage; // 증감량
 
-    @Column(name = "create_at")
+    @Column(name = "created_at")
     private LocalDateTime CreatedAt; // 생성 날짜
 
     @Builder
