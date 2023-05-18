@@ -75,23 +75,23 @@ public interface BatteryRepository extends JpaRepository<Battery, Long> {
 //            "AND b1.createdAt BETWEEN :startDate AND :endDate")
 //    List<BatteryVariationResponseDto> findUserBatteryVariation(@Param("batteryId") Long batteryId, @Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
 
-//    @Query(value = "SELECT DISTINCT NEW com._8attery.seesaw.dto.api.response.BatteryVariationResponseDto(b1.createdAt, b1.sleepTime, b1.sleepGoal, " +
-//            "(SELECT b2.variationPercentage FROM BatteryVariation b2 WHERE b2.type = 'ACTIVITY' AND DATE(b2.createdAt) = DATE(b1.createdAt)), " +
-//            "b1.activity, b1.activityGoal, " +
-//            "(SELECT b3.variationPercentage FROM BatteryVariation b3 WHERE b3.type = 'SLEEP' AND DATE(b3.createdAt) = DATE(b1.createdAt))) " +
-//            "FROM BatteryHistory b1 " +
-//            "WHERE b1.battery.id = :batteryId " +
-//            "AND b1.createdAt BETWEEN :startDate AND :endDate")
-//    List<BatteryVariationResponseDto> findUserBatteryVariation(@Param("batteryId") Long batteryId, @Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
-
     @Query(value = "SELECT DISTINCT NEW com._8attery.seesaw.dto.api.response.BatteryVariationResponseDto(b1.createdAt, b1.sleepTime, b1.sleepGoal, " +
-            "(SELECT b2.variationPercentage FROM BatteryVariation b2 WHERE b2.type = 'ACTIVITY' AND DATE_TRUNC('DAY', b2.createdAt) = DATE_TRUNC('DAY', b1.createdAt)), " +
+            "(SELECT b2.variationPercentage FROM BatteryVariation b2 WHERE b2.type = 'ACTIVITY' AND DATE(b2.createdAt) = DATE(b1.createdAt)), " +
             "b1.activity, b1.activityGoal, " +
-            "(SELECT b3.variationPercentage FROM BatteryVariation b3 WHERE b3.type = 'SLEEP' AND DATE_TRUNC('DAY', b3.createdAt) = DATE_TRUNC('DAY', b1.createdAt))) " +
+            "(SELECT b3.variationPercentage FROM BatteryVariation b3 WHERE b3.type = 'SLEEP' AND DATE(b3.createdAt) = DATE(b1.createdAt))) " +
             "FROM BatteryHistory b1 " +
             "WHERE b1.battery.id = :batteryId " +
             "AND b1.createdAt BETWEEN :startDate AND :endDate")
     List<BatteryVariationResponseDto> findUserBatteryVariation(@Param("batteryId") Long batteryId, @Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
+
+//    @Query(value = "SELECT DISTINCT NEW com._8attery.seesaw.dto.api.response.BatteryVariationResponseDto(b1.createdAt, b1.sleepTime, b1.sleepGoal, " +
+//            "(SELECT b2.variationPercentage FROM BatteryVariation b2 WHERE b2.type = 'ACTIVITY' AND DATE_TRUNC('DAY', b2.createdAt) = DATE_TRUNC('DAY', b1.createdAt)), " +
+//            "b1.activity, b1.activityGoal, " +
+//            "(SELECT b3.variationPercentage FROM BatteryVariation b3 WHERE b3.type = 'SLEEP' AND DATE_TRUNC('DAY', b3.createdAt) = DATE_TRUNC('DAY', b1.createdAt))) " +
+//            "FROM BatteryHistory b1 " +
+//            "WHERE b1.battery.id = :batteryId " +
+//            "AND b1.createdAt BETWEEN :startDate AND :endDate")
+//    List<BatteryVariationResponseDto> findUserBatteryVariation(@Param("batteryId") Long batteryId, @Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
 
     @Query(value = "SELECT DISTINCT NEW com._8attery.seesaw.dto.api.response.BatteryChargeResponseDto(c.createdAt, c.name, v.valueName, 30) " +
             "from Charge c join c.value v " +
