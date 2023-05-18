@@ -1,19 +1,15 @@
 package com._8attery.seesaw.service.battery;
 
 import com._8attery.seesaw.domain.battery.BatteryRepository;
-import com._8attery.seesaw.domain.battery_history.BatteryHistory;
 import com._8attery.seesaw.dto.api.response.BatteryPercentResponseDto;
 import com._8attery.seesaw.dto.api.response.BatteryVariationResponseDto;
-import com._8attery.seesaw.dto.api.response.ProjectResponseDto;
 import com._8attery.seesaw.exception.BaseException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static com._8attery.seesaw.exception.BaseResponseStatus.DATABASE_ERROR;
 
@@ -71,6 +67,23 @@ public class BatteryService {
     public Integer setUserCurSleep(Long userId, Integer req) throws BaseException {
         try {
             batteryRepository.addUserCurSleep(userId, req);
+
+            // 배터리 증감 내역 레코드 추가 & 배터리 갱신
+            String type = "SLEEP";
+            Long batteryId = batteryRepository.findUserBatteryId(userId);
+            LocalDateTime createdAt = LocalDateTime.now();
+
+            Integer variation = 0; // 수면에 따른 배터리 증감
+            Integer sleepGoal = batteryRepository.findUserSleepGoal(userId);
+            if (req < sleepGoal*0.5) {
+                variation = -20;
+            } else if (sleepGoal*0.5 < req && req < sleepGoal) {
+                variation = -10;
+            } else if (req >= sleepGoal) {
+                variation = 10;
+            }
+            batteryRepository.updateCurBattery(userId, variation); // 배터리 갱신
+            batteryRepository.addUserSleepVariation(batteryId, createdAt, type, variation); // 배터리 증감 내역 레코드 추가
 
             return batteryRepository.findUserCurSleep(userId);
 

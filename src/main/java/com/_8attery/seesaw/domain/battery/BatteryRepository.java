@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -42,6 +41,20 @@ public interface BatteryRepository extends JpaRepository<Battery, Long> {
     @Query(value = "update ss_battery set cur_sleep=:req where user_id=:userId", nativeQuery = true)
     void addUserCurSleep(@Param("userId") Long userId, @Param("req") Integer req);
 
+    // 사용자 배터리 갱신
+    @Modifying(clearAutomatically = true)
+    @Query(value = "update ss_battery set cur_battery = cur_battery + :variation where user_id=:userId", nativeQuery = true)
+    void updateCurBattery(@Param("userId") Long userId, @Param("variation") Integer variation);
+
+    // 배터리 증감 내역 레코드 추가
+    @Query(value = "select battery_id from ss_battery where user_id=:userId", nativeQuery = true)
+    Long findUserBatteryId(@Param("userId") Long userId);
+
+    @Modifying(clearAutomatically = true)
+    @Query(value = "insert into ss_battery_variation(created_at, type, variation_percentage, battery_id) values(:createdAt, :type, :variation, :batteryId)", nativeQuery = true)
+    void addUserSleepVariation(@Param("batteryId") Long batteryId, @Param("createdAt") LocalDateTime createdAt, @Param("type") String type, @Param("variation") Integer variation);
+
+
     @Query(value = "select cur_sleep from ss_battery where user_id=:userId", nativeQuery = true)
     Integer findUserCurSleep(@Param("userId") Long userId);
 
@@ -59,7 +72,5 @@ public interface BatteryRepository extends JpaRepository<Battery, Long> {
             "where b2.user.id=:userId " +
             "and b1.createdAt between :startDate and :endDate")
     List<BatteryVariationResponseDto> findUserBatteryVariation(@Param("userId") Long userId, @Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
-
-
 
 }
