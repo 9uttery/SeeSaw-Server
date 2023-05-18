@@ -26,6 +26,9 @@ public class ProjectRecord {
     @JoinColumn(name = "project_id")
     private Project project;
 
+    @Column(name = "question")
+    private String question; // 기록 질문
+
     @Column(name = "contents", nullable = false)
     private String contents; // 기록 내용
 
@@ -39,6 +42,15 @@ public class ProjectRecord {
     public ProjectRecord(String contents, LocalDateTime createdAt, Boolean temp) {
         this.contents = contents;
         this.createdAt = createdAt;
+        this.temp = temp;
+    }
+
+    @Builder
+    public ProjectRecord(Project project, String question, String contents, Boolean temp) {
+        this.project = project;
+        this.question = question;
+        this.contents = contents;
+        this.createdAt = LocalDateTime.now();
         this.temp = temp;
     }
 }
