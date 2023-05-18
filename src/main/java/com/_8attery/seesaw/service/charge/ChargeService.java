@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -32,6 +33,21 @@ public class ChargeService {
 
             Optional<ChargeResponseDto> chargeResponseDto = chargeRepository.findUserCharge(userId, valueId, chargeName, createdAt);
             return chargeResponseDto.orElse(new ChargeResponseDto(0L, null, null));
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
+    // 고속충전 조회
+    public ChargeResponseDto getUserCharge(Long userId) throws BaseException {
+        try {
+            LocalDateTime startDate = LocalDateTime.now();  // Current date and time
+            LocalDateTime endDate = startDate.plusDays(1);
+
+            Optional<ChargeResponseDto> chargeResponseDto = chargeRepository.findTodayCharge(userId, startDate, endDate);
+            return chargeResponseDto.orElse(new ChargeResponseDto(null, null, null));
 
         } catch (Exception exception) {
             exception.printStackTrace();
