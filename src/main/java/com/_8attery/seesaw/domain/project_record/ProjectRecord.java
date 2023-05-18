@@ -38,19 +38,19 @@ public class ProjectRecord {
     @Column(name = "temp", nullable = false)
     private Boolean temp; // 임시 저장 여부
 
-    @Builder
-    public ProjectRecord(String contents, LocalDateTime createdAt, Boolean temp) {
-        this.contents = contents;
-        this.createdAt = createdAt;
-        this.temp = temp;
-    }
+//    @Builder
+//    public ProjectRecord(String contents, LocalDateTime createdAt, Boolean temp) {
+//        this.contents = contents;
+//        this.createdAt = createdAt;
+//        this.temp = temp;
+//    }
 
-    @Builder
-    public ProjectRecord(Project project, String question, String contents, Boolean temp) {
+    @Builder(builderMethodName = "projectRecordBuilder")
+    public ProjectRecord(Project project, String question, String contents, LocalDateTime createdAt, Boolean temp) {
         this.project = project;
         this.question = question;
         this.contents = contents;
-        this.createdAt = LocalDateTime.now();
+        this.createdAt = createdAt;
         this.temp = temp;
     }
 }
