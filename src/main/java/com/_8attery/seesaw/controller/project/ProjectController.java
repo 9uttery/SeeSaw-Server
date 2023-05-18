@@ -2,11 +2,9 @@ package com._8attery.seesaw.controller.project;
 
 import com._8attery.seesaw.domain.user.account.UserAccount;
 import com._8attery.seesaw.dto.api.request.ProjectEmotionRequestDto;
+import com._8attery.seesaw.dto.api.request.ProjectRecordRequestDto;
 import com._8attery.seesaw.dto.api.request.ProjectRequestDto;
-import com._8attery.seesaw.dto.api.response.ProjectCardResponseDto;
-import com._8attery.seesaw.dto.api.response.ProjectDetailsResponseDto;
-import com._8attery.seesaw.dto.api.response.ProjectEmotionResponseDto;
-import com._8attery.seesaw.dto.api.response.ProjectResponseDto;
+import com._8attery.seesaw.dto.api.response.*;
 import com._8attery.seesaw.exception.BaseException;
 import com._8attery.seesaw.exception.BaseResponse;
 import com._8attery.seesaw.service.project.ProjectService;
@@ -125,4 +123,9 @@ public class ProjectController {
         return ResponseEntity.ok().body(projectService.addEmotionToProject(userAccount.getUserId(), projectEmotionRequestDto));
     }
 
+    @PostMapping("/record")
+    public ResponseEntity<ProjectRecordResponseDto> addRecordToProject(@AuthenticationPrincipal UserAccount userAccount, @Valid @RequestBody ProjectRecordRequestDto projectRecordRequestDto) {
+
+        return ResponseEntity.ok().body(projectService.addRecordToProject(userAccount.getUserId(), projectRecordRequestDto));
+    }
 }
