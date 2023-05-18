@@ -27,7 +27,7 @@ public interface ChargeRepository extends JpaRepository<Charge, Long> {
     @Query(value = "update ss_battery set cur_battery = cur_battery + 30 where user_id=:userId", nativeQuery = true)
     void updateUserBattery(@Param("userId") Long userId);
 
-    // 증감 내역 레코드 추가
+    // 배터리 증감 내역 레코드 추가
     @Query(value = "select battery_id from ss_battery where user_id=:userId", nativeQuery = true)
     Long findUserBattery(@Param("userId") Long userId);
 

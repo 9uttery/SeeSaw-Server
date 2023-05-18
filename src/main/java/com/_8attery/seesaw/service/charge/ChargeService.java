@@ -31,7 +31,7 @@ public class ChargeService {
             // 사용자 배터리 + 30
             chargeRepository.updateUserBattery(userId);
 
-            // 증감 내역 레코드 추가
+            // 배터리 증감 내역 레코드 추가
             String type = "CHARGE";
             Long batteryId = chargeRepository.findUserBattery(userId);
             chargeRepository.addUserVariation(batteryId, createdAt, type);
