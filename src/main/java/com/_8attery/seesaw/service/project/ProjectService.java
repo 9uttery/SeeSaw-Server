@@ -7,6 +7,7 @@ import com._8attery.seesaw.domain.project_emotion.ProjectEmotionRepository;
 import com._8attery.seesaw.domain.project_emotion.ProjectEmotionRepositoryCustom;
 import com._8attery.seesaw.domain.project_record.ProjectRecord;
 import com._8attery.seesaw.domain.project_record.ProjectRecordRepository;
+import com._8attery.seesaw.domain.project_record.ProjectRecordRepositoryCustom;
 import com._8attery.seesaw.dto.api.request.ProjectEmotionRequestDto;
 import com._8attery.seesaw.dto.api.request.ProjectRecordRequestDto;
 import com._8attery.seesaw.dto.api.response.*;
@@ -32,6 +33,7 @@ public class ProjectService {
     private final ProjectEmotionRepository projectEmotionRepository;
     private final ProjectEmotionRepositoryCustom projectEmotionRepositoryCustom;
     private final ProjectRecordRepository projectRecordRepository;
+    private final ProjectRecordRepositoryCustom projectRecordRepositoryCustom;
     private final ServiceUtils serviceUtils;
 
     @Transactional
@@ -144,5 +146,12 @@ public class ProjectService {
         );
 
         return ProjectRecordResponseDto.from(projectRecordRepository.save(projectRecord));
+    }
+
+    public List<ProjectRecordResponseDto> getProjectRecordList(Long userId, Long projectId) {
+        serviceUtils.retrieveUserById(userId);
+        serviceUtils.retrieveProjectById(projectId);
+
+        return projectRecordRepositoryCustom.findAllRecordsByProjectId(projectId);
     }
 }
