@@ -32,7 +32,7 @@ public class ProjectRecordResponseDto {
         return ProjectRecordResponseDto.builder()
                 .recordId(projectRecord.getId())
                 .createdAt(projectRecord.getCreatedAt())
-                .question(projectRecord.getQuestion())
+                .question(projectRecord.getProjectQuestion().getContents())
                 .contents(projectRecord.getContents())
                 .build();
     }
