@@ -82,7 +82,7 @@ public class ValueService {
 
                 LocalDateTime startedAt = pro.getStartedAt();
                 LocalDateTime endedAt = pro.getEndedAt();
-                Double rate = calculateProgressPercentage(startedAt, endedAt);
+                Double rate = calculateProgressPercentage(startedAt, endedAt, 100.0);
                 dto.setProgressRate(rate);
 
                 projectList.add(dto);
@@ -101,7 +101,7 @@ public class ValueService {
     }
 
     // 프로젝트 진행률 계산
-    public static double calculateProgressPercentage(LocalDateTime startDate, LocalDateTime endDate) {
+    public static double calculateProgressPercentage(LocalDateTime startDate, LocalDateTime endDate, Double progressRate) {
         LocalDateTime now = LocalDateTime.now();
 
         Duration fullPeriod = Duration.between(startDate, endDate);
@@ -110,12 +110,28 @@ public class ValueService {
         long fullPeriodSeconds = fullPeriod.getSeconds();
         long progressedPeriodSeconds = progressedPeriod.getSeconds();
 
-        if (fullPeriodSeconds == 0) {
-            return 0.0; // Handle the case when the full period is zero to avoid division by zero error
-        }
-
-        double progressPercentage = (double) progressedPeriodSeconds / fullPeriodSeconds * 100;
+        double calculatedProgressRate = (double) progressedPeriodSeconds / fullPeriodSeconds * 100;
+        double progressPercentage = Math.min(calculatedProgressRate, progressRate); // Cap the progress rate at the given progressRate value
 
         return Math.round(progressPercentage * 10) / 10.0; // Round to one decimal place
     }
+
+//    public static double calculateProgressPercentage(LocalDateTime startDate, LocalDateTime endDate) {
+//        LocalDateTime now = LocalDateTime.now();
+//
+//        Duration fullPeriod = Duration.between(startDate, endDate);
+//        Duration progressedPeriod = Duration.between(startDate, now);
+//
+//        long fullPeriodSeconds = fullPeriod.getSeconds();
+//        long progressedPeriodSeconds = progressedPeriod.getSeconds();
+//
+//        if (fullPeriodSeconds <= 0) {
+//            return 100.0; // End date has already passed, return progress 100
+//        }
+//
+//        double progressPercentage = (double) progressedPeriodSeconds / fullPeriodSeconds * 100;
+//
+//        return Math.round(progressPercentage * 10) / 10.0; // Round to one decimal place
+//    }
+
 }
