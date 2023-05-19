@@ -5,6 +5,7 @@ import com._8attery.seesaw.domain.project.ProjectRepository;
 import com._8attery.seesaw.domain.project.ProjectRepositoryCustom;
 import com._8attery.seesaw.domain.project_emotion.ProjectEmotionRepository;
 import com._8attery.seesaw.domain.project_emotion.ProjectEmotionRepositoryCustom;
+import com._8attery.seesaw.domain.project_question.ProjectQuestion;
 import com._8attery.seesaw.domain.project_record.ProjectRecord;
 import com._8attery.seesaw.domain.project_record.ProjectRecordRepository;
 import com._8attery.seesaw.domain.project_record.ProjectRecordRepositoryCustom;
@@ -14,6 +15,7 @@ import com._8attery.seesaw.dto.api.response.*;
 import com._8attery.seesaw.exception.BaseException;
 import com._8attery.seesaw.service.util.ServiceUtils;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +28,7 @@ import static com._8attery.seesaw.exception.BaseResponseStatus.*;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ProjectService {
 
     private final ProjectRepository projectRepository;
@@ -133,19 +136,18 @@ public class ProjectService {
     public ProjectRecordResponseDto addRecordToProject(Long userId, ProjectRecordRequestDto projectRecordRequestDto) {
         serviceUtils.retrieveUserById(userId);
         Project retrievedProject = serviceUtils.retrieveProjectById(projectRecordRequestDto.getProjectId());
+        ProjectQuestion retrievedQuestion = serviceUtils.retrieveProjectQuestionById(projectRecordRequestDto.getProjectQuestionId());
 
-        ProjectRecord projectRecord = projectRecordRepository.save(
-                ProjectRecord
-                        .projectRecordBuilder()
-                        .project(retrievedProject)
-                        .question(projectRecordRequestDto.getQuestion())
-                        .contents(projectRecordRequestDto.getContents())
-                        .temp(projectRecordRequestDto.getTemp())
-                        .createdAt(LocalDateTime.now())
-                        .build()
+        return ProjectRecordResponseDto.from(projectRecordRepository.save(
+                        ProjectRecord.builder()
+                                .project(retrievedProject)
+                                .createdAt(LocalDateTime.now())
+                                .projectQuestion(retrievedQuestion)
+                                .temp(projectRecordRequestDto.getTemp())
+                                .contents(projectRecordRequestDto.getContents())
+                                .build()
+                )
         );
-
-        return ProjectRecordResponseDto.from(projectRecordRepository.save(projectRecord));
     }
 
     public List<ProjectRecordResponseDto> getProjectRecordList(Long userId, Long projectId) {
