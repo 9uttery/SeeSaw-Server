@@ -2,10 +2,7 @@ package com._8attery.seesaw.controller;
 
 import com._8attery.seesaw.domain.user.account.UserAccount;
 import com._8attery.seesaw.dto.api.request.BatteryRequestDto;
-import com._8attery.seesaw.dto.api.response.ActivityDto;
-import com._8attery.seesaw.dto.api.response.ActivityResponseDto;
-import com._8attery.seesaw.dto.api.response.BatteryPercentResponseDto;
-import com._8attery.seesaw.dto.api.response.BatteryVariationResponseDto;
+import com._8attery.seesaw.dto.api.response.*;
 import com._8attery.seesaw.exception.BaseException;
 import com._8attery.seesaw.exception.BaseResponse;
 import com._8attery.seesaw.service.battery.BatteryService;
@@ -118,6 +115,20 @@ public class BatteryController {
 
         try {
             List<ActivityResponseDto> res = batteryService.getUserActivity(userId, year, month);
+
+            return new BaseResponse<>(res);
+        } catch(BaseException exception){
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
+    // 특정 기간 동안의 수면 내역 조회
+    @GetMapping("/api/battery/history/sleep")
+    public BaseResponse<List<SleepResponseDto>> getSleep(@RequestParam Integer year, @RequestParam Integer month, @AuthenticationPrincipal UserAccount userAccount) throws BaseException {
+        Long userId = userService.resolveUserById(userAccount.getUserId()).getId();
+
+        try {
+            List<SleepResponseDto> res = batteryService.getUserSleep(userId, year, month);
 
             return new BaseResponse<>(res);
         } catch(BaseException exception){
