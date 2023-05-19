@@ -116,22 +116,4 @@ public class ValueService {
         return Math.round(progressPercentage * 10) / 10.0; // Round to one decimal place
     }
 
-//    public static double calculateProgressPercentage(LocalDateTime startDate, LocalDateTime endDate) {
-//        LocalDateTime now = LocalDateTime.now();
-//
-//        Duration fullPeriod = Duration.between(startDate, endDate);
-//        Duration progressedPeriod = Duration.between(startDate, now);
-//
-//        long fullPeriodSeconds = fullPeriod.getSeconds();
-//        long progressedPeriodSeconds = progressedPeriod.getSeconds();
-//
-//        if (fullPeriodSeconds <= 0) {
-//            return 100.0; // End date has already passed, return progress 100
-//        }
-//
-//        double progressPercentage = (double) progressedPeriodSeconds / fullPeriodSeconds * 100;
-//
-//        return Math.round(progressPercentage * 10) / 10.0; // Round to one decimal place
-//    }
-
 }
