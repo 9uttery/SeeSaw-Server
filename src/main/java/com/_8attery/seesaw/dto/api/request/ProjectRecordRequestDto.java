@@ -15,7 +15,8 @@ public class ProjectRecordRequestDto {
     @Positive
     @JsonProperty("project_id")
     private Long projectId;
-    private String question;
+    @JsonProperty("question_id")
+    private Long projectQuestionId;
     @NotNull
     private String contents;
     @NotNull
