@@ -2,8 +2,10 @@ package com._8attery.seesaw.controller;
 
 import com._8attery.seesaw.domain.user.account.UserAccount;
 import com._8attery.seesaw.dto.api.request.BatteryRequestDto;
+import com._8attery.seesaw.dto.api.response.ActivityDto;
+import com._8attery.seesaw.dto.api.response.ActivityResponseDto;
 import com._8attery.seesaw.dto.api.response.BatteryPercentResponseDto;
-import com._8attery.seesaw.dto.api.response.CombinedBatteryVariationResponseDto;
+import com._8attery.seesaw.dto.api.response.BatteryVariationResponseDto;
 import com._8attery.seesaw.exception.BaseException;
 import com._8attery.seesaw.exception.BaseResponse;
 import com._8attery.seesaw.service.battery.BatteryService;
@@ -11,10 +13,7 @@ import com._8attery.seesaw.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -100,11 +99,25 @@ public class BatteryController {
 
     // 배터리 증감 조회 (30일 증감 내역)
     @GetMapping("/api/battery/variation")
-    public BaseResponse<List<CombinedBatteryVariationResponseDto>> getBatteryCombine(@AuthenticationPrincipal UserAccount userAccount) throws BaseException {
+    public BaseResponse<List<BatteryVariationResponseDto>> getBatteryCombine(@AuthenticationPrincipal UserAccount userAccount) throws BaseException {
         Long userId = userService.resolveUserById(userAccount.getUserId()).getId();
 
         try {
-            List<CombinedBatteryVariationResponseDto> res = batteryService.getUserBatteryData(userId);
+            List<BatteryVariationResponseDto> res = batteryService.getUserBatteryData(userId);
+
+            return new BaseResponse<>(res);
+        } catch(BaseException exception){
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
+    // 특정 기간 동안의 활동 내역 조회
+    @GetMapping("/api/battery/history/activity")
+    public BaseResponse<List<ActivityResponseDto>> getActivity(@RequestParam Integer year, @RequestParam Integer month, @AuthenticationPrincipal UserAccount userAccount) throws BaseException {
+        Long userId = userService.resolveUserById(userAccount.getUserId()).getId();
+
+        try {
+            List<ActivityResponseDto> res = batteryService.getUserActivity(userId, year, month);
 
             return new BaseResponse<>(res);
         } catch(BaseException exception){

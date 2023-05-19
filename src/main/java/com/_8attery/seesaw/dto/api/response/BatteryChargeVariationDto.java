@@ -11,13 +11,13 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class BatteryChargeResponseDto {
+public class BatteryChargeVariationDto {
     private LocalDate date; // 날짜
     private String chargeName;
     private String valueName;
     private Integer chargeVariation; // 고속충전 증감량
 
-    public BatteryChargeResponseDto(LocalDateTime date, String chargeName, String valueName, Integer chargeVariation) {
+    public BatteryChargeVariationDto(LocalDateTime date, String chargeName, String valueName, Integer chargeVariation) {
         this.date = date.toLocalDate();
         this.chargeName = chargeName;
         this.valueName = valueName;

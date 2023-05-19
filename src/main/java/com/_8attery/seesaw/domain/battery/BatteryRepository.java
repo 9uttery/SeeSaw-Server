@@ -1,8 +1,9 @@
 package com._8attery.seesaw.domain.battery;
 
-import com._8attery.seesaw.dto.api.response.BatteryChargeResponseDto;
+import com._8attery.seesaw.dto.api.response.ActivityDto;
+import com._8attery.seesaw.dto.api.response.BatteryChargeVariationDto;
 import com._8attery.seesaw.dto.api.response.BatteryPercentResponseDto;
-import com._8attery.seesaw.dto.api.response.BatteryVariationResponseDto;
+import com._8attery.seesaw.dto.api.response.BatteryDataVariationDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -66,20 +67,26 @@ public interface BatteryRepository extends JpaRepository<Battery, Long> {
     List<BatteryPercentResponseDto> findUserBatteryHistory(@Param("userId") Long userId, @Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
 
     // 배터리 증감 조회 (30일 증감 내역)
-    @Query(value = "SELECT DISTINCT NEW com._8attery.seesaw.dto.api.response.BatteryVariationResponseDto(b1.createdAt, b1.sleepTime, b1.sleepGoal, " +
-            "(SELECT b2.variationPercentage FROM BatteryVariation b2 WHERE b2.type = 'ACTIVITY' AND DATE(b2.createdAt) = DATE(b1.createdAt)), " +
+    @Query(value = "select DISTINCT new com._8attery.seesaw.dto.api.response.BatteryDataVariationDto(b1.createdAt, b1.sleepTime, b1.sleepGoal, " +
+            "(select b2.variationPercentage from BatteryVariation b2 where b2.type = 'ACTIVITY' and DATE(b2.createdAt) = DATE(b1.createdAt)), " +
             "b1.activity, b1.activityGoal, " +
-            "(SELECT b3.variationPercentage FROM BatteryVariation b3 WHERE b3.type = 'SLEEP' AND DATE(b3.createdAt) = DATE(b1.createdAt))) " +
-            "FROM BatteryHistory b1 " +
-            "WHERE b1.battery.id = :batteryId " +
-            "AND b1.createdAt BETWEEN :startDate AND :endDate")
-    List<BatteryVariationResponseDto> findUserBatteryVariation(@Param("batteryId") Long batteryId, @Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
+            "(select b3.variationPercentage from BatteryVariation b3 where b3.type = 'SLEEP' and DATE(b3.createdAt) = DATE(b1.createdAt))) " +
+            "from BatteryHistory b1 " +
+            "where b1.battery.id = :batteryId " +
+            "and b1.createdAt between :startDate and :endDate")
+    List<BatteryDataVariationDto> findUserBatteryVariation(@Param("batteryId") Long batteryId, @Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
 
-    @Query(value = "SELECT DISTINCT NEW com._8attery.seesaw.dto.api.response.BatteryChargeResponseDto(c.createdAt, c.name, v.valueName, 30) " +
+    @Query(value = "select DISTINCT new com._8attery.seesaw.dto.api.response.BatteryChargeVariationDto(c.createdAt, c.name, v.valueName, 30) " +
             "from Charge c join c.value v " +
             "where c.user.id=:userId " +
             "and c.createdAt between :startDate and :endDate ")
-    List<BatteryChargeResponseDto> findUserBatteryCharge(@Param("userId") Long userId, @Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
+    List<BatteryChargeVariationDto> findUserBatteryCharge(@Param("userId") Long userId, @Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
+
+
+    // 특정 기간 동안의 활동 내역 조회
+    @Query(value = "select DISTINCT new com._8attery.seesaw.dto.api.response.ActivityDto(EXTRACT(DAY FROM b.createdAt), b.activity) from BatteryHistory b " +
+            "where EXTRACT(YEAR FROM b.createdAt) = :year and EXTRACT(MONTH FROM b.createdAt) = :month and b.battery.id=:batteryId")
+    List<ActivityDto> findUserActivity(@Param("batteryId") Long batteryId, @Param("year") Integer year, @Param("month") Integer month);
 
 
 }
