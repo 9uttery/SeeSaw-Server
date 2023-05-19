@@ -206,4 +206,57 @@ public class BatteryService {
             throw new BaseException(DATABASE_ERROR);
         }
     }
+
+    // 특정 기간 동안의 수면 내역 조회
+    public List<SleepResponseDto> getUserSleep(Long userId, Integer year, Integer month) throws BaseException {
+        try {
+            Long batteryId = batteryRepository.findUserBatteryId(userId);
+            Integer sleepGoal = batteryRepository.findUserSleepGoal(userId);
+
+            List<SleepDto> resultList = batteryRepository.findUserSleep(batteryId, year, month);
+            List<SleepResponseDto> res = new ArrayList<>();
+
+            // 1,3,5,7,8,10,12 -> 31일
+            // 2,4,6,9,11 -> 30일 (로 치자 일단)
+            if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month ==12) {
+                for (int i = 1; i <= 31; i++) {
+                    SleepResponseDto sleepDto = new SleepResponseDto();
+                    sleepDto.setDay(i);
+                    res.add(sleepDto);
+                }
+            } else if (month == 2 || month == 4 || month == 6 || month == 9 || month == 11) {
+                for (int i = 1; i <= 30; i++) {
+                    SleepResponseDto sleepDto = new SleepResponseDto();
+                    sleepDto.setDay(i);
+                    res.add(sleepDto);
+                }
+            }
+
+            for (SleepResponseDto sleepRes : res) {
+                for (SleepDto result : resultList) {
+                    if (result.getDay() == sleepRes.getDay()) {
+                        sleepRes.setSleep(result.getSleep());
+
+                        if (result.getSleep() < sleepGoal*0.5) {
+                            sleepRes.setColor(1);
+                        } else if (result.getSleep() < sleepGoal && result.getSleep() >= sleepGoal*0.5) {
+                            sleepRes.setColor(2);
+                        } else if (result.getSleep() >= sleepGoal) {
+                            sleepRes.setColor(3);
+                        }
+                        break;
+                    } else {
+                        sleepRes.setSleep(0);
+                        sleepRes.setColor(0);
+                    }
+                }
+            }
+
+            return res;
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
 }

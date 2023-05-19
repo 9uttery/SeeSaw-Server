@@ -1,9 +1,6 @@
 package com._8attery.seesaw.domain.battery;
 
-import com._8attery.seesaw.dto.api.response.ActivityDto;
-import com._8attery.seesaw.dto.api.response.BatteryChargeVariationDto;
-import com._8attery.seesaw.dto.api.response.BatteryPercentResponseDto;
-import com._8attery.seesaw.dto.api.response.BatteryDataVariationDto;
+import com._8attery.seesaw.dto.api.response.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -89,4 +86,8 @@ public interface BatteryRepository extends JpaRepository<Battery, Long> {
     List<ActivityDto> findUserActivity(@Param("batteryId") Long batteryId, @Param("year") Integer year, @Param("month") Integer month);
 
 
+    // 특정 기간 동안의 수면 내역 조회
+    @Query(value = "select DISTINCT new com._8attery.seesaw.dto.api.response.SleepDto(EXTRACT(DAY FROM b.createdAt), b.sleepTime) from BatteryHistory b " +
+            "where EXTRACT(YEAR FROM b.createdAt) = :year and EXTRACT(MONTH FROM b.createdAt) = :month and b.battery.id=:batteryId")
+    List<SleepDto> findUserSleep(@Param("batteryId") Long batteryId, @Param("year") Integer year, @Param("month") Integer month);
 }
