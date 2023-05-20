@@ -1,6 +1,8 @@
 package com._8attery.seesaw.service.battery;
 
+import com._8attery.seesaw.domain.battery.Battery;
 import com._8attery.seesaw.domain.battery.BatteryRepository;
+import com._8attery.seesaw.domain.charge.Charge;
 import com._8attery.seesaw.dto.api.response.*;
 import com._8attery.seesaw.exception.BaseException;
 import lombok.RequiredArgsConstructor;
@@ -251,6 +253,35 @@ public class BatteryService {
                     }
                 }
             }
+
+            return res;
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
+    // 현재 배터리 상태 조회 -> 현재 배터리 잔량, 고속충전/활동량/수면 현황
+    public BatteryResponseDto getUserBattery(Long userId) throws BaseException {
+        try {
+            BatteryResponseDto res = new BatteryResponseDto();
+
+            // 1. Battery 객체 얻어와서 curBattery, curActivity, activityGoal, curSleep, sleepGoal 설정 & isCharged 정보
+            Battery battery = batteryRepository.findUserBattery(userId);
+            res.setCurBattery(battery.getCurBattery());
+            res.setCurActivity(battery.getCurActivity());
+            res.setActivityGoal(battery.getActivityGoal());
+            res.setCurSleep(battery.getCurSleep());
+            res.setSleepGoal(battery.getSleepGoal());
+
+            // 2. Charge 에서 오늘 고속충전 name, valueId 가져와서 chargeName 설정
+            Charge charge = batteryRepository.findUserCharge(userId);
+            res.setChargeName(charge.getName());
+
+            // 3. Value 에서 valueId로 valueName 설정
+            String valueName = batteryRepository.findUserValue(charge.getValue().getId());
+            res.setValueName(valueName);
 
             return res;
 
