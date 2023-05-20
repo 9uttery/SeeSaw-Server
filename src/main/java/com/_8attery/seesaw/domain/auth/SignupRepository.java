@@ -29,6 +29,6 @@ public interface SignupRepository extends JpaRepository<User, Long> {
     List<Object[]> getInfo(@Param("userId") Long userId);
 
     @Modifying(clearAutomatically = true)
-    @Query(value = "insert into ss_battery(cur_battery, activity_goal, sleep_goal, user_id) values(80, 200, 6, :userId)", nativeQuery = true)
+    @Query(value = "insert into ss_battery(cur_battery, user_id) values(80, :userId)", nativeQuery = true)
     void setBattery(@Param("userId") Long userId);
 }

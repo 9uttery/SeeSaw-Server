@@ -1,5 +1,6 @@
 package com._8attery.seesaw.domain.battery;
 
+import com._8attery.seesaw.domain.charge.Charge;
 import com._8attery.seesaw.dto.api.response.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -90,4 +91,14 @@ public interface BatteryRepository extends JpaRepository<Battery, Long> {
     @Query(value = "select DISTINCT new com._8attery.seesaw.dto.api.response.SleepDto(EXTRACT(DAY FROM b.createdAt), b.sleepTime) from BatteryHistory b " +
             "where EXTRACT(YEAR FROM b.createdAt) = :year and EXTRACT(MONTH FROM b.createdAt) = :month and b.battery.id=:batteryId")
     List<SleepDto> findUserSleep(@Param("batteryId") Long batteryId, @Param("year") Integer year, @Param("month") Integer month);
+
+    // 현재 배터리 상태 조회 -> 현재 배터리 잔량, 고속충전/활동량/수면 현황
+    @Query(value = "select b from Battery b where b.user.id=:userId")
+    Battery findUserBattery(@Param("userId") Long userId);
+
+    @Query(value = "select c from Charge c where c.user.id=:userId")
+    Charge findUserCharge(@Param("userId") Long userId);
+
+    @Query(value = "select value_name from ss_value where value_id=:id", nativeQuery = true)
+    String findUserValue(@Param("id") Long id);
 }
