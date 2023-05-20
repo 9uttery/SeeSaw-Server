@@ -1,5 +1,6 @@
 package com._8attery.seesaw.domain.project_qna;
 
+import com._8attery.seesaw.domain.project_question.ProjectQuestion;
 import com._8attery.seesaw.domain.project_remembrance.ProjectRemembrance;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -8,7 +9,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-import static javax.persistence.FetchType.*;
+import static javax.persistence.FetchType.LAZY;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -18,23 +19,24 @@ public class ProjectQna {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "project_qna_id")
+    @Column(name = "project_qna_id", nullable = false)
     private Long id;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "projectRemembrance")
+    @JoinColumn(name = "projectRemembrance", nullable = false)
     private ProjectRemembrance projectRemembrance;
 
-    @Column(name = "question_id", nullable = false)
-    private Integer questionId; // 질문 번호
+    @ManyToOne
+    @JoinColumn(name = "project_question_id", nullable = false)
+    private ProjectQuestion projectQuestion; // 질문 id
 
-    @Column(name = "answer_content")
+    @Column(name = "answer_content", nullable = false)
     private String answerContent; // 답변 내용
 
-
     @Builder
-    public ProjectQna(Integer questionId, String answerContent) {
-        this.questionId = questionId;
+    public ProjectQna(ProjectRemembrance projectRemembrance, ProjectQuestion projectQuestion, String answerContent) {
+        this.projectRemembrance = projectRemembrance;
+        this.projectQuestion = projectQuestion;
         this.answerContent = answerContent;
     }
 }
