@@ -159,7 +159,9 @@ public class ProjectService {
         return projectRecordRepositoryCustom.findAllRecordsByProjectId(projectId);
     }
 
-    public ProjectQuestionResponseDto getRandomRegularQuestion() {
+    public ProjectQuestionResponseDto getRandomRegularQuestion(Long userId) {
+        serviceUtils.retrieveUserById(userId);
+
         return ProjectQuestionResponseDto
                 .builder()
                 .contents(projectQuestionRepository.findRandomRegularQuestion().getContents())

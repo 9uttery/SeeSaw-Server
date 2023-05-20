@@ -126,7 +126,7 @@ public class ProjectController {
     @GetMapping("/question")
     public ResponseEntity<ProjectQuestionResponseDto> getRandomRegularQuestion(@AuthenticationPrincipal UserAccount userAccount) {
 
-        return ResponseEntity.ok().body(projectService.getRandomRegularQuestion());
+        return ResponseEntity.ok().body(projectService.getRandomRegularQuestion(userAccount.getUserId()));
     }
 
     @PostMapping("/record")
