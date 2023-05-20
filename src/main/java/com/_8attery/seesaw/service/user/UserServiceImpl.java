@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    // 회원 탈퇴 화면 - 함께 한 일수, 가치 조회
+    // 회원 탈퇴 화면 - 함께 한 일수, 가치 목록 조회 API
     @Override
     public UserHistoryResponseDto getUserHistory(Long userId) throws BaseException {
         try {

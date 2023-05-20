@@ -22,7 +22,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "select nick_name from ss_user where user_id=:userId", nativeQuery = true)
     String findUserNickname(@Param("userId") Long userId);
 
-    // 회원 탈퇴 화면 - 함께 한 일수, 가치 조회
+    // 회원 탈퇴 화면 - 함께 한 일수, 가치 목록 조회 API
     @Query(value = "select date(created_at) from ss_user where user_id=:userId", nativeQuery = true)
     LocalDate findUserCreatedAt(@Param("userId") Long userId);
 
