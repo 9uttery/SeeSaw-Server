@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -27,13 +28,16 @@ public class SignupService {
     public SignupResponseDto userSignup(Boolean agreeMarketing, String email, String nickName, Long userId) throws BaseException {
 
         try {
+            LocalDateTime today = LocalDateTime.now();
             if (checkEmail(userId) == 1) { // 이메일 이미 있으면 빼고 추가
                 signupRepository.setAgreeMarketing(agreeMarketing, userId);
                 signupRepository.setNickName(nickName, userId);
+                signupRepository.setCreateAt(today, userId);
             } else  { // 이메일 없으면 전부 추가
                 signupRepository.setAgreeMarketing(agreeMarketing, userId);
                 signupRepository.setNickName(nickName, userId);
                 signupRepository.setEmail(email, userId);
+                signupRepository.setCreateAt(today, userId);
             }
 
             List<Object[]> info = signupRepository.getInfo(userId);
