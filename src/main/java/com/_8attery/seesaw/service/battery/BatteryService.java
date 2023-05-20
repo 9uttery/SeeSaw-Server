@@ -279,8 +279,9 @@ public class BatteryService {
             Charge charge = batteryRepository.findUserCharge(userId);
             res.setChargeName(charge.getName());
 
-            // 3. Value 에서 valueId로 valueName 설정
-            String valueName = batteryRepository.findUserValue(charge.getValue().getId());
+            // 3. Value 객체 얻어와서 valueName 설정
+            Long valueId = charge.getValue().getId();
+            String valueName = batteryRepository.findUserValue(valueId);
             res.setValueName(valueName);
 
             return res;
