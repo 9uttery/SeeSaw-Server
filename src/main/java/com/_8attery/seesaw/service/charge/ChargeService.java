@@ -48,11 +48,13 @@ public class ChargeService {
     // 고속충전 조회
     public ChargeResponseDto getUserCharge(Long userId) throws BaseException {
         try {
-            LocalDateTime startDate = LocalDateTime.now();  // Current date and time
-            LocalDateTime endDate = startDate.plusDays(1);
 
-            Optional<ChargeResponseDto> chargeResponseDto = chargeRepository.findTodayCharge(userId, startDate, endDate);
-            return chargeResponseDto.orElse(new ChargeResponseDto(null, null, null));
+            return chargeRepository.findTodayCharge(userId);
+//            LocalDateTime startDate = LocalDateTime.now();  // Current date and time
+//            LocalDateTime endDate = startDate.plusDays(1);
+
+//            Optional<ChargeResponseDto> chargeResponseDto = chargeRepository.findTodayCharge(userId, startDate, endDate);
+//            return chargeResponseDto.orElse(new ChargeResponseDto(null, null, null));
 
         } catch (Exception exception) {
             exception.printStackTrace();
