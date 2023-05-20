@@ -42,11 +42,6 @@ public interface ChargeRepository extends JpaRepository<Charge, Long> {
 
 
     // 고속충전 조회
-//    @Query(value = "select new com._8attery.seesaw.dto.api.response.ChargeResponseDto(c.value.id, c.name, c.createdAt) from Charge c " +
-//            "where c.user.id=:userId " +
-//            "and c.createdAt between :startDate and :endDate ")
-//    Optional<ChargeResponseDto> findTodayCharge(@Param("userId") Long userId, @Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
-
     @Query(value = "select new com._8attery.seesaw.dto.api.response.ChargeResponseDto(c.value.id, c.name, c.createdAt) from Charge c " +
             "where c.user.id=:userId and date(c.createdAt)=curdate()")
     ChargeResponseDto findTodayCharge(@Param("userId") Long userId);
