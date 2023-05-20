@@ -32,7 +32,7 @@ public interface ChargeRepository extends JpaRepository<Charge, Long> {
     Long findUserBattery(@Param("userId") Long userId);
 
     @Modifying(clearAutomatically = true)
-    @Query(value = "insert into ss_battery_variation(created_at, type, variation_percentage, battery_id) values(:createdAt, :type, 30, :batteryId)", nativeQuery = true)
+    @Query(value = "insert into ss_battery_variation(created_at, type, variation_percentage, battery_id) values(:createdAt, :type, 10, :batteryId)", nativeQuery = true)
     void addUserVariation(@Param("batteryId") Long batteryId, @Param("createdAt") LocalDateTime createdAt, @Param("type") String type);
 
 
