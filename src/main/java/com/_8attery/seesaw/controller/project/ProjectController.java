@@ -123,6 +123,12 @@ public class ProjectController {
         return ResponseEntity.ok().body(projectService.addEmotionToProject(userAccount.getUserId(), projectEmotionRequestDto));
     }
 
+    @GetMapping("/question")
+    public ResponseEntity<ProjectQuestionResponseDto> getRandomRegularQuestion(@AuthenticationPrincipal UserAccount userAccount) {
+
+        return ResponseEntity.ok().body(projectService.getRandomRegularQuestion());
+    }
+
     @PostMapping("/record")
     public ResponseEntity<ProjectRecordResponseDto> addRecordToProject(@AuthenticationPrincipal UserAccount userAccount, @Valid @RequestBody ProjectRecordRequestDto projectRecordRequestDto) {
 
