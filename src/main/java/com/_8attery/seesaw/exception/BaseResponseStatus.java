@@ -18,7 +18,7 @@ public enum BaseResponseStatus {
 
 
     // Value
-    VALUES_EXIST(false, 2010, "사용자의 가치 3개가 이미 존재합니다."),
+    VALUES_EXIST(false, 2010, "사용자의 올해 가치 3개가 이미 존재합니다."),
 
     // Project
     POSTS_EMPTY_POST_ID(false, 2020, "프로젝트 아이디 값을 확인해주세요."),

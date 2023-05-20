@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,11 +28,15 @@ public class ValueService {
     // 사용자 가치 선택
     @Transactional
     public int set3Values(List<String> values, Long userId) throws BaseException {
-        int count = checkValues(userId);
-        if (count == 3) {
-            // 가치 3개 이미 존재
-            throw new BaseException(BaseResponseStatus.VALUES_EXIST);
-        }
+        LocalDate date = LocalDate.now();
+
+        int year = date.getYear();
+
+//        int count = checkValues(userId, year);
+//        if (count == 3) {
+//            // 가치 3개 이미 존재
+//            throw new BaseException(BaseResponseStatus.VALUES_EXIST);
+//        }
 
         int result = 1;
         LocalDateTime currentDateTime = LocalDateTime.now();
@@ -45,15 +50,15 @@ public class ValueService {
         return result;
     }
 
-    public int checkValues(Long userId) {
-        int count = valueRepository.checkValuesExist(userId);
+    public int checkValues(Long userId, Integer year) {
+        int count = valueRepository.checkValuesExist(userId, year);
 
         return count;
     }
 
     // 사용자 가치 조회
-    public List<ValueResponseDto> get3Values(Long userId) {
-        List<Object[]> values = valueRepository.getUser3Values(userId);
+    public List<ValueResponseDto> get3Values(Long userId, Integer year) {
+        List<Object[]> values = valueRepository.getUser3Values(userId, year);
 
         List<ValueResponseDto> list = new ArrayList<>();
 
