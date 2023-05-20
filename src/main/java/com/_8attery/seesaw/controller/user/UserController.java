@@ -2,6 +2,7 @@ package com._8attery.seesaw.controller.user;
 
 import com._8attery.seesaw.domain.user.account.UserAccount;
 import com._8attery.seesaw.dto.api.request.NicknameRequestDto;
+import com._8attery.seesaw.dto.api.response.UserHistoryResponseDto;
 import com._8attery.seesaw.exception.BaseException;
 import com._8attery.seesaw.exception.BaseResponse;
 import com._8attery.seesaw.service.user.UserService;
@@ -34,5 +35,15 @@ public class UserController {
         } catch(BaseException exception){
             return new BaseResponse<>((exception.getStatus()));
         }
+    }
+
+    // 회원 탈퇴 화면 - 함께 한 일수, 가치 목록 조회 API
+    @GetMapping("api/user/history")
+    public BaseResponse<UserHistoryResponseDto> getHistory (@AuthenticationPrincipal UserAccount userAccount) throws BaseException {
+        Long userId = userService.resolveUserById(userAccount.getUserId()).getId();
+
+        UserHistoryResponseDto res = userService.getUserHistory(userId);
+
+        return new BaseResponse<>(res);
     }
 }
