@@ -45,10 +45,10 @@ public class ValueController {
 
     // 사용자 가치 조회
     @GetMapping("/api/value")
-    public BaseResponse<List<ValueResponseDto>> getValues(@AuthenticationPrincipal UserAccount userAccount) throws BaseException {
+    public BaseResponse<List<ValueResponseDto>> getValues(@RequestParam Integer year, @AuthenticationPrincipal UserAccount userAccount) throws BaseException {
         Long userId = userService.resolveUserById(userAccount.getUserId()).getId();
 
-        List<ValueResponseDto> res = valueService.get3Values(userId);
+        List<ValueResponseDto> res = valueService.get3Values(userId, year);
         return new BaseResponse<>(res);
     }
 
