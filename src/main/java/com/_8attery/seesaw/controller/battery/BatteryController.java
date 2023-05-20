@@ -1,4 +1,4 @@
-package com._8attery.seesaw.controller;
+package com._8attery.seesaw.controller.battery;
 
 import com._8attery.seesaw.domain.user.account.UserAccount;
 import com._8attery.seesaw.dto.api.request.BatteryRequestDto;
@@ -135,5 +135,20 @@ public class BatteryController {
             return new BaseResponse<>((exception.getStatus()));
         }
     }
+
+    // 현재 배터리 상태 조회 -> 현재 배터리 잔량, 고속충전/활동량/수면 현황
+    @GetMapping("/api/battery")
+    public BaseResponse<BatteryResponseDto> getBattery (@AuthenticationPrincipal UserAccount userAccount) throws BaseException {
+        Long userId = userService.resolveUserById(userAccount.getUserId()).getId();
+
+        try {
+            BatteryResponseDto res = batteryService.getUserBattery(userId);
+
+            return new BaseResponse<>(res);
+        } catch(BaseException exception){
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
 
 }
