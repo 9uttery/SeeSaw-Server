@@ -12,6 +12,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +40,9 @@ public class User {
 
     @Column(name = "agree_marketing")
     private Boolean agreeMarketing; // 마케팅 약관 동의 여부
+
+    @Column(name = "created_at")
+    private LocalDateTime createdAt; // 가입 날짜
 
     @Column(name = "provider", nullable = false)
     @Enumerated(EnumType.STRING)
