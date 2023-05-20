@@ -6,6 +6,7 @@ import com._8attery.seesaw.domain.project.ProjectRepositoryCustom;
 import com._8attery.seesaw.domain.project_emotion.ProjectEmotionRepository;
 import com._8attery.seesaw.domain.project_emotion.ProjectEmotionRepositoryCustom;
 import com._8attery.seesaw.domain.project_question.ProjectQuestion;
+import com._8attery.seesaw.domain.project_question.ProjectQuestionRepository;
 import com._8attery.seesaw.domain.project_record.ProjectRecord;
 import com._8attery.seesaw.domain.project_record.ProjectRecordRepository;
 import com._8attery.seesaw.domain.project_record.ProjectRecordRepositoryCustom;
@@ -30,6 +31,7 @@ import static com._8attery.seesaw.exception.BaseResponseStatus.*;
 @RequiredArgsConstructor
 @Slf4j
 public class ProjectService {
+    private final ProjectQuestionRepository projectQuestionRepository;
 
     private final ProjectRepository projectRepository;
     private final ProjectRepositoryCustom projectRepositoryCustom;
@@ -155,5 +157,12 @@ public class ProjectService {
         serviceUtils.retrieveProjectById(projectId);
 
         return projectRecordRepositoryCustom.findAllRecordsByProjectId(projectId);
+    }
+
+    public ProjectQuestionResponseDto getRandomRegularQuestion() {
+        return ProjectQuestionResponseDto
+                .builder()
+                .contents(projectQuestionRepository.findRandomRegularQuestion().getContents())
+                .build();
     }
 }
