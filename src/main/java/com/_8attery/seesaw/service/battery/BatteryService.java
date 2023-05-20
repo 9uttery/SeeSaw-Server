@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -181,6 +182,13 @@ public class BatteryService {
                 }
             }
 
+            // 아직 안 온 날은 color 4 설정
+            LocalDate date = LocalDate.now();
+
+            int todayYear = date.getYear();       // Extract the year
+            int todayMonth = date.getMonthValue();  // Extract the month as an integer (1-12)
+            int todayDay = date.getDayOfMonth();  // Extract the day of the month
+
             for (ActivityResponseDto activityRes : res) {
                 for (ActivityDto result : resultList) {
                     if (result.getDay() == activityRes.getDay()) {
@@ -195,8 +203,13 @@ public class BatteryService {
                         }
                         break;
                     } else {
-                        activityRes.setActivity(0);
-                        activityRes.setColor(0);
+                        if (todayYear == year && todayMonth == month && todayDay < activityRes.getDay()) {
+                            activityRes.setActivity(0);
+                            activityRes.setColor(4);
+                        } else {
+                            activityRes.setActivity(0);
+                            activityRes.setColor(0);
+                        }
                     }
                 }
             }
@@ -234,6 +247,13 @@ public class BatteryService {
                 }
             }
 
+            // 아직 안 온 날은 color 4 설정
+            LocalDate date = LocalDate.now();
+
+            int todayYear = date.getYear();       // Extract the year
+            int todayMonth = date.getMonthValue();  // Extract the month as an integer (1-12)
+            int todayDay = date.getDayOfMonth();  // Extract the day of the month
+
             for (SleepResponseDto sleepRes : res) {
                 for (SleepDto result : resultList) {
                     if (result.getDay() == sleepRes.getDay()) {
@@ -248,8 +268,13 @@ public class BatteryService {
                         }
                         break;
                     } else {
-                        sleepRes.setSleep(0);
-                        sleepRes.setColor(0);
+                        if (todayYear == year && todayMonth == month && todayDay < sleepRes.getDay()) {
+                            sleepRes.setSleep(0);
+                            sleepRes.setColor(4);
+                        } else {
+                            sleepRes.setSleep(0);
+                            sleepRes.setColor(0);
+                        }
                     }
                 }
             }
