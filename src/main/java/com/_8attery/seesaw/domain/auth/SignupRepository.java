@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface SignupRepository extends JpaRepository<User, Long> {
@@ -22,6 +23,10 @@ public interface SignupRepository extends JpaRepository<User, Long> {
     void setNickName(@Param("nickName") String nickName, @Param("userId") Long userId);
 
     @Modifying(clearAutomatically = true)
+    @Query(value = "update ss_user set created_at=:today where user_id=:userId", nativeQuery = true)
+    void setCreateAt(@Param("today") LocalDateTime today, @Param("userId") Long userId);
+
+    @Modifying(clearAutomatically = true)
     @Query(value = "update ss_user set email=:email where user_id=:userId", nativeQuery = true)
     void setEmail(@Param("email") String email, @Param("userId") Long userId);
 
@@ -31,4 +36,6 @@ public interface SignupRepository extends JpaRepository<User, Long> {
     @Modifying(clearAutomatically = true)
     @Query(value = "insert into ss_battery(cur_battery, user_id) values(80, :userId)", nativeQuery = true)
     void setBattery(@Param("userId") Long userId);
+
+
 }
