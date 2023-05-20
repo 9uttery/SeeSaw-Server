@@ -50,12 +50,6 @@ public class ChargeService {
         try {
 
             return chargeRepository.findTodayCharge(userId);
-//            LocalDateTime startDate = LocalDateTime.now();  // Current date and time
-//            LocalDateTime endDate = startDate.plusDays(1);
-
-//            Optional<ChargeResponseDto> chargeResponseDto = chargeRepository.findTodayCharge(userId, startDate, endDate);
-//            return chargeResponseDto.orElse(new ChargeResponseDto(null, null, null));
-
         } catch (Exception exception) {
             exception.printStackTrace();
             throw new BaseException(DATABASE_ERROR);
