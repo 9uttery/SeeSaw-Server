@@ -96,9 +96,9 @@ public interface BatteryRepository extends JpaRepository<Battery, Long> {
     @Query(value = "select b from Battery b where b.user.id=:userId")
     Battery findUserBattery(@Param("userId") Long userId);
 
-    @Query(value = "select c from Charge c where c.user.id=:userId")
+    @Query(value = "select c from Charge c where c.user.id=:userId and date(c.createdAt)=curdate()")
     Charge findUserCharge(@Param("userId") Long userId);
 
-    @Query(value = "select value_name from ss_value where value_id=:id", nativeQuery = true)
-    String findUserValue(@Param("id") Long id);
+    @Query(value = "select value_name from ss_value where value_id=:valueId", nativeQuery = true)
+    String findUserValue(@Param("valueId") Long valueId);
 }
