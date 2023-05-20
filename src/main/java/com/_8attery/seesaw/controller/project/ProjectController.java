@@ -2,11 +2,9 @@ package com._8attery.seesaw.controller.project;
 
 import com._8attery.seesaw.domain.user.account.UserAccount;
 import com._8attery.seesaw.dto.api.request.ProjectEmotionRequestDto;
+import com._8attery.seesaw.dto.api.request.ProjectRecordRequestDto;
 import com._8attery.seesaw.dto.api.request.ProjectRequestDto;
-import com._8attery.seesaw.dto.api.response.ProjectCardResponseDto;
-import com._8attery.seesaw.dto.api.response.ProjectDetailsResponseDto;
-import com._8attery.seesaw.dto.api.response.ProjectEmotionResponseDto;
-import com._8attery.seesaw.dto.api.response.ProjectResponseDto;
+import com._8attery.seesaw.dto.api.response.*;
 import com._8attery.seesaw.exception.BaseException;
 import com._8attery.seesaw.exception.BaseResponse;
 import com._8attery.seesaw.service.project.ProjectService;
@@ -17,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 import static com._8attery.seesaw.exception.BaseResponseStatus.USERS_FAILED_POST_ID;
@@ -119,9 +118,26 @@ public class ProjectController {
     }
 
     @PostMapping("/emotion")
-    public ResponseEntity<ProjectEmotionResponseDto> addEmotionToProject(@AuthenticationPrincipal UserAccount userAccount, @RequestBody ProjectEmotionRequestDto projectEmotionRequestDto) {
+    public ResponseEntity<ProjectEmotionResponseDto> addEmotionToProject(@AuthenticationPrincipal UserAccount userAccount, @Valid @RequestBody ProjectEmotionRequestDto projectEmotionRequestDto) {
 
         return ResponseEntity.ok().body(projectService.addEmotionToProject(userAccount.getUserId(), projectEmotionRequestDto));
     }
 
+    @GetMapping("/question")
+    public ResponseEntity<ProjectQuestionResponseDto> getRandomRegularQuestion(@AuthenticationPrincipal UserAccount userAccount) {
+
+        return ResponseEntity.ok().body(projectService.getRandomRegularQuestion());
+    }
+
+    @PostMapping("/record")
+    public ResponseEntity<ProjectRecordResponseDto> addRecordToProject(@AuthenticationPrincipal UserAccount userAccount, @Valid @RequestBody ProjectRecordRequestDto projectRecordRequestDto) {
+
+        return ResponseEntity.ok().body(projectService.addRecordToProject(userAccount.getUserId(), projectRecordRequestDto));
+    }
+
+    @GetMapping("/{projectId}/record")
+    public ResponseEntity<List<ProjectRecordResponseDto>> getProjectRecordList(@AuthenticationPrincipal UserAccount userAccount, @PathVariable("projectId") Long projectId) {
+
+        return ResponseEntity.ok().body(projectService.getProjectRecordList(userAccount.getUserId(), projectId));
+    }
 }

@@ -1,17 +1,22 @@
 package com._8attery.seesaw.service.project;
 
+import com._8attery.seesaw.domain.project.Project;
 import com._8attery.seesaw.domain.project.ProjectRepository;
 import com._8attery.seesaw.domain.project.ProjectRepositoryCustom;
 import com._8attery.seesaw.domain.project_emotion.ProjectEmotionRepository;
 import com._8attery.seesaw.domain.project_emotion.ProjectEmotionRepositoryCustom;
+import com._8attery.seesaw.domain.project_question.ProjectQuestion;
+import com._8attery.seesaw.domain.project_question.ProjectQuestionRepository;
+import com._8attery.seesaw.domain.project_record.ProjectRecord;
+import com._8attery.seesaw.domain.project_record.ProjectRecordRepository;
+import com._8attery.seesaw.domain.project_record.ProjectRecordRepositoryCustom;
 import com._8attery.seesaw.dto.api.request.ProjectEmotionRequestDto;
-import com._8attery.seesaw.dto.api.response.ProjectCardResponseDto;
-import com._8attery.seesaw.dto.api.response.ProjectDetailsResponseDto;
-import com._8attery.seesaw.dto.api.response.ProjectEmotionResponseDto;
-import com._8attery.seesaw.dto.api.response.ProjectResponseDto;
+import com._8attery.seesaw.dto.api.request.ProjectRecordRequestDto;
+import com._8attery.seesaw.dto.api.response.*;
 import com._8attery.seesaw.exception.BaseException;
 import com._8attery.seesaw.service.util.ServiceUtils;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,12 +29,16 @@ import static com._8attery.seesaw.exception.BaseResponseStatus.*;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ProjectService {
+    private final ProjectQuestionRepository projectQuestionRepository;
 
     private final ProjectRepository projectRepository;
     private final ProjectRepositoryCustom projectRepositoryCustom;
     private final ProjectEmotionRepository projectEmotionRepository;
     private final ProjectEmotionRepositoryCustom projectEmotionRepositoryCustom;
+    private final ProjectRecordRepository projectRecordRepository;
+    private final ProjectRecordRepositoryCustom projectRecordRepositoryCustom;
     private final ServiceUtils serviceUtils;
 
     @Transactional
@@ -124,5 +133,36 @@ public class ProjectService {
         serviceUtils.retrieveProjectById(projectEmotionRequestDto.getProjectId());
 
         return projectEmotionRepositoryCustom.updateProjectEmotion(projectEmotionRequestDto);
+    }
+
+    public ProjectRecordResponseDto addRecordToProject(Long userId, ProjectRecordRequestDto projectRecordRequestDto) {
+        serviceUtils.retrieveUserById(userId);
+        Project retrievedProject = serviceUtils.retrieveProjectById(projectRecordRequestDto.getProjectId());
+        ProjectQuestion retrievedQuestion = serviceUtils.retrieveProjectQuestionById(projectRecordRequestDto.getProjectQuestionId());
+
+        return ProjectRecordResponseDto.from(projectRecordRepository.save(
+                        ProjectRecord.builder()
+                                .project(retrievedProject)
+                                .createdAt(LocalDateTime.now())
+                                .projectQuestion(retrievedQuestion)
+                                .temp(projectRecordRequestDto.getTemp())
+                                .contents(projectRecordRequestDto.getContents())
+                                .build()
+                )
+        );
+    }
+
+    public List<ProjectRecordResponseDto> getProjectRecordList(Long userId, Long projectId) {
+        serviceUtils.retrieveUserById(userId);
+        serviceUtils.retrieveProjectById(projectId);
+
+        return projectRecordRepositoryCustom.findAllRecordsByProjectId(projectId);
+    }
+
+    public ProjectQuestionResponseDto getRandomRegularQuestion() {
+        return ProjectQuestionResponseDto
+                .builder()
+                .contents(projectQuestionRepository.findRandomRegularQuestion().getContents())
+                .build();
     }
 }
