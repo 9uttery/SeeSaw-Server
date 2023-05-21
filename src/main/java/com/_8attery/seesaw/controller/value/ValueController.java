@@ -6,6 +6,7 @@ import com._8attery.seesaw.dto.api.request.ValueRequestDto;
 import com._8attery.seesaw.dto.api.response.ProjectResponseDto;
 import com._8attery.seesaw.dto.api.response.ValueInfoResponseDto;
 import com._8attery.seesaw.dto.api.response.ValueResponseDto;
+import com._8attery.seesaw.dto.api.response.ValueYearResponseDto;
 import com._8attery.seesaw.exception.BaseException;
 import com._8attery.seesaw.exception.BaseResponse;
 import com._8attery.seesaw.service.user.UserService;
@@ -59,6 +60,20 @@ public class ValueController {
 
         try {
             ValueInfoResponseDto res = valueService.getUserValueInfo(userId, valueId);
+
+            return new BaseResponse<>(res);
+        } catch(BaseException exception){
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
+    // 사용자 가치 년도 조회
+    @GetMapping("/api/value/year")
+    public BaseResponse<ValueYearResponseDto> getValueYear(@AuthenticationPrincipal UserAccount userAccount) throws BaseException {
+        Long userId = userService.resolveUserById(userAccount.getUserId()).getId();
+
+        try {
+            ValueYearResponseDto res = valueService.getUserValueYear(userId);
 
             return new BaseResponse<>(res);
         } catch(BaseException exception){
