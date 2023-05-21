@@ -31,4 +31,9 @@ public interface ValueRepository extends JpaRepository<Value, Long> {
     @Query(value = "select count(*) from ss_charge where value_id=:valueId", nativeQuery = true)
     Integer findValueCharge(@Param("valueId") Long valueId);
 
+
+    // 사용자 가치 년도 조회
+    @Query(value = "select EXTRACT(YEAR FROM created_at) from ss_user where user_id=:userId", nativeQuery = true)
+    Integer findValueYear(@Param("userId") Long userId);
+
 }

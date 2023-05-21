@@ -2,8 +2,10 @@ package com._8attery.seesaw.service.value;
 
 import com._8attery.seesaw.domain.project.Project;
 import com._8attery.seesaw.domain.value.ValueRepository;
+import com._8attery.seesaw.dto.api.response.UserHistoryResponseDto;
 import com._8attery.seesaw.dto.api.response.ValueInfoResponseDto;
 import com._8attery.seesaw.dto.api.response.ValueResponseDto;
+import com._8attery.seesaw.dto.api.response.ValueYearResponseDto;
 import com._8attery.seesaw.exception.BaseException;
 import com._8attery.seesaw.exception.BaseResponseStatus;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com._8attery.seesaw.exception.BaseResponseStatus.DATABASE_ERROR;
+import static java.time.temporal.ChronoUnit.DAYS;
 
 @Service
 @Transactional(readOnly = true)
@@ -121,4 +124,26 @@ public class ValueService {
         return Math.round(progressPercentage * 10) / 10.0; // Round to one decimal place
     }
 
+    // 사용자 가치 년도 조회
+    public ValueYearResponseDto getUserValueYear(Long userId) throws BaseException {
+        try {
+            LocalDate curDate = LocalDate.now();
+            Integer curYear = curDate.getYear();
+            Integer userCreatedAt = valueRepository.findValueYear(userId);
+
+            List<Integer> years = new ArrayList<>();
+            while (userCreatedAt <= curYear) {
+                years.add(userCreatedAt);
+                userCreatedAt++;
+            }
+
+            ValueYearResponseDto res = new ValueYearResponseDto(years);
+
+            return res;
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
 }
