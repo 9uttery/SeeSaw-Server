@@ -60,8 +60,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserHistoryResponseDto getUserHistory(Long userId) throws BaseException {
         try {
-//            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-//            LocalDate date1 = LocalDate.parse("20220211", formatter);
 
             UserHistoryResponseDto res = new UserHistoryResponseDto();
 
