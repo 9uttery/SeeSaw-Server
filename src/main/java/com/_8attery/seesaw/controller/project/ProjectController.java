@@ -3,6 +3,7 @@ package com._8attery.seesaw.controller.project;
 import com._8attery.seesaw.domain.user.account.UserAccount;
 import com._8attery.seesaw.dto.api.request.ProjectEmotionRequestDto;
 import com._8attery.seesaw.dto.api.request.ProjectRecordRequestDto;
+import com._8attery.seesaw.dto.api.request.ProjectRemembranceRequestDto;
 import com._8attery.seesaw.dto.api.request.ProjectRequestDto;
 import com._8attery.seesaw.dto.api.response.*;
 import com._8attery.seesaw.exception.BaseException;
@@ -139,5 +140,11 @@ public class ProjectController {
     public ResponseEntity<List<ProjectRecordResponseDto>> getProjectRecordList(@AuthenticationPrincipal UserAccount userAccount, @PathVariable("projectId") Long projectId) {
 
         return ResponseEntity.ok().body(projectService.getProjectRecordList(userAccount.getUserId(), projectId));
+    }
+
+    @PostMapping("/remembrance")
+    public ResponseEntity<ProjectRemembranceResponseDto> addRemembranceToProject(@AuthenticationPrincipal UserAccount userAccount, @Valid @RequestBody ProjectRemembranceRequestDto projectRecordRequestDto) {
+
+        return ResponseEntity.ok().body(projectService.addRemembranceToProject(userAccount.getUserId(), projectRecordRequestDto));
     }
 }
