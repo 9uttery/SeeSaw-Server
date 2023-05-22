@@ -13,7 +13,7 @@ import javax.validation.constraints.Positive;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ProjectRemembranceRequestDto {
     @NotNull
-    RemembranceType type;
+    private RemembranceType type;
     @JsonProperty("project_id")
     @NotNull
     @Positive
