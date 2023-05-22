@@ -4,6 +4,8 @@ import com._8attery.seesaw.domain.project.Project;
 import com._8attery.seesaw.domain.project.ProjectRepository;
 import com._8attery.seesaw.domain.project_question.ProjectQuestion;
 import com._8attery.seesaw.domain.project_question.ProjectQuestionRepository;
+import com._8attery.seesaw.domain.project_remembrance.ProjectRemembrance;
+import com._8attery.seesaw.domain.project_remembrance.ProjectRemembranceRepository;
 import com._8attery.seesaw.domain.user.User;
 import com._8attery.seesaw.domain.user.UserRepository;
 import com._8attery.seesaw.domain.value.Value;
@@ -21,6 +23,7 @@ public class ServiceUtils {
     private final ProjectRepository projectRepository;
     private final ValueRepository valueRepository;
     private final ProjectQuestionRepository projectQuestionRepository;
+    private final ProjectRemembranceRepository projectRemembranceRepository;
 
     public boolean validateUser(Long userId) {
         return userRepository.existsById(userId);
@@ -55,6 +58,12 @@ public class ServiceUtils {
     public ProjectQuestion retrieveProjectQuestionById(Long projectQuestionId) {
         return projectQuestionRepository.findById(projectQuestionId).orElseThrow(
                 () -> new ResourceNotFoundException("projectQuestionId로 projectQuestion을 찾을 수 없습니다.")
+        );
+    }
+
+    public ProjectRemembrance retrieveProjectRemembranceById(Long projectRemembranceId) {
+        return projectRemembranceRepository.findById(projectRemembranceId).orElseThrow(
+                () -> new ResourceNotFoundException("projectRemembranceId로 projectRemembrance을 찾을 수 없습니다.")
         );
     }
 }
