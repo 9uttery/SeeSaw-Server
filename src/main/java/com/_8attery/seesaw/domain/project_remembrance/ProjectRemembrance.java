@@ -8,9 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 import static javax.persistence.FetchType.LAZY;
@@ -37,11 +35,12 @@ public class ProjectRemembrance {
     @Column(name = "date", nullable = false)
     private LocalDateTime date; // 회고 날짜
 
-    @OneToMany(mappedBy = "projectRemembrance")
-    private List<ProjectQna> projectQnas = new ArrayList<>();
+    @OneToMany(mappedBy = "projectRemembrance", fetch = LAZY)
+    private List<ProjectQna> projectQnaList;
 
     @Builder
-    public ProjectRemembrance(RemembranceType type, LocalDateTime date) {
+    public ProjectRemembrance(Project project, RemembranceType type, LocalDateTime date) {
+        this.project = project;
         this.type = type;
         this.date = date;
     }
