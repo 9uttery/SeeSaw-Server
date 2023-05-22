@@ -21,9 +21,24 @@ public class UserController {
 //        return ResponseEntity.ok(userService.resolveUserById(userAccount.getUserId()));
 //    }
 
+    // 닉네임 조회
+    @GetMapping("/api/user")
+    public BaseResponse<String> getUser (@AuthenticationPrincipal UserAccount userAccount) throws BaseException {
+        Long userId = userService.resolveUserById(userAccount.getUserId()).getId();
+
+        try {
+            String nickName = userService.getUserNickname(userId);
+
+            return new BaseResponse<>(nickName);
+        } catch(BaseException exception){
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
+
     // 닉네임 수정
-    @PutMapping("api/user")
-    public BaseResponse<String> getUser (@RequestBody NicknameRequestDto req, @AuthenticationPrincipal UserAccount userAccount) throws BaseException {
+    @PutMapping("/api/user")
+    public BaseResponse<String> updateUser (@RequestBody NicknameRequestDto req, @AuthenticationPrincipal UserAccount userAccount) throws BaseException {
         Long userId = userService.resolveUserById(userAccount.getUserId()).getId();
 
         try {
@@ -38,7 +53,7 @@ public class UserController {
     }
 
     // 회원 탈퇴 화면 - 함께 한 일수, 가치 목록 조회 API
-    @GetMapping("api/user/history")
+    @GetMapping("/api/user/history")
     public BaseResponse<UserHistoryResponseDto> getHistory (@AuthenticationPrincipal UserAccount userAccount) throws BaseException {
         Long userId = userService.resolveUserById(userAccount.getUserId()).getId();
 
