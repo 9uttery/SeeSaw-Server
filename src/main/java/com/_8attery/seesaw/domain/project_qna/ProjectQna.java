@@ -30,7 +30,7 @@ public class ProjectQna {
     @JoinColumn(name = "project_question_id", nullable = false)
     private ProjectQuestion projectQuestion; // 질문 id
 
-    @Column(name = "answer_content", nullable = false)
+    @Column(name = "answer_content")
     private String answerContent; // 답변 내용
 
     @Builder
