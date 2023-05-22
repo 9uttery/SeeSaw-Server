@@ -147,4 +147,10 @@ public class ProjectController {
 
         return ResponseEntity.ok().body(projectService.addRemembranceToProject(userAccount.getUserId(), projectRecordRequestDto));
     }
+
+    @GetMapping("/remembrance/{remembranceId}")
+    public ResponseEntity<ProjectRemembranceResponseDto> getProjectRemembrance(@AuthenticationPrincipal UserAccount userAccount, @PathVariable("remembranceId") Long remembranceId) {
+
+        return ResponseEntity.ok().body(projectService.getProjectRemembrance(userAccount.getUserId(), remembranceId));
+    }
 }

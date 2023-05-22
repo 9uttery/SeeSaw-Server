@@ -22,6 +22,7 @@ import com._8attery.seesaw.dto.api.request.ProjectRecordRequestDto;
 import com._8attery.seesaw.dto.api.request.ProjectRemembranceRequestDto;
 import com._8attery.seesaw.dto.api.response.*;
 import com._8attery.seesaw.exception.BaseException;
+import com._8attery.seesaw.exception.custom.ConflictRequestException;
 import com._8attery.seesaw.service.util.ServiceUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -186,6 +187,10 @@ public class ProjectService {
         serviceUtils.retrieveUserById(userId);
         Project retrievedProject = serviceUtils.retrieveProjectById(projectRemembranceRequestDto.getProjectId());
 
+        if (projectRemembranceRepositoryCustom.existsByProjectIdAndType(projectRemembranceRequestDto.getProjectId(), projectRemembranceRequestDto.getType())) {
+            throw new ConflictRequestException("이미 해당 타입의 회고록이 존재합니다.");
+        }
+
         ProjectRemembrance projectRemembrance = projectRemembranceRepository.save(
                 ProjectRemembrance.builder()
                         .project(retrievedProject)
@@ -205,6 +210,22 @@ public class ProjectService {
                         .projectQuestion(projectQuestion)
                         .build())); // 해당 프로젝트에 회고용 질문 추가
 
-        return new ProjectRemembranceResponseDto(projectRemembrance.getId(), projectRemembranceRepositoryCustom.findQnaListByRemembranceId(projectRemembrance.getId()));
+        return ProjectRemembranceResponseDto
+                .builder()
+                .remembranceId(projectRemembrance.getId())
+                .qnaList(projectRemembranceRepositoryCustom.findQnaListByRemembranceId(projectRemembrance.getId()))
+                .remembranceType(projectRemembrance.getType())
+                .build();
+    }
+
+    public ProjectRemembranceResponseDto getProjectRemembrance(Long userId, Long remembranceId) {
+        serviceUtils.retrieveUserById(userId);
+        ProjectRemembrance retrievedRemembrance = serviceUtils.retrieveProjectRemembranceById(remembranceId);
+
+        return ProjectRemembranceResponseDto
+                .builder()
+                .qnaList(projectRemembranceRepositoryCustom.findQnaListByRemembranceId(remembranceId))
+                .remembranceType(retrievedRemembrance.getType())
+                .build();
     }
 }
