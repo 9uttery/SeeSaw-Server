@@ -28,4 +28,14 @@ public class ProjectRemembranceRepositoryCustomImpl implements ProjectRemembranc
                 .where(projectRemembrance.id.eq(projectRemembranceId))
                 .fetch();
     }
+
+    @Override
+    public Boolean existsByProjectIdAndType(Long projectId, RemembranceType type) {
+        return jpaQueryFactory
+                .select(projectRemembrance)
+                .from(projectRemembrance)
+                .where(projectRemembrance.project.id.eq(projectId)
+                        .and(projectRemembrance.type.eq(type)))
+                .stream().findFirst().isPresent();
+    }
 }

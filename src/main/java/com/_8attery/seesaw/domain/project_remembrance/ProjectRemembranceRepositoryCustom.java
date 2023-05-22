@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface ProjectRemembranceRepositoryCustom {
     List<ProjectRemembranceResponseDto.QnaDto> findQnaListByRemembranceId(Long projectRemembranceId);
+
+    Boolean existsByProjectIdAndType(Long projectId, RemembranceType type);
 }
