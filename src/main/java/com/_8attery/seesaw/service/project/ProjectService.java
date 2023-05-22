@@ -5,13 +5,21 @@ import com._8attery.seesaw.domain.project.ProjectRepository;
 import com._8attery.seesaw.domain.project.ProjectRepositoryCustom;
 import com._8attery.seesaw.domain.project_emotion.ProjectEmotionRepository;
 import com._8attery.seesaw.domain.project_emotion.ProjectEmotionRepositoryCustom;
+import com._8attery.seesaw.domain.project_qna.ProjectQna;
+import com._8attery.seesaw.domain.project_qna.ProjectQnaRepository;
 import com._8attery.seesaw.domain.project_question.ProjectQuestion;
 import com._8attery.seesaw.domain.project_question.ProjectQuestionRepository;
+import com._8attery.seesaw.domain.project_question.ProjectQuestionRepositoryCustom;
+import com._8attery.seesaw.domain.project_question.QuestionType;
 import com._8attery.seesaw.domain.project_record.ProjectRecord;
 import com._8attery.seesaw.domain.project_record.ProjectRecordRepository;
 import com._8attery.seesaw.domain.project_record.ProjectRecordRepositoryCustom;
+import com._8attery.seesaw.domain.project_remembrance.ProjectRemembrance;
+import com._8attery.seesaw.domain.project_remembrance.ProjectRemembranceRepository;
+import com._8attery.seesaw.domain.project_remembrance.ProjectRemembranceRepositoryCustom;
 import com._8attery.seesaw.dto.api.request.ProjectEmotionRequestDto;
 import com._8attery.seesaw.dto.api.request.ProjectRecordRequestDto;
+import com._8attery.seesaw.dto.api.request.ProjectRemembranceRequestDto;
 import com._8attery.seesaw.dto.api.response.*;
 import com._8attery.seesaw.exception.BaseException;
 import com._8attery.seesaw.service.util.ServiceUtils;
@@ -39,6 +47,10 @@ public class ProjectService {
     private final ProjectEmotionRepositoryCustom projectEmotionRepositoryCustom;
     private final ProjectRecordRepository projectRecordRepository;
     private final ProjectRecordRepositoryCustom projectRecordRepositoryCustom;
+    private final ProjectRemembranceRepository projectRemembranceRepository;
+    private final ProjectRemembranceRepositoryCustom projectRemembranceRepositoryCustom;
+    private final ProjectQnaRepository projectQnaRepository;
+    private final ProjectQuestionRepositoryCustom projectQuestionRepositoryCustom;
     private final ServiceUtils serviceUtils;
 
     @Transactional
@@ -70,13 +82,13 @@ public class ProjectService {
         }
     }
 
-    public Long retrieveUserId(Long projectId) throws BaseException{
-        try{
+    public Long retrieveUserId(Long projectId) throws BaseException {
+        try {
             Long userId = projectRepository.getUserId(projectId);
             if (userId == null)
                 throw new BaseException(POSTS_EMPTY_POST_ID);
             return userId;
-        } catch (Exception exception){
+        } catch (Exception exception) {
             exception.printStackTrace();
             throw new BaseException(DATABASE_ERROR);
         }
@@ -84,12 +96,11 @@ public class ProjectService {
 
     @Transactional
     public void deleteUserProject(Long projectId) throws BaseException {
-        try{
+        try {
             int result = projectRepository.deleteProjectByProjectId(projectId);
             if (result == 0)
                 throw new BaseException(DELETE_FAIL_POST);
-        }
-        catch (Exception exception) {
+        } catch (Exception exception) {
             exception.printStackTrace();
             throw new BaseException(DATABASE_ERROR);
         }
@@ -128,6 +139,7 @@ public class ProjectService {
         return result;
     }
 
+    @Transactional
     public ProjectEmotionResponseDto addEmotionToProject(Long userId, ProjectEmotionRequestDto projectEmotionRequestDto) {
         serviceUtils.retrieveUserById(userId);
         serviceUtils.retrieveProjectById(projectEmotionRequestDto.getProjectId());
@@ -135,6 +147,7 @@ public class ProjectService {
         return projectEmotionRepositoryCustom.updateProjectEmotion(projectEmotionRequestDto);
     }
 
+    @Transactional
     public ProjectRecordResponseDto addRecordToProject(Long userId, ProjectRecordRequestDto projectRecordRequestDto) {
         serviceUtils.retrieveUserById(userId);
         Project retrievedProject = serviceUtils.retrieveProjectById(projectRecordRequestDto.getProjectId());
@@ -166,5 +179,32 @@ public class ProjectService {
                 .builder()
                 .contents(projectQuestionRepository.findRandomRegularQuestion().getContents())
                 .build();
+    }
+
+    @Transactional
+    public ProjectRemembranceResponseDto addRemembranceToProject(Long userId, ProjectRemembranceRequestDto projectRemembranceRequestDto) {
+        serviceUtils.retrieveUserById(userId);
+        Project retrievedProject = serviceUtils.retrieveProjectById(projectRemembranceRequestDto.getProjectId());
+
+        ProjectRemembrance projectRemembrance = projectRemembranceRepository.save(
+                ProjectRemembrance.builder()
+                        .project(retrievedProject)
+                        .date(LocalDateTime.now())
+                        .type(projectRemembranceRequestDto.getType())
+                        .project(retrievedProject)
+                        .build()
+        ); // 새로운 프로젝트 회고록 생성
+
+        List<ProjectQuestion> projectQuestionList = projectQuestionRepositoryCustom.findAllByQuestionType(QuestionType.valueOf(projectRemembranceRequestDto.getType().toString()));
+        // 회고 타입에 맞는 질문 리스트 가져오기
+
+        projectQuestionList.forEach(
+                projectQuestion -> projectQnaRepository.save(ProjectQna
+                        .builder()
+                        .projectRemembrance(projectRemembrance)
+                        .projectQuestion(projectQuestion)
+                        .build())); // 해당 프로젝트에 회고용 질문 추가
+
+        return new ProjectRemembranceResponseDto(projectRemembrance.getId(), projectRemembranceRepositoryCustom.findQnaListByRemembranceId(projectRemembrance.getId()));
     }
 }
