@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public interface BatteryRepository extends JpaRepository<Battery, Long> {
 
@@ -97,7 +98,7 @@ public interface BatteryRepository extends JpaRepository<Battery, Long> {
     Battery findUserBattery(@Param("userId") Long userId);
 
     @Query(value = "select c from Charge c where c.user.id=:userId and date(c.createdAt)=curdate()")
-    Charge findUserCharge(@Param("userId") Long userId);
+    Optional<Charge> findUserCharge(@Param("userId") Long userId);
 
     @Query(value = "select value_name from ss_value where value_id=:valueId", nativeQuery = true)
     String findUserValue(@Param("valueId") Long valueId);
