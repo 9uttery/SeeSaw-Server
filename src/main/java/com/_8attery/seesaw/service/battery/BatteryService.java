@@ -298,13 +298,18 @@ public class BatteryService {
             res.setSleepGoal(battery.getSleepGoal());
 
             // 2. Charge 에서 오늘 고속충전 name, valueId 가져와서 chargeName 설정
-            Charge charge = batteryRepository.findUserCharge(userId);
-            res.setChargeName(charge.getName());
+            Optional<Charge> charge = batteryRepository.findUserCharge(userId);
+            if (charge.isPresent()) {
+                res.setChargeName(charge.get().getName());
 
-            // 3. Value 객체 얻어와서 valueName 설정
-            Long valueId = charge.getValue().getId();
-            String valueName = batteryRepository.findUserValue(valueId);
-            res.setValueName(valueName);
+                // 3. Value 객체 얻어와서 valueName 설정
+                Long valueId = charge.get().getValue().getId();
+                String valueName = batteryRepository.findUserValue(valueId);
+                res.setValueName(valueName);
+            } else {
+                res.setChargeName(null);
+                res.setValueName(null);
+            }
 
             return res;
 
