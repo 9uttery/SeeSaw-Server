@@ -127,15 +127,6 @@ public class BatteryService {
             // Merge variation and charge data based on the date
             for (BatteryDataVariationDto variation : variationData) {
                 BatteryVariationResponseDto combinedDto = new BatteryVariationResponseDto();
-//                combinedDto.setDate(variation.getDate());
-
-//                combinedDto.setCurSleep(variation.getCurSleep());
-//                combinedDto.setGoalSleep(variation.getGoalSleep());
-//                combinedDto.setSleepVariation(variation.getSleepVariation());
-
-//                combinedDto.setCurActivity(variation.getCurActivity());
-//                combinedDto.setGoalActivity(variation.getGoalActivity());
-//                combinedDto.setActivityVariation(variation.getActivityVariation());
 
                 combinedDto.setDate(variation.getDate());
                 combinedDto.setSleep(new BatteryVariationResponseDto.Sleep( variation.getCurSleep(), variation.getGoalSleep(), variation.getSleepVariation() ));
@@ -145,9 +136,6 @@ public class BatteryService {
                 // Find matching charge data for the date
                 for (BatteryChargeVariationDto charge : chargeData) {
                     if (charge.getDate().isEqual(variation.getDate())) {
-//                        combinedDto.setChargeName(charge.getChargeName());
-//                        combinedDto.setValueName(charge.getValueName());
-//                        combinedDto.setChargeVariation(charge.getChargeVariation());
 
                         combinedDto.setCharge(new BatteryVariationResponseDto.Charge( charge.getChargeName(), charge.getValueName(), charge.getChargeVariation() ));
                         break;  // Found a matching charge, exit the loop
