@@ -62,7 +62,8 @@ public interface BatteryRepository extends JpaRepository<Battery, Long> {
     // 배터리 수준 조회 (7일 퍼센트)
     @Query(value = "select distinct new com._8attery.seesaw.dto.api.response.BatteryPercentResponseDto(b1.createdAt, b1.batteryPercentage) from BatteryHistory b1 join b1.battery b2 " +
             "where b2.user.id=:userId " +
-            "and b1.createdAt between :startDate and :endDate ")
+            "and b1.createdAt between :startDate and :endDate " +
+            "order by b1.createdAt desc")
     List<BatteryPercentResponseDto> findUserBatteryHistory(@Param("userId") Long userId, @Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
 
     // 배터리 증감 조회 (30일 증감 내역)
@@ -72,13 +73,15 @@ public interface BatteryRepository extends JpaRepository<Battery, Long> {
             "(select b3.variationPercentage from BatteryVariation b3 where b3.type = 'SLEEP' and DATE(b3.createdAt) = DATE(b1.createdAt))) " +
             "from BatteryHistory b1 " +
             "where b1.battery.id = :batteryId " +
-            "and b1.createdAt between :startDate and :endDate")
+            "and b1.createdAt between :startDate and :endDate " +
+            "order by b1.createdAt desc")
     List<BatteryDataVariationDto> findUserBatteryVariation(@Param("batteryId") Long batteryId, @Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
 
     @Query(value = "select DISTINCT new com._8attery.seesaw.dto.api.response.BatteryChargeVariationDto(c.createdAt, c.name, v.valueName, 30) " +
             "from Charge c join c.value v " +
             "where c.user.id=:userId " +
-            "and c.createdAt between :startDate and :endDate ")
+            "and c.createdAt between :startDate and :endDate " +
+            "order by c.createdAt desc")
     List<BatteryChargeVariationDto> findUserBatteryCharge(@Param("userId") Long userId, @Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
 
 
