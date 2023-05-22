@@ -18,18 +18,6 @@ public class BatteryVariationResponseDto {
     private Charge charge;
     private Activity activity;
 
-//    private Integer curSleep;
-//    private Integer goalSleep;
-//    private Integer sleepVariation;
-//
-//    private String chargeName;
-//    private String valueName;
-//    private Integer chargeVariation;
-//
-//    private Integer curActivity;
-//    private Integer goalActivity;
-//    private Integer activityVariation;
-
     @Getter
     @Setter
     @Data
@@ -69,18 +57,6 @@ public class BatteryVariationResponseDto {
         this.charge = charge;
         this.activity = activity;
     }
-
-    //    public BatteryVariationResponseDto(LocalDateTime date, Integer curSleep, Integer goalSleep, Integer sleepVariation, Integer curActivity, Integer goalActivity, Integer activityVariation, String chargeName, String valueName, Integer chargeVariation) {
-//        this.date = date.toLocalDate();
-//        this.curSleep = curSleep;
-//        this.goalSleep = goalSleep;
-//        this.sleepVariation = sleepVariation;
-//        this.curActivity = curActivity;
-//        this.goalActivity = goalActivity;
-//        this.activityVariation = activityVariation;
-//        this.chargeName = chargeName;
-//        this.valueName = valueName;
-//        this.chargeVariation = chargeVariation;
-//    }
+    
 }
 
