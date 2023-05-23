@@ -2,6 +2,8 @@ package com._8attery.seesaw.service.util;
 
 import com._8attery.seesaw.domain.project.Project;
 import com._8attery.seesaw.domain.project.ProjectRepository;
+import com._8attery.seesaw.domain.project_emotion.ProjectEmotion;
+import com._8attery.seesaw.domain.project_emotion.ProjectEmotionRepositoryCustom;
 import com._8attery.seesaw.domain.project_qna.ProjectQna;
 import com._8attery.seesaw.domain.project_qna.ProjectQnaRepository;
 import com._8attery.seesaw.domain.project_question.ProjectQuestion;
@@ -26,6 +28,7 @@ public class ServiceUtils {
     private final ValueRepository valueRepository;
     private final ProjectQuestionRepository projectQuestionRepository;
     private final ProjectRemembranceRepository projectRemembranceRepository;
+    private final ProjectEmotionRepositoryCustom projectEmotionRepositoryCustom;
     private final ProjectQnaRepository projectQnaRepository;
 
     public boolean validateUser(Long userId) {
@@ -68,6 +71,14 @@ public class ServiceUtils {
         return projectRemembranceRepository.findById(projectRemembranceId).orElseThrow(
                 () -> new ResourceNotFoundException("projectRemembranceId로 projectRemembrance을 찾을 수 없습니다.")
         );
+    }
+
+    public ProjectEmotion retrieveProjectEmotionByProjectId(Long projectId) {
+        if (projectEmotionRepositoryCustom.findProjectEmotionByProjectId(projectId) == null) {
+            throw new ResourceNotFoundException("projectId로 projectEmotion을 찾을 수 없습니다.");
+        } else {
+            return projectEmotionRepositoryCustom.findProjectEmotionByProjectId(projectId);
+        }
     }
 
     public ProjectQna retrieveProjectQnaById(Long projectQnaId) {
