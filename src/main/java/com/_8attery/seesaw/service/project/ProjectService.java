@@ -224,6 +224,7 @@ public class ProjectService {
 
         return ProjectRemembranceResponseDto
                 .builder()
+                .remembranceId(retrievedRemembrance.getId())
                 .qnaList(projectRemembranceRepositoryCustom.findQnaListByRemembranceId(remembranceId))
                 .remembranceType(retrievedRemembrance.getType())
                 .build();
