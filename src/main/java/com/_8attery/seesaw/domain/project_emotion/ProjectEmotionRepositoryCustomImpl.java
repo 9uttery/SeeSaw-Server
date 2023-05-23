@@ -50,4 +50,12 @@ public class ProjectEmotionRepositoryCustomImpl implements ProjectEmotionReposit
                 .fetchOne();
 
     }
+
+    @Override
+    public ProjectEmotion findProjectEmotionByProjectId(Long projectId) {
+        return jpaQueryFactory.select(projectEmotion)
+                .from(projectEmotion)
+                .where(projectEmotion.project.id.eq(projectId))
+                .fetchOne();
+    }
 }

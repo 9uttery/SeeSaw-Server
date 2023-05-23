@@ -5,4 +5,6 @@ import com._8attery.seesaw.dto.api.response.ProjectEmotionResponseDto;
 
 public interface ProjectEmotionRepositoryCustom {
     ProjectEmotionResponseDto updateProjectEmotion(ProjectEmotionRequestDto projectEmotionRequestDto);
+
+    ProjectEmotion findProjectEmotionByProjectId(Long projectId);
 }
