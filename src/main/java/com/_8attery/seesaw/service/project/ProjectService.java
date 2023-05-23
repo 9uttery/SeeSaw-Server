@@ -25,6 +25,7 @@ import com._8attery.seesaw.dto.api.request.ProjectRemembranceRequestDto;
 import com._8attery.seesaw.dto.api.response.*;
 import com._8attery.seesaw.exception.BaseException;
 import com._8attery.seesaw.exception.custom.ConflictRequestException;
+import com._8attery.seesaw.exception.custom.ResourceNotFoundException;
 import com._8attery.seesaw.service.util.ServiceUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,6 +36,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static com._8attery.seesaw.exception.BaseResponseStatus.*;
 
@@ -248,5 +250,22 @@ public class ProjectService {
         serviceUtils.retrieveUserById(userId);
 
         return projectQnaRepositoryCustom.findProjectQnaByProjectQnaId(serviceUtils.retrieveProjectQnaById(qnaId).getId());
+    }
+
+    @Transactional
+    public List<Long> deleteProjectRecordList(Long userId, List<Long> projectRecordIdList) {
+        serviceUtils.retrieveUserById(userId);
+
+        List<ProjectRecord> projectRecordList = projectRecordRepositoryCustom.findAllByProjectRecordIdList(userId, projectRecordIdList);
+
+        if (projectRecordList.size() == 0) {
+            throw new ResourceNotFoundException("존재하지 않는 상시 회고입니다.");
+        }
+
+        List<Long> resultList = projectRecordList.stream().map(ProjectRecord::getId).collect(Collectors.toList());
+
+        projectRecordRepository.deleteAllInBatch(projectRecordList);
+
+        return resultList;
     }
 }
