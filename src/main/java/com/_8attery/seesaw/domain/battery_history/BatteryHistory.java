@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-
 import java.time.LocalDateTime;
 
 import static javax.persistence.FetchType.LAZY;
@@ -23,7 +22,7 @@ public class BatteryHistory {
     @Column(name = "battery_history_id")
     private Long id;
 
-    @ManyToOne(fetch = LAZY)
+    @ManyToOne(fetch = LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "battery_id")
     private Battery battery;
 
