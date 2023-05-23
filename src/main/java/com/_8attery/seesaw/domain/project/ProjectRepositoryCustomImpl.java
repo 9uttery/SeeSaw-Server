@@ -9,6 +9,9 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 import static com._8attery.seesaw.domain.project.QProject.project;
 import static com._8attery.seesaw.domain.project_emotion.QProjectEmotion.projectEmotion;
 import static com._8attery.seesaw.domain.project_remembrance.QProjectRemembrance.projectRemembrance;
@@ -68,4 +71,15 @@ public class ProjectRepositoryCustomImpl implements ProjectRepositoryCustom {
 
         return result;
     }
+
+    @Override
+    public List<String> getThreeProjectNamesAtSameTime(Long userId, LocalDateTime startedAt, LocalDateTime endedAt) {
+
+        return jpaQueryFactory.select(project.projectName)
+                .from(project)
+                .where(project.user.id.eq(userId), project.startedAt.between(startedAt, endedAt).or(project.endedAt.between(startedAt, endedAt)))
+                .limit(3)
+                .fetch();
+    }
+
 }
