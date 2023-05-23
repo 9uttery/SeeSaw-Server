@@ -7,6 +7,7 @@ import com._8attery.seesaw.domain.project_emotion.ProjectEmotionRepository;
 import com._8attery.seesaw.domain.project_emotion.ProjectEmotionRepositoryCustom;
 import com._8attery.seesaw.domain.project_qna.ProjectQna;
 import com._8attery.seesaw.domain.project_qna.ProjectQnaRepository;
+import com._8attery.seesaw.domain.project_qna.ProjectQnaRepositoryCustom;
 import com._8attery.seesaw.domain.project_question.ProjectQuestion;
 import com._8attery.seesaw.domain.project_question.ProjectQuestionRepository;
 import com._8attery.seesaw.domain.project_question.ProjectQuestionRepositoryCustom;
@@ -18,6 +19,7 @@ import com._8attery.seesaw.domain.project_remembrance.ProjectRemembrance;
 import com._8attery.seesaw.domain.project_remembrance.ProjectRemembranceRepository;
 import com._8attery.seesaw.domain.project_remembrance.ProjectRemembranceRepositoryCustom;
 import com._8attery.seesaw.dto.api.request.ProjectEmotionRequestDto;
+import com._8attery.seesaw.dto.api.request.ProjectQnaRequestDto;
 import com._8attery.seesaw.dto.api.request.ProjectRecordRequestDto;
 import com._8attery.seesaw.dto.api.request.ProjectRemembranceRequestDto;
 import com._8attery.seesaw.dto.api.response.*;
@@ -51,6 +53,7 @@ public class ProjectService {
     private final ProjectRemembranceRepository projectRemembranceRepository;
     private final ProjectRemembranceRepositoryCustom projectRemembranceRepositoryCustom;
     private final ProjectQnaRepository projectQnaRepository;
+    private final ProjectQnaRepositoryCustom projectQnaRepositoryCustom;
     private final ProjectQuestionRepositoryCustom projectQuestionRepositoryCustom;
     private final ServiceUtils serviceUtils;
 
@@ -228,5 +231,22 @@ public class ProjectService {
                 .qnaList(projectRemembranceRepositoryCustom.findQnaListByRemembranceId(remembranceId))
                 .remembranceType(retrievedRemembrance.getType())
                 .build();
+    }
+
+    @Transactional
+    public ProjectQnaResponseDto addAnswerToProjectQna(Long userId, ProjectQnaRequestDto projectQnaRequestDto) {
+        serviceUtils.retrieveUserById(userId);
+        ProjectQna retrievedProjectQna = serviceUtils.retrieveProjectQnaById(projectQnaRequestDto.getProjectQnaId());
+        retrievedProjectQna.updateAnswer(projectQnaRequestDto.getAnswerChoice(), projectQnaRequestDto.getAnswerContent());
+
+        projectQnaRepository.save(retrievedProjectQna);
+
+        return projectQnaRepositoryCustom.findProjectQnaByProjectQnaId(retrievedProjectQna.getId());
+    }
+
+    public ProjectQnaResponseDto getProjectQna(Long userId, Long qnaId) {
+        serviceUtils.retrieveUserById(userId);
+
+        return projectQnaRepositoryCustom.findProjectQnaByProjectQnaId(serviceUtils.retrieveProjectQnaById(qnaId).getId());
     }
 }
