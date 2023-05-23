@@ -2,6 +2,8 @@ package com._8attery.seesaw.service.util;
 
 import com._8attery.seesaw.domain.project.Project;
 import com._8attery.seesaw.domain.project.ProjectRepository;
+import com._8attery.seesaw.domain.project_qna.ProjectQna;
+import com._8attery.seesaw.domain.project_qna.ProjectQnaRepository;
 import com._8attery.seesaw.domain.project_question.ProjectQuestion;
 import com._8attery.seesaw.domain.project_question.ProjectQuestionRepository;
 import com._8attery.seesaw.domain.project_remembrance.ProjectRemembrance;
@@ -24,6 +26,7 @@ public class ServiceUtils {
     private final ValueRepository valueRepository;
     private final ProjectQuestionRepository projectQuestionRepository;
     private final ProjectRemembranceRepository projectRemembranceRepository;
+    private final ProjectQnaRepository projectQnaRepository;
 
     public boolean validateUser(Long userId) {
         return userRepository.existsById(userId);
@@ -64,6 +67,12 @@ public class ServiceUtils {
     public ProjectRemembrance retrieveProjectRemembranceById(Long projectRemembranceId) {
         return projectRemembranceRepository.findById(projectRemembranceId).orElseThrow(
                 () -> new ResourceNotFoundException("projectRemembranceId로 projectRemembrance을 찾을 수 없습니다.")
+        );
+    }
+
+    public ProjectQna retrieveProjectQnaById(Long projectQnaId) {
+        return projectQnaRepository.findById(projectQnaId).orElseThrow(
+                () -> new ResourceNotFoundException("projectQnaId로 projectQna을 찾을 수 없습니다.")
         );
     }
 }
