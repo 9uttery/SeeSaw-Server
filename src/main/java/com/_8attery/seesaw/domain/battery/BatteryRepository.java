@@ -70,7 +70,7 @@ public interface BatteryRepository extends JpaRepository<Battery, Long> {
     @Query(value = "select DISTINCT new com._8attery.seesaw.dto.api.response.BatteryDataVariationDto(b1.createdAt, b1.sleepTime, b1.sleepGoal, " +
             "(select b3.variationPercentage from BatteryVariation b3 where b3.type = 'SLEEP' and DATE(b3.createdAt) = DATE(b1.createdAt) and b3.battery.id = :batteryId), " +
             "b1.activity, b1.activityGoal, " +
-            "(select b2.variationPercentage from BatteryVariation b2 where b2.type = 'ACTIVITY' and DATE(b2.createdAt) = DATE(b1.createdAt and b2.battery.id = :batteryId ))) " +
+            "(select b2.variationPercentage from BatteryVariation b2 where b2.type = 'ACTIVITY' and DATE(b2.createdAt) = DATE(b1.createdAt) and b2.battery.id = :batteryId )) " +
             "from BatteryHistory b1 " +
             "where b1.battery.id = :batteryId " +
             "and b1.createdAt between :startDate and :endDate " +
