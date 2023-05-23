@@ -13,7 +13,6 @@ import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 import static javax.persistence.FetchType.LAZY;
@@ -29,11 +28,11 @@ public class Project {
     @Column(name = "project_id")
     private Long id;
 
-    @ManyToOne(fetch = LAZY)
+    @ManyToOne(fetch = LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToOne(fetch = LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "value_id")
     private Value value;
 
@@ -63,8 +62,8 @@ public class Project {
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProjectRecord> projectRecords;
 
-    @OneToMany(mappedBy = "project", orphanRemoval = true)
-    private List<ProjectRemembrance> projectRemembrances = new ArrayList<>();
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProjectRemembrance> projectRemembrances;
 
     @Builder
     public Project(String projectName, LocalDateTime startedAt, LocalDateTime endedAt, Intensity intensity, String goal, Boolean isFinished) {

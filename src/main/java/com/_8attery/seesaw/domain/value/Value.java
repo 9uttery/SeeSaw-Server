@@ -35,11 +35,11 @@ public class Value {
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt; // 생성 날짜
 
-    @OneToMany(mappedBy = "value", fetch = LAZY)
-    private List<Charge> charge;
+    @OneToMany(mappedBy = "value", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Charge> charges;
 
-    @OneToOne(mappedBy = "value", fetch = LAZY)
-    private Project project;
+    @OneToMany(mappedBy = "value", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Project> projects;
 
     @Builder
     public Value(String valueName, LocalDateTime createdAt) {
