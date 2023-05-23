@@ -42,6 +42,10 @@ public class ProjectQna {
         this.projectQuestion = projectQuestion;
         this.answerChoice = answerChoice;
         this.answerContent = answerContent;
+    }
 
+    public void updateAnswer(Long answerChoice, String answerContent) {
+        this.answerChoice = answerChoice;
+        this.answerContent = answerContent;
     }
 }
