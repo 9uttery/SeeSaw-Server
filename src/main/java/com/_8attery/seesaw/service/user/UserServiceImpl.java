@@ -5,14 +5,13 @@ import com._8attery.seesaw.domain.user.UserRepository;
 import com._8attery.seesaw.dto.api.response.UserHistoryResponseDto;
 import com._8attery.seesaw.exception.BaseException;
 import com._8attery.seesaw.exception.custom.ResourceNotFoundException;
+import com._8attery.seesaw.service.util.ServiceUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static com._8attery.seesaw.exception.BaseResponseStatus.DATABASE_ERROR;
@@ -23,6 +22,7 @@ import static java.time.temporal.ChronoUnit.DAYS;
 @Service
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
+    private final ServiceUtils serviceUtils;
 
     @Override
     public User resolveUserById(Long userId) {
@@ -80,5 +80,12 @@ public class UserServiceImpl implements UserService {
             exception.printStackTrace();
             throw new BaseException(DATABASE_ERROR);
         }
+    }
+
+    @Transactional
+    @Override
+    public void deleteUser(Long userId) {
+        User retrievedUser = serviceUtils.retrieveUserById(userId);
+        userRepository.delete(retrievedUser);
     }
 }
