@@ -77,7 +77,7 @@ public interface BatteryRepository extends JpaRepository<Battery, Long> {
             "order by b1.createdAt desc")
     List<BatteryDataVariationDto> findUserBatteryVariation(@Param("batteryId") Long batteryId, @Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
 
-    @Query(value = "select DISTINCT new com._8attery.seesaw.dto.api.response.BatteryChargeVariationDto(c.createdAt, c.name, v.valueName, 30) " +
+    @Query(value = "select DISTINCT new com._8attery.seesaw.dto.api.response.BatteryChargeVariationDto(c.createdAt, c.name, v.valueName, 10) " +
             "from Charge c join c.value v " +
             "where c.user.id=:userId " +
             "and c.createdAt between :startDate and :endDate " +
