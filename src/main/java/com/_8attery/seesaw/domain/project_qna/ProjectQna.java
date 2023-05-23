@@ -30,13 +30,18 @@ public class ProjectQna {
     @JoinColumn(name = "project_question_id", nullable = false)
     private ProjectQuestion projectQuestion; // 질문 id
 
+    @Column(name = "answer_choice")
+    private Long answerChoice; // 답변 선택지
+
     @Column(name = "answer_content")
     private String answerContent; // 답변 내용
 
     @Builder
-    public ProjectQna(ProjectRemembrance projectRemembrance, ProjectQuestion projectQuestion, String answerContent) {
+    public ProjectQna(ProjectRemembrance projectRemembrance, ProjectQuestion projectQuestion, Long answerChoice, String answerContent) {
         this.projectRemembrance = projectRemembrance;
         this.projectQuestion = projectQuestion;
+        this.answerChoice = answerChoice;
         this.answerContent = answerContent;
+
     }
 }
