@@ -28,7 +28,7 @@ public class ChargeService {
             chargeRepository.addUserCharge(userId, valueId, chargeName, createdAt);
             // 오늘 고속충전 여부 수정
             chargeRepository.updateIsCharged(userId);
-            // 사용자 배터리 + 30
+            // 사용자 배터리 + 10
             chargeRepository.updateUserBattery(userId);
 
             // 배터리 증감 내역 레코드 추가
