@@ -32,4 +32,11 @@ public class ProjectRecordRepositoryCustomImpl implements ProjectRecordRepositor
                 .where(projectRecord.project.id.eq(projectId))
                 .fetch();
     }
+
+    @Override
+    public List<ProjectRecord> findAllByProjectRecordIdList(Long userId, List<Long> projectRecordIdList) {
+        return jpaQueryFactory.selectFrom(projectRecord)
+                .where(projectRecord.id.in(projectRecordIdList), projectRecord.project.user.id.eq(userId))
+                .fetch();
+    }
 }
