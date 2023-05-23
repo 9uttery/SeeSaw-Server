@@ -1,10 +1,7 @@
 package com._8attery.seesaw.controller.project;
 
 import com._8attery.seesaw.domain.user.account.UserAccount;
-import com._8attery.seesaw.dto.api.request.ProjectEmotionRequestDto;
-import com._8attery.seesaw.dto.api.request.ProjectRecordRequestDto;
-import com._8attery.seesaw.dto.api.request.ProjectRemembranceRequestDto;
-import com._8attery.seesaw.dto.api.request.ProjectRequestDto;
+import com._8attery.seesaw.dto.api.request.*;
 import com._8attery.seesaw.dto.api.response.*;
 import com._8attery.seesaw.exception.BaseException;
 import com._8attery.seesaw.exception.BaseResponse;
@@ -152,5 +149,17 @@ public class ProjectController {
     public ResponseEntity<ProjectRemembranceResponseDto> getProjectRemembrance(@AuthenticationPrincipal UserAccount userAccount, @PathVariable("remembranceId") Long remembranceId) {
 
         return ResponseEntity.ok().body(projectService.getProjectRemembrance(userAccount.getUserId(), remembranceId));
+    }
+
+    @PostMapping("/remembrance/qna")
+    public ResponseEntity<ProjectQnaResponseDto> addAnswerToProjectQna(@AuthenticationPrincipal UserAccount userAccount, @Valid @RequestBody ProjectQnaRequestDto projectQnaRequestDto) {
+
+        return ResponseEntity.ok().body(projectService.addAnswerToProjectQna(userAccount.getUserId(), projectQnaRequestDto));
+    }
+
+    @GetMapping("/remembrance/qna/{qnaId}")
+    public ResponseEntity<ProjectQnaResponseDto> getProjectQna(@AuthenticationPrincipal UserAccount userAccount, @PathVariable("qnaId") Long qnaId) {
+
+        return ResponseEntity.ok().body(projectService.getProjectQna(userAccount.getUserId(), qnaId));
     }
 }
