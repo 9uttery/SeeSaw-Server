@@ -20,7 +20,7 @@ public class ProjectRemembranceRepositoryCustomImpl implements ProjectRemembranc
         return jpaQueryFactory.select(
                         Projections.constructor(
                                 ProjectRemembranceResponseDto.QnaDto.class,
-                                projectQna.id, projectQna.projectQuestion.contents, projectQna.answerContent
+                                projectQna.id, projectQna.projectQuestion.contents, projectQna.answerChoice, projectQna.answerContent
                         )
                 )
                 .from(projectQna)

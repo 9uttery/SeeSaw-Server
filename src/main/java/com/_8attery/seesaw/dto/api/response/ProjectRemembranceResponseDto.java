@@ -33,7 +33,9 @@ public class ProjectRemembranceResponseDto {
         private Long qnaId;
         @JsonProperty("question")
         private String question;
-        @JsonProperty("answer")
-        private String answer;
+        @JsonProperty("answer_choice")
+        private Long answerChoice;
+        @JsonProperty("answer_content")
+        private String answerContent;
     }
 }
