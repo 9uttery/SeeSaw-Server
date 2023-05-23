@@ -3,6 +3,8 @@ package com._8attery.seesaw.service.project;
 import com._8attery.seesaw.domain.project.Project;
 import com._8attery.seesaw.domain.project.ProjectRepository;
 import com._8attery.seesaw.domain.project.ProjectRepositoryCustom;
+import com._8attery.seesaw.domain.project_emotion.Emotion;
+import com._8attery.seesaw.domain.project_emotion.ProjectEmotion;
 import com._8attery.seesaw.domain.project_emotion.ProjectEmotionRepository;
 import com._8attery.seesaw.domain.project_emotion.ProjectEmotionRepositoryCustom;
 import com._8attery.seesaw.domain.project_qna.ProjectQna;
@@ -34,8 +36,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com._8attery.seesaw.exception.BaseResponseStatus.*;
@@ -196,11 +197,21 @@ public class ProjectService {
             throw new ConflictRequestException("이미 해당 타입의 회고록이 존재합니다.");
         }
 
+        ProjectEmotion retrievedProjectEmotion = serviceUtils.retrieveProjectEmotionByProjectId(projectRemembranceRequestDto.getProjectId());
+
+        Map<Emotion, Integer> emotionMap = new HashMap<>();
+        emotionMap.put(Emotion.LIKE, retrievedProjectEmotion.getLikeCnt());
+        emotionMap.put(Emotion.NICE, retrievedProjectEmotion.getNiceCnt());
+        emotionMap.put(Emotion.IDK, retrievedProjectEmotion.getIdkCnt());
+        emotionMap.put(Emotion.ANGRY, retrievedProjectEmotion.getAngryCnt());
+        emotionMap.put(Emotion.SAD, retrievedProjectEmotion.getSadCnt());
+
         ProjectRemembrance projectRemembrance = projectRemembranceRepository.save(
                 ProjectRemembrance.builder()
                         .project(retrievedProject)
                         .date(LocalDateTime.now())
                         .type(projectRemembranceRequestDto.getType())
+                        .emotion(Collections.max(emotionMap.entrySet(), Comparator.comparingInt(Map.Entry::getValue)).getKey())
                         .project(retrievedProject)
                         .build()
         ); // 새로운 프로젝트 회고록 생성
