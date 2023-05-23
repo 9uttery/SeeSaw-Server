@@ -40,7 +40,7 @@ public class ProjectRemembrance {
     @Enumerated(EnumType.STRING)
     private Emotion emotion; // 감정
 
-    @OneToMany(mappedBy = "projectRemembrance", fetch = LAZY)
+    @OneToMany(mappedBy = "projectRemembrance", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProjectQna> projectQnaList;
 
     @Builder

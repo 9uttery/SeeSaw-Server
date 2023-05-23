@@ -9,7 +9,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,10 +47,10 @@ public class Battery {
     @Column(name = "is_charged")
     private Boolean isCharged; // 오늘 고속 충전 여부
 
-    @OneToMany(mappedBy = "battery")
+    @OneToMany(mappedBy = "battery", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BatteryHistory> batteryHistories = new ArrayList<>();
 
-    @OneToMany(mappedBy = "battery")
+    @OneToMany(mappedBy = "battery", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BatteryVariation> batteryVariations = new ArrayList<>();
 
     @Builder

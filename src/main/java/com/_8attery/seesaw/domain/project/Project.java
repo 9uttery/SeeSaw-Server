@@ -1,5 +1,7 @@
 package com._8attery.seesaw.domain.project;
 
+import com._8attery.seesaw.domain.project_emotion.ProjectEmotion;
+import com._8attery.seesaw.domain.project_record.ProjectRecord;
 import com._8attery.seesaw.domain.project_remembrance.ProjectRemembrance;
 import com._8attery.seesaw.domain.user.User;
 import com._8attery.seesaw.domain.value.Value;
@@ -55,11 +57,11 @@ public class Project {
     @Column(name = "is_finished", nullable = false)
     private Boolean isFinished; // 프로젝트 완료 여부
 
-//    @OneToOne(mappedBy = "project", fetch = LAZY, orphanRemoval = true)
-//    private ProjectEmotion projectEmotion;
-//
-//    @OneToOne(mappedBy = "project", fetch = LAZY, orphanRemoval = true)
-//    private ProjectRecord projectRecord;
+    @OneToOne(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    private ProjectEmotion projectEmotion;
+
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProjectRecord> projectRecords;
 
     @OneToMany(mappedBy = "project", orphanRemoval = true)
     private List<ProjectRemembrance> projectRemembrances = new ArrayList<>();
