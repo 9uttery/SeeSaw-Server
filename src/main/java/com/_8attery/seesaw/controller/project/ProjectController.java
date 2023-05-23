@@ -14,6 +14,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 import static com._8attery.seesaw.exception.BaseResponseStatus.USERS_FAILED_POST_ID;
@@ -137,6 +138,12 @@ public class ProjectController {
     public ResponseEntity<List<ProjectRecordResponseDto>> getProjectRecordList(@AuthenticationPrincipal UserAccount userAccount, @PathVariable("projectId") Long projectId) {
 
         return ResponseEntity.ok().body(projectService.getProjectRecordList(userAccount.getUserId(), projectId));
+    }
+
+    @DeleteMapping("/record")
+    public ResponseEntity<List<Long>> deleteProjectRecordList(@AuthenticationPrincipal UserAccount userAccount, @RequestParam @NotNull List<Long> recordId) {
+
+        return ResponseEntity.ok().body(projectService.deleteProjectRecordList(userAccount.getUserId(), recordId));
     }
 
     @PostMapping("/remembrance")
