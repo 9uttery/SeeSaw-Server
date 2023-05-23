@@ -19,16 +19,22 @@ public class ProjectDetailsResponseDto {
     @JsonProperty("project_name")
     private String projectName;
     @Enumerated(EnumType.STRING)
+    @JsonProperty("intensity")
     private Intensity intensity;
+    @JsonProperty("goal")
     private String goal;
     @JsonProperty("started_at")
     private LocalDateTime startedAt;
     @JsonProperty("ended_at")
     private LocalDateTime endedAt;
-    @JsonProperty("is_finished")
-    private Boolean isFinished;
     @JsonProperty("is_half_progressed")
     private Boolean isHalfProgressed;
+    @JsonProperty("middle_remembrance_id")
+    private Long middleRemembranceId;
+    @JsonProperty("is_finished")
+    private Boolean isFinished;
+    @JsonProperty("final_remembrance_id")
+    private Long finalRemembranceId;
     @JsonProperty("value_id")
     private Long valueId;
     @JsonProperty("value_name")

@@ -1,6 +1,7 @@
 package com._8attery.seesaw.domain.project_remembrance;
 
 import com._8attery.seesaw.domain.project.Project;
+import com._8attery.seesaw.domain.project_emotion.Emotion;
 import com._8attery.seesaw.domain.project_qna.ProjectQna;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -8,9 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 import static javax.persistence.FetchType.LAZY;
@@ -37,12 +36,18 @@ public class ProjectRemembrance {
     @Column(name = "date", nullable = false)
     private LocalDateTime date; // 회고 날짜
 
-    @OneToMany(mappedBy = "projectRemembrance")
-    private List<ProjectQna> projectQnas = new ArrayList<>();
+    @Column(name = "emotion", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Emotion emotion; // 감정
+
+    @OneToMany(mappedBy = "projectRemembrance", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProjectQna> projectQnaList;
 
     @Builder
-    public ProjectRemembrance(RemembranceType type, LocalDateTime date) {
+    public ProjectRemembrance(Project project, RemembranceType type, Emotion emotion, LocalDateTime date) {
+        this.project = project;
         this.type = type;
+        this.emotion = emotion;
         this.date = date;
     }
 }
