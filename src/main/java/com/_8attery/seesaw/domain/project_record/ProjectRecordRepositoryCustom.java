@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface ProjectRecordRepositoryCustom {
     List<ProjectRecordResponseDto> findAllRecordsByProjectId(Long projectId);
+
+    List<ProjectRecord> findAllByProjectRecordIdList(Long userId, List<Long> projectRecordIdList);
 }

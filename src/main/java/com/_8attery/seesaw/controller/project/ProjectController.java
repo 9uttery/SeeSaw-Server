@@ -1,9 +1,7 @@
 package com._8attery.seesaw.controller.project;
 
 import com._8attery.seesaw.domain.user.account.UserAccount;
-import com._8attery.seesaw.dto.api.request.ProjectEmotionRequestDto;
-import com._8attery.seesaw.dto.api.request.ProjectRecordRequestDto;
-import com._8attery.seesaw.dto.api.request.ProjectRequestDto;
+import com._8attery.seesaw.dto.api.request.*;
 import com._8attery.seesaw.dto.api.response.*;
 import com._8attery.seesaw.exception.BaseException;
 import com._8attery.seesaw.exception.BaseResponse;
@@ -16,6 +14,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 import static com._8attery.seesaw.exception.BaseResponseStatus.USERS_FAILED_POST_ID;
@@ -126,7 +125,7 @@ public class ProjectController {
     @GetMapping("/question")
     public ResponseEntity<ProjectQuestionResponseDto> getRandomRegularQuestion(@AuthenticationPrincipal UserAccount userAccount) {
 
-        return ResponseEntity.ok().body(projectService.getRandomRegularQuestion());
+        return ResponseEntity.ok().body(projectService.getRandomRegularQuestion(userAccount.getUserId()));
     }
 
     @PostMapping("/record")
@@ -139,5 +138,35 @@ public class ProjectController {
     public ResponseEntity<List<ProjectRecordResponseDto>> getProjectRecordList(@AuthenticationPrincipal UserAccount userAccount, @PathVariable("projectId") Long projectId) {
 
         return ResponseEntity.ok().body(projectService.getProjectRecordList(userAccount.getUserId(), projectId));
+    }
+
+    @DeleteMapping("/record")
+    public ResponseEntity<List<Long>> deleteProjectRecordList(@AuthenticationPrincipal UserAccount userAccount, @RequestParam @NotNull List<Long> recordId) {
+
+        return ResponseEntity.ok().body(projectService.deleteProjectRecordList(userAccount.getUserId(), recordId));
+    }
+
+    @PostMapping("/remembrance")
+    public ResponseEntity<ProjectRemembranceResponseDto> addRemembranceToProject(@AuthenticationPrincipal UserAccount userAccount, @Valid @RequestBody ProjectRemembranceRequestDto projectRecordRequestDto) {
+
+        return ResponseEntity.ok().body(projectService.addRemembranceToProject(userAccount.getUserId(), projectRecordRequestDto));
+    }
+
+    @GetMapping("/remembrance/{remembranceId}")
+    public ResponseEntity<ProjectRemembranceResponseDto> getProjectRemembrance(@AuthenticationPrincipal UserAccount userAccount, @PathVariable("remembranceId") Long remembranceId) {
+
+        return ResponseEntity.ok().body(projectService.getProjectRemembrance(userAccount.getUserId(), remembranceId));
+    }
+
+    @PostMapping("/remembrance/qna")
+    public ResponseEntity<ProjectQnaResponseDto> addAnswerToProjectQna(@AuthenticationPrincipal UserAccount userAccount, @Valid @RequestBody ProjectQnaRequestDto projectQnaRequestDto) {
+
+        return ResponseEntity.ok().body(projectService.addAnswerToProjectQna(userAccount.getUserId(), projectQnaRequestDto));
+    }
+
+    @GetMapping("/remembrance/qna/{qnaId}")
+    public ResponseEntity<ProjectQnaResponseDto> getProjectQna(@AuthenticationPrincipal UserAccount userAccount, @PathVariable("qnaId") Long qnaId) {
+
+        return ResponseEntity.ok().body(projectService.getProjectQna(userAccount.getUserId(), qnaId));
     }
 }
