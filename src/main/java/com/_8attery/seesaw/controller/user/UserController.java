@@ -33,11 +33,15 @@ public class UserController {
             String nickName = userService.getUserNickname(userId);
 
             return new BaseResponse<>(nickName);
-        } catch(BaseException exception){
+        } catch (BaseException exception) {
             return new BaseResponse<>((exception.getStatus()));
         }
     }
 
+    @GetMapping("/email")
+    public BaseResponse<String> getUserEmail(@AuthenticationPrincipal UserAccount userAccount) {
+        return new BaseResponse<>(userService.getUserEmail(userAccount.getUserId()));
+    }
 
     // 닉네임 수정
     @PutMapping
