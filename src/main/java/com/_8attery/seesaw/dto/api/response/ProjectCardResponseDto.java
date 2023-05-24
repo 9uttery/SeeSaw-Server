@@ -1,6 +1,7 @@
 package com._8attery.seesaw.dto.api.response;
 
 import com._8attery.seesaw.domain.project.Intensity;
+import com._8attery.seesaw.service.value.ValueService;
 import lombok.*;
 
 import javax.persistence.EnumType;
@@ -11,7 +12,6 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 public class ProjectCardResponseDto {
 
@@ -23,8 +23,20 @@ public class ProjectCardResponseDto {
 
     private LocalDateTime endedAt;
 
+    private Double progressRate;
+
     @Enumerated(EnumType.STRING)
     private Intensity intensity; // 강도
 
     private String valueName;
+
+    public ProjectCardResponseDto(Long projectId, String projectName, LocalDateTime startedAt, LocalDateTime endedAt, Intensity intensity, String valueName) {
+        this.projectId = projectId;
+        this.projectName = projectName;
+        this.startedAt = startedAt;
+        this.endedAt = endedAt;
+        this.progressRate = ValueService.calculateProgressPercentage(startedAt, endedAt, 100.0);
+        this.intensity = intensity;
+        this.valueName = valueName;
+    }
 }

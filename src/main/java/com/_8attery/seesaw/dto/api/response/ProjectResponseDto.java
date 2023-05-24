@@ -1,15 +1,15 @@
 package com._8attery.seesaw.dto.api.response;
 
 import com._8attery.seesaw.domain.project.Intensity;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
-@ToString
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
