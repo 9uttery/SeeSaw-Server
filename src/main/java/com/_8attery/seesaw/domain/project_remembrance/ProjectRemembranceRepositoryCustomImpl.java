@@ -47,7 +47,7 @@ public class ProjectRemembranceRepositoryCustomImpl implements ProjectRemembranc
                 .from(projectRemembrance)
                 .join(project).on(projectRemembrance.project.id.eq(project.id))
                 .fetchJoin()
-                .where(projectRemembrance.type.eq(type))
+                .where(projectRemembrance.type.eq(type), project.id.eq(projectId))
                 .fetchOne();
     }
 
