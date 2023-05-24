@@ -169,4 +169,11 @@ public class ProjectController {
 
         return ResponseEntity.ok().body(projectService.getProjectQna(userAccount.getUserId(), qnaId));
     }
+
+    @GetMapping("/{projectId}/report")
+    public ResponseEntity<InitialProjectReportResponseDto> getInitialProjectReport(@AuthenticationPrincipal UserAccount userAccount, @PathVariable("projectId") Long projectId) {
+
+        return ResponseEntity.ok().body(projectService.getInitialProjectReport(userAccount.getUserId(), projectId));
+    }
+
 }
