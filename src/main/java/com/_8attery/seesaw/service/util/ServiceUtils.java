@@ -19,6 +19,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Slf4j
 @RequiredArgsConstructor
 @Service
@@ -85,5 +87,9 @@ public class ServiceUtils {
         return projectQnaRepository.findById(projectQnaId).orElseThrow(
                 () -> new ResourceNotFoundException("projectQnaId로 projectQna을 찾을 수 없습니다.")
         );
+    }
+
+    public static String LocalDateTimetoLocalDateString(LocalDateTime localDateTime) {
+        return localDateTime.toLocalDate().format(java.time.format.DateTimeFormatter.ofPattern("yyyy.MM.dd"));
     }
 }

@@ -137,11 +137,11 @@ public class ProjectService {
 
     public ProjectDetailsResponseDto getProjectDetails(Long userId, Long projectId) {
         serviceUtils.retrieveUserById(userId);
-        serviceUtils.retrieveProjectById(projectId);
+        Project rerievedProject = serviceUtils.retrieveProjectById(projectId);
         ProjectDetailsResponseDto result = projectRepositoryCustom.getProjectDetails(projectId);
 
         if (!result.getIsFinished()) {
-            LocalDate middleDate = result.getStartedAt().plusDays(ChronoUnit.DAYS.between(result.getStartedAt(), result.getEndedAt()) / 2);
+            LocalDate middleDate = rerievedProject.getStartedAt().plusDays(ChronoUnit.DAYS.between(rerievedProject.getStartedAt(), rerievedProject.getEndedAt()) / 2).toLocalDate();
             result.setIsHalfProgressed(LocalDateTime.now().toLocalDate().isAfter(middleDate.minusDays(1L)));
         }
 

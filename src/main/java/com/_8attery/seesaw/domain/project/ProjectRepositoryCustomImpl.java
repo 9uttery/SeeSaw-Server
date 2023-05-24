@@ -27,40 +27,42 @@ public class ProjectRepositoryCustomImpl implements ProjectRepositoryCustom {
     @Override
     public ProjectDetailsResponseDto getProjectDetails(Long projectId) {
         ProjectDetailsResponseDto result = jpaQueryFactory
-                .select(Projections.constructor(ProjectDetailsResponseDto.class,
-                        project.id,
-                        project.projectName,
-                        project.intensity,
-                        project.goal,
-                        project.startedAt,
-                        project.endedAt,
-                        project.isFinished,
-                        Expressions.as(
-                                JPAExpressions
-                                        .select(projectRemembrance.id)
-                                        .from(projectRemembrance)
-                                        .where(
-                                                projectRemembrance.project.id.eq(projectId),
-                                                projectRemembrance.type.eq(RemembranceType.MIDDLE)
-                                        ), "middle_remembrance_id"
-                        ),
-                        project.isFinished,
-                        Expressions.as(
-                                JPAExpressions
-                                        .select(projectRemembrance.id)
-                                        .from(projectRemembrance)
-                                        .where(
-                                                projectRemembrance.project.id.eq(projectId),
-                                                projectRemembrance.type.eq(RemembranceType.FINAL)
-                                        ), "final_remembrance_id"
-                        ),
-                        value.id,
-                        value.valueName,
-                        projectEmotion.likeCnt,
-                        projectEmotion.niceCnt,
-                        projectEmotion.idkCnt,
-                        projectEmotion.angryCnt,
-                        projectEmotion.sadCnt)
+                .select(
+                        Projections.constructor(ProjectDetailsResponseDto.class,
+                                project.id,
+                                project.projectName,
+                                project.intensity,
+                                project.goal,
+                                project.startedAt,
+                                project.endedAt,
+                                project.isFinished,
+                                Expressions.as(
+                                        JPAExpressions
+                                                .select(projectRemembrance.id)
+                                                .from(projectRemembrance)
+                                                .where(
+                                                        projectRemembrance.project.id.eq(projectId),
+                                                        projectRemembrance.type.eq(RemembranceType.MIDDLE)
+                                                ), "middle_remembrance_id"
+                                ),
+                                project.isFinished,
+                                Expressions.as(
+                                        JPAExpressions
+                                                .select(projectRemembrance.id)
+                                                .from(projectRemembrance)
+                                                .where(
+                                                        projectRemembrance.project.id.eq(projectId),
+                                                        projectRemembrance.type.eq(RemembranceType.FINAL)
+                                                ), "final_remembrance_id"
+                                ),
+                                value.id,
+                                value.valueName,
+                                projectEmotion.likeCnt,
+                                projectEmotion.niceCnt,
+                                projectEmotion.idkCnt,
+                                projectEmotion.angryCnt,
+                                projectEmotion.sadCnt
+                        )
                 )
                 .from(project)
                 .leftJoin(value).on(value.id.eq(project.value.id))
