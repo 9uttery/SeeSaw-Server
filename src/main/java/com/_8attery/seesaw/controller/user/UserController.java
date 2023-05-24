@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/user")
@@ -39,7 +41,7 @@ public class UserController {
 
     // 닉네임 수정
     @PutMapping
-    public BaseResponse<String> updateUser (@RequestBody NicknameRequestDto req, @AuthenticationPrincipal UserAccount userAccount) throws BaseException {
+    public BaseResponse<String> updateUser(@Valid @RequestBody NicknameRequestDto req, @AuthenticationPrincipal UserAccount userAccount) throws BaseException {
         Long userId = userService.resolveUserById(userAccount.getUserId()).getId();
 
         try {
@@ -48,7 +50,7 @@ public class UserController {
             String nickName = userService.getUserNickname(userId);
 
             return new BaseResponse<>(nickName);
-        } catch(BaseException exception){
+        } catch (BaseException exception) {
             return new BaseResponse<>((exception.getStatus()));
         }
     }
