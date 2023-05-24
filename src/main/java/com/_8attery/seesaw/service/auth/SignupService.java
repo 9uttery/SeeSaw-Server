@@ -31,7 +31,6 @@ public class SignupService {
             LocalDateTime today = LocalDateTime.now();
             signupRepository.setAgreeMarketing(agreeMarketing, userId);
             signupRepository.setNickName(nickName, userId);
-            signupRepository.setEmail(email, userId);
             signupRepository.setCreateAt(today, userId);
 
 
