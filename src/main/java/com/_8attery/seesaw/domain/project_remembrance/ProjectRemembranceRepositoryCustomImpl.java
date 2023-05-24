@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+import static com._8attery.seesaw.domain.project.QProject.project;
 import static com._8attery.seesaw.domain.project_qna.QProjectQna.projectQna;
 import static com._8attery.seesaw.domain.project_remembrance.QProjectRemembrance.projectRemembrance;
 
@@ -38,4 +39,16 @@ public class ProjectRemembranceRepositoryCustomImpl implements ProjectRemembranc
                         .and(projectRemembrance.type.eq(type)))
                 .stream().findFirst().isPresent();
     }
+
+    @Override
+    public ProjectRemembrance getByProjectIdAndType(Long projectId, RemembranceType type) {
+        return jpaQueryFactory
+                .select(projectRemembrance)
+                .from(projectRemembrance)
+                .join(project).on(projectRemembrance.project.id.eq(project.id))
+                .fetchJoin()
+                .where(projectRemembrance.type.eq(type))
+                .fetchOne();
+    }
+
 }

@@ -1,6 +1,7 @@
 package com._8attery.seesaw.dto.api.response;
 
 import com._8attery.seesaw.domain.project.Intensity;
+import com._8attery.seesaw.service.util.ServiceUtils;
 import com._8attery.seesaw.service.value.ValueService;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,8 +18,8 @@ public class ProjectDetailsResponseDto {
     @Enumerated(EnumType.STRING)
     private Intensity intensity;
     private String goal;
-    private LocalDateTime startedAt;
-    private LocalDateTime endedAt;
+    private String startedAt;
+    private String endedAt;
     private Double progressRate;
     private Boolean isHalfProgressed;
     private Long middleRemembranceId;
@@ -37,8 +38,8 @@ public class ProjectDetailsResponseDto {
         this.projectName = projectName;
         this.intensity = intensity;
         this.goal = goal;
-        this.startedAt = startedAt;
-        this.endedAt = endedAt;
+        this.startedAt = ServiceUtils.LocalDateTimetoLocalDateString(startedAt);
+        this.endedAt = ServiceUtils.LocalDateTimetoLocalDateString(endedAt);
         this.progressRate = ValueService.calculateProgressPercentage(startedAt, endedAt, 100.0);
         this.isHalfProgressed = isHalfProgressed;
         this.middleRemembranceId = middleRemembranceId;
