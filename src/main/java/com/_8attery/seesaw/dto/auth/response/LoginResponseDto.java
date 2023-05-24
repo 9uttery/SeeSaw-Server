@@ -16,10 +16,14 @@ public class LoginResponseDto {
     @JsonProperty("refresh_token")
     private String refreshToken;
 
+    @JsonProperty("email")
+    private String email;
+
     @Builder
-    public LoginResponseDto(String accessToken, String refreshToken) {
+    public LoginResponseDto(String accessToken, String refreshToken, String email) {
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
+        this.email = email;
     }
 
 }
