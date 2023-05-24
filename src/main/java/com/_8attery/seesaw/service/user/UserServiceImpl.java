@@ -38,7 +38,6 @@ public class UserServiceImpl implements UserService {
     public void updateNickname(Long userId, NicknameRequestDto nicknameRequestDto) throws BaseException {
         try {
             userRepository.updateUserNickname(userId, nicknameRequestDto.getNickName());
-            userRepository.updateUserEmail(userId, nicknameRequestDto.getEmail());
 
         } catch (Exception exception) {
             exception.printStackTrace();
