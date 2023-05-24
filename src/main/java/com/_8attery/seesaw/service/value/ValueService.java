@@ -35,11 +35,11 @@ public class ValueService {
 
         int year = date.getYear();
 
-//        int count = checkValues(userId, year);
-//        if (count == 3) {
-//            // 가치 3개 이미 존재
-//            throw new BaseException(BaseResponseStatus.VALUES_EXIST);
-//        }
+        int count = checkValues(userId, year);
+        if (count == 3) {
+            // 가치 3개 이미 존재
+            throw new BaseException(BaseResponseStatus.VALUES_EXIST);
+        }
 
         int result = 1;
         LocalDateTime currentDateTime = LocalDateTime.now();
