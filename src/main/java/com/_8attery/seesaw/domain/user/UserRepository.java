@@ -29,4 +29,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "select distinct value_name from ss_value where user_id=:userId", nativeQuery = true)
     List<String> findValues(@Param("userId") Long userId);
 
+    @Modifying(clearAutomatically = true)
+    @Query(value = "update ss_user set email=:email where user_id=:userId", nativeQuery = true)
+    void updateUserEmail(Long userId, String email);
 }

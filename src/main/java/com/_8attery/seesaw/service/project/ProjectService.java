@@ -37,6 +37,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -48,7 +49,6 @@ import static com._8attery.seesaw.exception.BaseResponseStatus.*;
 @Slf4j
 public class ProjectService {
     private final ProjectQuestionRepository projectQuestionRepository;
-
     private final ProjectRepository projectRepository;
     private final ProjectRepositoryCustom projectRepositoryCustom;
     private final ProjectEmotionRepository projectEmotionRepository;
@@ -61,6 +61,9 @@ public class ProjectService {
     private final ProjectQnaRepositoryCustom projectQnaRepositoryCustom;
     private final ProjectQuestionRepositoryCustom projectQuestionRepositoryCustom;
     private final ServiceUtils serviceUtils;
+
+    private static final int MIN = 46;
+    private static final int MAX = 76;
 
     @Transactional
     public ProjectResponseDto addUserProject(Long userId, Long valueId, String projectName, LocalDateTime startedAt, LocalDateTime endedAt, String intensity, String goal) throws BaseException {
@@ -186,7 +189,7 @@ public class ProjectService {
 
         return ProjectQuestionResponseDto
                 .builder()
-                .contents(projectQuestionRepository.findRandomRegularQuestion().getContents())
+                .contents(serviceUtils.retrieveProjectQuestionById(getTodayQuestionId()).getContents())
                 .build();
     }
 
@@ -311,5 +314,11 @@ public class ProjectService {
                 .build();
 
         return resultDto;
+    }
+
+    private Long getTodayQuestionId() {
+        String formattedDate = LocalDateTime.now().format(DateTimeFormatter.BASIC_ISO_DATE);
+        int hashAsInt = Math.abs(formattedDate.hashCode());
+        return (long) MIN + (hashAsInt % (MAX - MIN + 1));
     }
 }

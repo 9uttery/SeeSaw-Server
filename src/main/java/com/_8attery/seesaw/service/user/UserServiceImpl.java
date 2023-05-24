@@ -2,6 +2,7 @@ package com._8attery.seesaw.service.user;
 
 import com._8attery.seesaw.domain.user.User;
 import com._8attery.seesaw.domain.user.UserRepository;
+import com._8attery.seesaw.dto.api.request.NicknameRequestDto;
 import com._8attery.seesaw.dto.api.response.UserHistoryResponseDto;
 import com._8attery.seesaw.exception.BaseException;
 import com._8attery.seesaw.exception.custom.ResourceNotFoundException;
@@ -34,9 +35,10 @@ public class UserServiceImpl implements UserService {
     // 닉네임 수정
     @Override
     @Transactional
-    public void updateNickname(Long userId, String nickName) throws BaseException {
+    public void updateNickname(Long userId, NicknameRequestDto nicknameRequestDto) throws BaseException {
         try {
-            userRepository.updateUserNickname(userId, nickName);
+            userRepository.updateUserNickname(userId, nicknameRequestDto.getNickName());
+            userRepository.updateUserEmail(userId, nicknameRequestDto.getEmail());
 
         } catch (Exception exception) {
             exception.printStackTrace();

@@ -125,6 +125,7 @@ public class AuthServiceImpl implements AuthService {
         return LoginResponseDto.builder()
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
+                .email(targetUser.getEmail())
                 .build();
     }
 
