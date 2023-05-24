@@ -43,7 +43,7 @@ public class UserController {
         Long userId = userService.resolveUserById(userAccount.getUserId()).getId();
 
         try {
-            userService.updateNickname(userId, req.getNickName());
+            userService.updateNickname(userId, req);
 
             String nickName = userService.getUserNickname(userId);
 
