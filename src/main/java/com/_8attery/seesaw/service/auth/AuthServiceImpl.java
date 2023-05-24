@@ -139,4 +139,9 @@ public class AuthServiceImpl implements AuthService {
                 .build();
     }
 
+    @Override
+    public Boolean checkEmail(String email) {
+        return !userRepository.existsByEmail(email);
+    }
+
 }

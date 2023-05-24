@@ -39,4 +39,9 @@ public class AuthController {
     public ResponseEntity<LoginResponseDto> generateAccessTokenByUserId(@RequestBody Long userId) {
         return ResponseEntity.ok(authService.generateAccessTokenByUserId(userId));
     }
+
+    @PostMapping("/check-email")
+    public ResponseEntity<Boolean> checkEmail(@RequestBody String email) {
+        return ResponseEntity.ok(authService.checkEmail(email));
+    }
 }

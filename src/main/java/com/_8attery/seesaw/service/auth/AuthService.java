@@ -23,4 +23,6 @@ public interface AuthService {
     LoginResponseDto getLoginResponseDto(User user);
 
     LoginResponseDto generateAccessTokenByUserId(Long userId);
+
+    Boolean checkEmail(String email);
 }
