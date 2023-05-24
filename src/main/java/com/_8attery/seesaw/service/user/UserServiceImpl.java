@@ -38,7 +38,6 @@ public class UserServiceImpl implements UserService {
     public void updateNickname(Long userId, NicknameRequestDto nicknameRequestDto) throws BaseException {
         try {
             userRepository.updateUserNickname(userId, nicknameRequestDto.getNickName());
-            userRepository.updateUserEmail(userId, nicknameRequestDto.getEmail());
 
         } catch (Exception exception) {
             exception.printStackTrace();
@@ -69,7 +68,7 @@ public class UserServiceImpl implements UserService {
             LocalDate createdAt = userRepository.findUserCreatedAt(userId);
             LocalDate today = LocalDate.now();
 
-            Long days = DAYS.between(createdAt, today);
+            Long days = DAYS.between(createdAt, today) + 1;
             res.setDayCount(days);
 
             // 가치 목록
