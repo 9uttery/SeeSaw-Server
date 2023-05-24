@@ -16,7 +16,7 @@ public interface ValueRepository extends JpaRepository<Value, Long> {
     @Query(value = "insert into ss_value(created_at, value_name, user_id) values(:currentDateTime, :value, :userId)" , nativeQuery = true)
     int setUser3Values(@Param("value") String value, @Param("currentDateTime") LocalDateTime currentDateTime, @Param("userId") Long userId);
 
-    @Query(value = "select count(*) from ss_value where user_id=:userId and and EXTRACT(YEAR FROM created_at) = :year", nativeQuery = true)
+    @Query(value = "select count(*) from ss_value where user_id=:userId and EXTRACT(YEAR FROM created_at) = :year", nativeQuery = true)
     int checkValuesExist(@Param("userId") Long userId, @Param("year") Integer year);
 
     // 사용자 가치 조회
