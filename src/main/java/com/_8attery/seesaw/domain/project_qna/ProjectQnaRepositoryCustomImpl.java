@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import static com._8attery.seesaw.domain.project_qna.QProjectQna.projectQna;
 import static com._8attery.seesaw.domain.project_question.QProjectQuestion.projectQuestion;
+import static com._8attery.seesaw.domain.project_remembrance.QProjectRemembrance.projectRemembrance;
 
 @RequiredArgsConstructor
 @Repository
@@ -34,4 +35,19 @@ public class ProjectQnaRepositoryCustomImpl implements ProjectQnaRepositoryCusto
                 .where(projectQna.id.eq(projectQnaId))
                 .fetchOne();
     }
+
+    @Override
+    public ProjectQna findProjectQnaByProjectRemembranceAndQuestionId(Long projectRemembranceId, Long questionId) {
+        return jpaQueryFactory
+                .select(projectQna)
+                .from(projectQna)
+                .join(projectRemembrance).on(projectQna.projectRemembrance.id.eq(projectRemembrance.id))
+                .fetchJoin()
+                .join(projectQuestion).on(projectQna.projectQuestion.id.eq(projectQuestion.id))
+                .fetchJoin()
+                .where(projectQna.projectQuestion.id.eq(questionId), projectRemembrance.id.eq(projectRemembranceId))
+                .fetchOne();
+    }
+
+
 }

@@ -20,6 +20,7 @@ import com._8attery.seesaw.domain.project_record.ProjectRecordRepositoryCustom;
 import com._8attery.seesaw.domain.project_remembrance.ProjectRemembrance;
 import com._8attery.seesaw.domain.project_remembrance.ProjectRemembranceRepository;
 import com._8attery.seesaw.domain.project_remembrance.ProjectRemembranceRepositoryCustom;
+import com._8attery.seesaw.domain.project_remembrance.RemembranceType;
 import com._8attery.seesaw.dto.api.request.ProjectEmotionRequestDto;
 import com._8attery.seesaw.dto.api.request.ProjectQnaRequestDto;
 import com._8attery.seesaw.dto.api.request.ProjectRecordRequestDto;
@@ -34,6 +35,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -135,12 +137,12 @@ public class ProjectService {
 
     public ProjectDetailsResponseDto getProjectDetails(Long userId, Long projectId) {
         serviceUtils.retrieveUserById(userId);
-        serviceUtils.retrieveProjectById(projectId);
+        Project rerievedProject = serviceUtils.retrieveProjectById(projectId);
         ProjectDetailsResponseDto result = projectRepositoryCustom.getProjectDetails(projectId);
 
         if (!result.getIsFinished()) {
-            LocalDateTime middleDate = result.getStartedAt().plusSeconds(ChronoUnit.SECONDS.between(result.getStartedAt(), result.getEndedAt()) / 2).truncatedTo(ChronoUnit.DAYS);
-            result.setIsHalfProgressed(LocalDateTime.now().toLocalDate().isAfter(middleDate.toLocalDate()));
+            LocalDate middleDate = rerievedProject.getStartedAt().plusDays(ChronoUnit.DAYS.between(rerievedProject.getStartedAt(), rerievedProject.getEndedAt()) / 2).toLocalDate();
+            result.setIsHalfProgressed(LocalDateTime.now().toLocalDate().isAfter(middleDate.minusDays(1L)));
         }
 
         return result;
@@ -278,5 +280,36 @@ public class ProjectService {
         projectRecordRepository.deleteAllInBatch(projectRecordList);
 
         return resultList;
+    }
+
+    public InitialProjectReportResponseDto getInitialProjectReport(Long userId, Long projectId) {
+        serviceUtils.retrieveUserById(userId);
+        Project retrievedProject = serviceUtils.retrieveProjectById(projectId);
+        ProjectReportInfoDto projectReportInfoDto = projectRepositoryCustom.getProjectReportInfo(projectId);
+        projectReportInfoDto.setJointProject(projectRepositoryCustom.getJointProject(userId, projectId, retrievedProject.getStartedAt(), retrievedProject.getEndedAt()));
+        if (!projectRemembranceRepositoryCustom.existsByProjectIdAndType(projectId, RemembranceType.MIDDLE) || !projectRemembranceRepositoryCustom.existsByProjectIdAndType(projectId, RemembranceType.FINAL)) {
+            throw new ConflictRequestException("중간 혹은 최종 회고록이 존재하지 않습니다.");
+        }
+        ProjectRemembrance middleRemembrance = projectRemembranceRepositoryCustom.getByProjectIdAndType(projectId, RemembranceType.MIDDLE);
+        ProjectRemembrance finalRemembrance = projectRemembranceRepositoryCustom.getByProjectIdAndType(projectId, RemembranceType.FINAL);
+
+        InitialProjectReportResponseDto resultDto = InitialProjectReportResponseDto
+                .builder()
+                .projectReportInfoDto(projectReportInfoDto)
+                .emotion1(middleRemembrance.getEmotion())
+                .emotion2(middleRemembrance.getEmotion() == finalRemembrance.getEmotion() ? null : finalRemembrance.getEmotion())
+                .projectMiddleFinalQnaDto(
+                        ProjectMiddleFinalQnaDto
+                                .builder()
+                                .middleAnswer(projectQnaRepositoryCustom.findProjectQnaByProjectRemembranceAndQuestionId(middleRemembrance.getId(), 79L).getAnswerContent())
+                                .finalAnswer(projectQnaRepositoryCustom.findProjectQnaByProjectRemembranceAndQuestionId(finalRemembrance.getId(), 86L).getAnswerContent())
+                                .build()
+                )
+                .todayAnswerCount(projectRecordRepositoryCustom.countAllByProjectAndQuestionExists(retrievedProject.getId(), true))
+                .recordAnswerCount(projectRecordRepositoryCustom.countAllByProjectAndQuestionExists(retrievedProject.getId(), false))
+                .simpleRecordInfo(projectRecordRepositoryCustom.findThreeRandomSimpleRecordByProjectId(retrievedProject.getId()))
+                .build();
+
+        return resultDto;
     }
 }

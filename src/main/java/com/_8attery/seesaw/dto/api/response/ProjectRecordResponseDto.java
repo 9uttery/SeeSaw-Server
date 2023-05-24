@@ -1,6 +1,7 @@
 package com._8attery.seesaw.dto.api.response;
 
 import com._8attery.seesaw.domain.project_record.ProjectRecord;
+import com._8attery.seesaw.service.util.ServiceUtils;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,14 +12,14 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class ProjectRecordResponseDto {
     private Long recordId;
-    private LocalDateTime createdAt;
+    private String createdAt;
     private String question;
     private String contents;
 
     @Builder
     public ProjectRecordResponseDto(Long recordId, LocalDateTime createdAt, String question, String contents) {
         this.recordId = recordId;
-        this.createdAt = createdAt;
+        this.createdAt = ServiceUtils.LocalDateTimetoLocalDateString(createdAt);
         this.question = question;
         this.contents = contents;
     }
