@@ -89,4 +89,9 @@ public class UserServiceImpl implements UserService {
         User retrievedUser = serviceUtils.retrieveUserById(userId);
         userRepository.delete(retrievedUser);
     }
+
+    @Override
+    public String getUserEmail(Long userId) {
+        return serviceUtils.retrieveUserById(userId).getEmail();
+    }
 }

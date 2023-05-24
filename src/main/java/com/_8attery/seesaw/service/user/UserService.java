@@ -16,4 +16,6 @@ public interface UserService {
     UserHistoryResponseDto getUserHistory(Long userId) throws BaseException;
 
     void deleteUser(Long userId);
+
+    String getUserEmail(Long userId);
 }
