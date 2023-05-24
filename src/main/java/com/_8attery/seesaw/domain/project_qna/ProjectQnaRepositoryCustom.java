@@ -4,4 +4,6 @@ import com._8attery.seesaw.dto.api.response.ProjectQnaResponseDto;
 
 public interface ProjectQnaRepositoryCustom {
     ProjectQnaResponseDto findProjectQnaByProjectQnaId(Long projectQnaId);
+
+    ProjectQna findProjectQnaByProjectRemembranceAndQuestionId(Long projectRemembranceId, Long questionId);
 }

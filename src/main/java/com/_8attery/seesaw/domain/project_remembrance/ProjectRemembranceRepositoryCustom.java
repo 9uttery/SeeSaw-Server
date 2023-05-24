@@ -8,4 +8,6 @@ public interface ProjectRemembranceRepositoryCustom {
     List<ProjectRemembranceResponseDto.QnaDto> findQnaListByRemembranceId(Long projectRemembranceId);
 
     Boolean existsByProjectIdAndType(Long projectId, RemembranceType type);
+
+    ProjectRemembrance getByProjectIdAndType(Long projectId, RemembranceType type);
 }
