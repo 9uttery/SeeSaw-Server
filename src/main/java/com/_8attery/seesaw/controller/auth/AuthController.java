@@ -1,5 +1,6 @@
 package com._8attery.seesaw.controller.auth;
 
+import com._8attery.seesaw.dto.api.request.EmailRequestDto;
 import com._8attery.seesaw.dto.auth.request.LoginRequestDto;
 import com._8attery.seesaw.dto.auth.request.RefreshTokenRequestDto;
 import com._8attery.seesaw.dto.auth.response.LoginResponseDto;
@@ -41,7 +42,7 @@ public class AuthController {
     }
 
     @PostMapping("/check-email")
-    public ResponseEntity<Boolean> checkEmail(@RequestBody String email) {
-        return ResponseEntity.ok(authService.checkEmail(email));
+    public ResponseEntity<Boolean> checkEmail(@Valid @RequestBody EmailRequestDto emailRequestDto) {
+        return ResponseEntity.ok(authService.checkEmail(emailRequestDto.getEmail()));
     }
 }
