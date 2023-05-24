@@ -44,8 +44,13 @@ public class SignupService {
                 res = new SignupResponseDto(agreeMarketingResult.booleanValue(), nickNameResult);
             }
 
-            // 배터리 초기 값 80 설정
-            signupRepository.setBattery(userId);
+            // 이미 배터리 정보 있으면 배터리 새로 추가 안되게 처리
+            int battery = signupRepository.getBattery(userId);
+
+            if (battery == 0) {
+                // 배터리 초기 값 80 설정
+                signupRepository.setBattery(userId);
+            }
 
             return res;
         } catch (Exception exception) {

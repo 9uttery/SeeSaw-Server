@@ -33,9 +33,12 @@ public interface SignupRepository extends JpaRepository<User, Long> {
     @Query(value = "select agree_marketing, nick_name from ss_user where user_id=:userId", nativeQuery = true)
     List<Object[]> getInfo(@Param("userId") Long userId);
 
+
     @Modifying(clearAutomatically = true)
     @Query(value = "insert into ss_battery(cur_battery, user_id) values(80, :userId)", nativeQuery = true)
     void setBattery(@Param("userId") Long userId);
 
+    @Query(value = "select count(*) from ss_battery where user_id=:userId", nativeQuery = true)
+    int getBattery(@Param("userId") Long userId);
 
 }
