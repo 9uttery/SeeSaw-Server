@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 @Data
 @NoArgsConstructor
@@ -19,6 +20,7 @@ public class ProjectDetailsResponseDto {
     private Intensity intensity;
     private String goal;
     private String startedAt;
+    private String halfDate;
     private String endedAt;
     private Double progressRate;
     private Boolean isHalfProgressed;
@@ -39,6 +41,7 @@ public class ProjectDetailsResponseDto {
         this.intensity = intensity;
         this.goal = goal;
         this.startedAt = ServiceUtils.LocalDateTimetoLocalDateString(startedAt);
+        this.halfDate = ServiceUtils.LocalDateTimetoLocalDateString(startedAt.plusDays(ChronoUnit.DAYS.between(startedAt, endedAt) / 2));
         this.endedAt = ServiceUtils.LocalDateTimetoLocalDateString(endedAt);
         this.progressRate = ValueService.calculateProgressPercentage(startedAt, endedAt, 100.0);
         this.isHalfProgressed = isHalfProgressed;
