@@ -84,7 +84,14 @@ public class BatteryService {
             } else if (req >= sleepGoal) {
                 variation = 10;
             }
-            batteryRepository.updateCurBattery(userId, variation); // 배터리 갱신
+
+            Integer curBattery = batteryRepository.findUserCurActivity(userId);
+            Integer varBattery = curBattery + variation;
+            if (varBattery >= 100) {
+                batteryRepository.updateCurBattery100(userId);
+            } else {
+                batteryRepository.updateCurBattery(userId, variation); // 배터리 갱신
+            }
             batteryRepository.addUserSleepVariation(batteryId, createdAt, type, variation); // 배터리 증감 내역 레코드 추가
 
             return batteryRepository.findUserCurSleep(userId);
@@ -257,11 +264,11 @@ public class BatteryService {
                         sleepRes.setSleep(result.getSleep());
 
                         if (result.getSleep() < sleepGoal*0.5) {
-                            sleepRes.setColor(1);
+                            sleepRes.setColor(3);
                         } else if (result.getSleep() < sleepGoal && result.getSleep() >= sleepGoal*0.5) {
                             sleepRes.setColor(2);
                         } else if (result.getSleep() >= sleepGoal) {
-                            sleepRes.setColor(3);
+                            sleepRes.setColor(1);
                         }
                         break;
                     } else {
