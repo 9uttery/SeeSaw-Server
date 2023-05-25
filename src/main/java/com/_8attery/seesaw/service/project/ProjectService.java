@@ -49,7 +49,8 @@ import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com._8attery.seesaw.exception.BaseResponseStatus.*;
+import static com._8attery.seesaw.exception.BaseResponseStatus.DATABASE_ERROR;
+import static com._8attery.seesaw.exception.BaseResponseStatus.POSTS_EMPTY_POST_ID;
 
 @Service
 @RequiredArgsConstructor
@@ -146,14 +147,17 @@ public class ProjectService {
 
     @Transactional
     public void deleteUserProject(Long projectId) throws BaseException {
-        try {
-            int result = projectRepository.deleteProjectByProjectId(projectId);
-            if (result == 0)
-                throw new BaseException(DELETE_FAIL_POST);
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            throw new BaseException(DATABASE_ERROR);
-        }
+//        try {
+//            int result = projectRepository.deleteProjectByProjectId(projectId);
+//            projectRepository.d
+//            if (result == 0)
+//                throw new BaseException(DELETE_FAIL_POST);
+//        } catch (Exception exception) {
+//            exception.printStackTrace();
+//            throw new BaseException(DATABASE_ERROR);
+//        }
+        Project retrievedProject = serviceUtils.retrieveProjectById(projectId);
+        projectRepository.delete(retrievedProject);
     }
 
     public List<ProjectCardResponseDto> getProgressProjectList(Long userId) throws BaseException {
