@@ -33,7 +33,7 @@ public class ProjectQna {
     @Column(name = "answer_choice")
     private Long answerChoice; // 답변 선택지
 
-    @Column(name = "answer_content")
+    @Column(name = "answer_content", columnDefinition = "TEXT")
     private String answerContent; // 답변 내용
 
     @Builder
