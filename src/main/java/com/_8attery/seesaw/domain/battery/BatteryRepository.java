@@ -69,7 +69,7 @@ public interface BatteryRepository extends JpaRepository<Battery, Long> {
             "where b2.user.id=:userId " +
             "and b1.createdAt between :startDate and :endDate " +
             "order by b1.createdAt desc")
-    List<BatteryPercentResponseDto> findUserBatteryHistory(@Param("userId") Long userId, @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+    List<BatteryPercentResponseDto> findUserBatteryHistory(@Param("userId") Long userId, @Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
 
 
     // 배터리 증감 조회 (30일 증감 내역)
