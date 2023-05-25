@@ -106,8 +106,11 @@ public class BatteryService {
     @Transactional
     public List<BatteryPercentResponseDto> getUserBatteryHistory(Long userId) throws BaseException {
         try {
-            LocalDateTime endDate = LocalDateTime.now();  // Current date and time
-            LocalDateTime startDate = endDate.minusDays(7);  // 7 days ago
+//            LocalDateTime endDate = LocalDateTime.now();  // Current date and time
+//            LocalDateTime startDate = endDate.minusDays(7);  // 7 days ago
+
+            LocalDate endDate = LocalDate.now();  // Current date and time
+            LocalDate startDate = endDate.minusDays(7);  // 7 days ago
 
             return batteryRepository.findUserBatteryHistory(userId, startDate, endDate);
 
