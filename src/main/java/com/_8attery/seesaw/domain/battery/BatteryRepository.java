@@ -47,6 +47,10 @@ public interface BatteryRepository extends JpaRepository<Battery, Long> {
     @Query(value = "update ss_battery set cur_battery = cur_battery + :variation where user_id=:userId", nativeQuery = true)
     void updateCurBattery(@Param("userId") Long userId, @Param("variation") Integer variation);
 
+    @Modifying(clearAutomatically = true)
+    @Query(value = "update ss_battery set cur_battery = 100 where user_id=:userId", nativeQuery = true)
+    void updateCurBattery100(Long userId);
+
     // 배터리 증감 내역 레코드 추가
     @Query(value = "select battery_id from ss_battery where user_id=:userId", nativeQuery = true)
     Long findUserBatteryId(@Param("userId") Long userId);
@@ -105,4 +109,6 @@ public interface BatteryRepository extends JpaRepository<Battery, Long> {
 
     @Query(value = "select value_name from ss_value where value_id=:valueId", nativeQuery = true)
     String findUserValue(@Param("valueId") Long valueId);
+
+
 }

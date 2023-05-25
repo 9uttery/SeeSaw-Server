@@ -1,5 +1,6 @@
 package com._8attery.seesaw.service.charge;
 
+import com._8attery.seesaw.domain.battery.BatteryRepository;
 import com._8attery.seesaw.domain.charge.ChargeRepository;
 import com._8attery.seesaw.dto.api.response.ChargeResponseDto;
 import com._8attery.seesaw.exception.BaseException;
@@ -19,6 +20,7 @@ import static com._8attery.seesaw.exception.BaseResponseStatus.DATABASE_ERROR;
 public class ChargeService {
 
     private final ChargeRepository chargeRepository;
+    private final BatteryRepository batteryRepository;
 
     // 고속충전 사용
     @Transactional
@@ -28,8 +30,15 @@ public class ChargeService {
             chargeRepository.addUserCharge(userId, valueId, chargeName, createdAt);
             // 오늘 고속충전 여부 수정
             chargeRepository.updateIsCharged(userId);
-            // 사용자 배터리 + 10
-            chargeRepository.updateUserBattery(userId);
+
+            Integer curBattery = batteryRepository.findUserCurActivity(userId);
+            Integer varBattery = curBattery + 10;
+            if (varBattery >= 100) {
+                batteryRepository.updateCurBattery100(userId);
+            } else {
+                // 사용자 배터리 + 10
+                chargeRepository.updateUserBattery(userId);
+            }
 
             // 배터리 증감 내역 레코드 추가
             String type = "CHARGE";
