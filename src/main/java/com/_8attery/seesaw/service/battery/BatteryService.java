@@ -264,11 +264,11 @@ public class BatteryService {
                         sleepRes.setSleep(result.getSleep());
 
                         if (result.getSleep() < sleepGoal*0.5) {
-                            sleepRes.setColor(1);
+                            sleepRes.setColor(3);
                         } else if (result.getSleep() < sleepGoal && result.getSleep() >= sleepGoal*0.5) {
                             sleepRes.setColor(2);
                         } else if (result.getSleep() >= sleepGoal) {
-                            sleepRes.setColor(3);
+                            sleepRes.setColor(1);
                         }
                         break;
                     } else {
