@@ -99,6 +99,7 @@ public class ProjectService {
                         .endedAt(endedAt)
                         .intensity(Intensity.valueOf(intensity))
                         .goal(goal)
+                        .isFinished(false)
                         .build();
 
         projectRepository.save(newProject);
