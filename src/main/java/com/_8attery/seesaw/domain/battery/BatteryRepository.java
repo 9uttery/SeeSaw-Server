@@ -50,7 +50,7 @@ public interface BatteryRepository extends JpaRepository<Battery, Long> {
 
     @Modifying(clearAutomatically = true)
     @Query(value = "update ss_battery set cur_battery = 100 where user_id=:userId", nativeQuery = true)
-    void updateCurBattery100(Long userId);
+    void updateCurBattery100(@Param("userId") Long userId);
 
     // 배터리 증감 내역 레코드 추가
     @Query(value = "select battery_id from ss_battery where user_id=:userId", nativeQuery = true)

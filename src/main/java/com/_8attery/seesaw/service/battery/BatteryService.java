@@ -106,9 +106,6 @@ public class BatteryService {
     @Transactional
     public List<BatteryPercentResponseDto> getUserBatteryHistory(Long userId) throws BaseException {
         try {
-//            LocalDateTime endDate = LocalDateTime.now();  // Current date and time
-//            LocalDateTime startDate = endDate.minusDays(7);  // 7 days ago
-
             LocalDateTime endDate = LocalDate.now().atStartOfDay();  // Current date and time
             LocalDateTime startDate = endDate.minusDays(7);  // 7 days ago
 
@@ -262,6 +259,19 @@ public class BatteryService {
             int todayDay = date.getDayOfMonth();  // Extract the day of the month
 
             for (SleepResponseDto sleepRes : res) {
+                Integer curSleep = batteryRepository.findUserCurSleep(userId);
+                if (todayDay == sleepRes.getDay() && curSleep != null) {
+                    sleepRes.setSleep(curSleep);
+                    // 오늘 수면량 입력했으면 따로 확인
+                    if (curSleep < sleepGoal * 0.5) {
+                        sleepRes.setColor(3);
+                    } else if (curSleep < sleepGoal && curSleep >= sleepGoal * 0.5) {
+                        sleepRes.setColor(2);
+                    } else if (curSleep >= sleepGoal) {
+                        sleepRes.setColor(1);
+                    }
+                }
+
                 for (SleepDto result : resultList) {
                     if (result.getDay() == sleepRes.getDay()) {
                         sleepRes.setSleep(result.getSleep());
