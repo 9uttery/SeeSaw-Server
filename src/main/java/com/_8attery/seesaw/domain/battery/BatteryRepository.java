@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -66,9 +67,10 @@ public interface BatteryRepository extends JpaRepository<Battery, Long> {
     // 배터리 수준 조회 (7일 퍼센트)
     @Query(value = "select distinct new com._8attery.seesaw.dto.api.response.BatteryPercentResponseDto(b1.createdAt, b1.batteryPercentage) from BatteryHistory b1 join b1.battery b2 " +
             "where b2.user.id=:userId " +
-            "and b1.createdAt between :startDate and :endDate " +
+            "and DATE(b1.createdAt) between :startDate and :endDate " +
             "order by b1.createdAt desc")
-    List<BatteryPercentResponseDto> findUserBatteryHistory(@Param("userId") Long userId, @Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
+    List<BatteryPercentResponseDto> findUserBatteryHistory(@Param("userId") Long userId, @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+
 
     // 배터리 증감 조회 (30일 증감 내역)
     @Query(value = "select DISTINCT new com._8attery.seesaw.dto.api.response.BatteryDataVariationDto(b1.createdAt, b1.sleepTime, b1.sleepGoal, " +
