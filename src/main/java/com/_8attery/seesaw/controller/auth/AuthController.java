@@ -1,5 +1,6 @@
 package com._8attery.seesaw.controller.auth;
 
+import com._8attery.seesaw.annotation.ClientIp;
 import com._8attery.seesaw.dto.api.request.EmailRequestDto;
 import com._8attery.seesaw.dto.auth.request.LoginRequestDto;
 import com._8attery.seesaw.dto.auth.request.RefreshTokenRequestDto;
@@ -21,19 +22,19 @@ public class AuthController {
     private final AuthServiceImpl authService;
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponseDto> login(@Valid @RequestBody LoginRequestDto loginRequestDto) {
+    public ResponseEntity<LoginResponseDto> login(@Valid @RequestBody LoginRequestDto loginRequestDto, @ClientIp String clientIp) {
         if (loginRequestDto.getProvider().equalsIgnoreCase("APPLE")) {
-            return ResponseEntity.ok(authService.appleLogin(loginRequestDto));
+            return ResponseEntity.ok(authService.appleLogin(loginRequestDto, clientIp));
         } else if (loginRequestDto.getProvider().equalsIgnoreCase("KAKAO")) {
-            return ResponseEntity.ok(authService.kakaoLogin(loginRequestDto));
+            return ResponseEntity.ok(authService.kakaoLogin(loginRequestDto, clientIp));
         } else {
             throw new IllegalArgumentException("Provider값이 KAKAO 또는 APPLE이 아닙니다.");
         }
     }
 
     @PostMapping("/regenerate-token")
-    public ResponseEntity<LoginResponseDto> regenerateAccessToken(@Valid @RequestBody RefreshTokenRequestDto refreshTokenRequestDto) {
-        return ResponseEntity.ok(authService.regenerateAccessToken(refreshTokenRequestDto));
+    public ResponseEntity<LoginResponseDto> regenerateAccessToken(@Valid @RequestBody RefreshTokenRequestDto refreshTokenRequestDto, @ClientIp String clientIp) {
+        return ResponseEntity.ok(authService.regenerateAccessToken(refreshTokenRequestDto, clientIp));
     }
 
     @PostMapping("/test/generate-token")
