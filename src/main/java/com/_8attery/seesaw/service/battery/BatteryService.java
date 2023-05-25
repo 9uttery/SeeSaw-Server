@@ -123,7 +123,7 @@ public class BatteryService {
         try {
             Long batteryId = batteryRepository.findUserBatteryId(userId);
 
-            LocalDateTime endDate = LocalDateTime.now();  // Current date and time
+            LocalDateTime endDate = LocalDate.now().atStartOfDay();  // Current date and time
             LocalDateTime startDate = endDate.minusDays(30);  // 30 days ago
 
             List<BatteryDataVariationDto> variationData = batteryRepository.findUserBatteryVariation(batteryId, startDate, endDate);
