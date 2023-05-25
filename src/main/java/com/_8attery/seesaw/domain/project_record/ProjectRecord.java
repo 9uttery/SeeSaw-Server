@@ -31,7 +31,7 @@ public class ProjectRecord {
     @JoinColumn(name = "project_question_id")
     private ProjectQuestion projectQuestion; // 기록 질문
 
-    @Column(name = "contents", nullable = false)
+    @Column(name = "contents", nullable = false, columnDefinition = "TEXT")
     private String contents; // 기록 내용
 
     @Column(name = "created_at", nullable = false)
