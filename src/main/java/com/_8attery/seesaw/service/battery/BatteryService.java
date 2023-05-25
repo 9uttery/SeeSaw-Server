@@ -6,15 +6,19 @@ import com._8attery.seesaw.domain.charge.Charge;
 import com._8attery.seesaw.dto.api.response.*;
 import com._8attery.seesaw.exception.BaseException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 import static com._8attery.seesaw.exception.BaseResponseStatus.DATABASE_ERROR;
 
+@Slf4j
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -31,6 +35,7 @@ public class BatteryService {
             return batteryRepository.findUserActivityGoal(userId);
 
         } catch (Exception exception) {
+            log.info(exception.getMessage());
             exception.printStackTrace();
             throw new BaseException(DATABASE_ERROR);
         }
@@ -45,6 +50,7 @@ public class BatteryService {
             return batteryRepository.findUserSleepGoal(userId);
 
         } catch (Exception exception) {
+            log.info(exception.getMessage());
             exception.printStackTrace();
             throw new BaseException(DATABASE_ERROR);
         }
@@ -59,6 +65,7 @@ public class BatteryService {
             return batteryRepository.findUserCurActivity(userId);
 
         } catch (Exception exception) {
+            log.info(exception.getMessage());
             exception.printStackTrace();
             throw new BaseException(DATABASE_ERROR);
         }
@@ -85,7 +92,7 @@ public class BatteryService {
                 variation = 10;
             }
 
-            Integer curBattery = batteryRepository.findUserCurActivity(userId);
+            Integer curBattery = batteryRepository.findUserCurBattery(userId);
             Integer varBattery = curBattery + variation;
             if (varBattery >= 100) {
                 batteryRepository.updateCurBattery100(userId);
@@ -97,6 +104,7 @@ public class BatteryService {
             return batteryRepository.findUserCurSleep(userId);
 
         } catch (Exception exception) {
+            log.info(exception.getMessage());
             exception.printStackTrace();
             throw new BaseException(DATABASE_ERROR);
         }
@@ -112,6 +120,7 @@ public class BatteryService {
             return batteryRepository.findUserBatteryHistory(userId, startDate, endDate);
 
         } catch (Exception exception) {
+            log.info(exception.getMessage());
             exception.printStackTrace();
             throw new BaseException(DATABASE_ERROR);
         }
@@ -155,6 +164,7 @@ public class BatteryService {
             return combinedData;
 
         } catch (Exception exception) {
+            log.info(exception.getMessage());
             exception.printStackTrace();
             throw new BaseException(DATABASE_ERROR);
         }
@@ -202,8 +212,10 @@ public class BatteryService {
                             activityRes.setColor(1);
                         } else if (result.getActivity() < activityGoal + 50 && result.getActivity() >= activityGoal) {
                             activityRes.setColor(2);
-                        } else if (result.getActivity() < activityGoal) {
+                        } else if (result.getActivity() < activityGoal && result.getActivity() != 0) {
                             activityRes.setColor(3);
+                        } else if (result.getActivity() == 0) {
+                            activityRes.setColor(0);
                         }
                         break;
                     } else {
@@ -221,6 +233,7 @@ public class BatteryService {
             return res;
 
         } catch (Exception exception) {
+            log.info(exception.getMessage());
             exception.printStackTrace();
             throw new BaseException(DATABASE_ERROR);
         }
@@ -257,6 +270,7 @@ public class BatteryService {
             int todayYear = date.getYear();       // Extract the year
             int todayMonth = date.getMonthValue();  // Extract the month as an integer (1-12)
             int todayDay = date.getDayOfMonth();  // Extract the day of the month
+            Integer curSleep = batteryRepository.findUserCurSleep(userId);
 
             for (SleepResponseDto sleepRes : res) {
 
@@ -283,8 +297,7 @@ public class BatteryService {
                     }
                 }
 
-                Integer curSleep = batteryRepository.findUserCurSleep(userId);
-                if (todayDay == sleepRes.getDay() && curSleep != null) {
+                if (todayMonth == month && todayDay == sleepRes.getDay() && curSleep != null) {
                     sleepRes.setSleep(curSleep);
                     // 오늘 수면량 입력했으면 따로 확인
                     if (curSleep < sleepGoal * 0.5) {
@@ -300,6 +313,7 @@ public class BatteryService {
             return res;
 
         } catch (Exception exception) {
+            log.info(exception.getMessage());
             exception.printStackTrace();
             throw new BaseException(DATABASE_ERROR);
         }
@@ -335,6 +349,7 @@ public class BatteryService {
             return res;
 
         } catch (Exception exception) {
+            log.info(exception.getMessage());
             exception.printStackTrace();
             throw new BaseException(DATABASE_ERROR);
         }
