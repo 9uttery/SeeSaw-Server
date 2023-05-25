@@ -296,6 +296,25 @@ public class ProjectService {
         ProjectRemembrance middleRemembrance = projectRemembranceRepositoryCustom.getByProjectIdAndType(projectId, RemembranceType.MIDDLE);
         ProjectRemembrance finalRemembrance = projectRemembranceRepositoryCustom.getByProjectIdAndType(projectId, RemembranceType.FINAL);
 
+        List<ProjectQna> projectQnaList = new ArrayList<>();
+        projectQnaList.add(projectQnaRepositoryCustom.findProjectQnaByProjectRemembranceAndQuestionId(middleRemembrance.getId(), 77L));
+        projectQnaList.add(projectQnaRepositoryCustom.findProjectQnaByProjectRemembranceAndQuestionId(finalRemembrance.getId(), 83L));
+        projectQnaList.add(projectQnaRepositoryCustom.findProjectQnaByProjectRemembranceAndQuestionId(middleRemembrance.getId(), 78L));
+        projectQnaList.add(projectQnaRepositoryCustom.findProjectQnaByProjectRemembranceAndQuestionId(finalRemembrance.getId(), 84L));
+        projectQnaList.add(projectQnaRepositoryCustom.findProjectQnaByProjectRemembranceAndQuestionId(middleRemembrance.getId(), 80L));
+        projectQnaList.add(projectQnaRepositoryCustom.findProjectQnaByProjectRemembranceAndQuestionId(finalRemembrance.getId(), 88L));
+        projectQnaList.add(projectQnaRepositoryCustom.findProjectQnaByProjectRemembranceAndQuestionId(middleRemembrance.getId(), 81L));
+        projectQnaList.add(projectQnaRepositoryCustom.findProjectQnaByProjectRemembranceAndQuestionId(finalRemembrance.getId(), 89L));
+        projectQnaList.add(projectQnaRepositoryCustom.findProjectQnaByProjectRemembranceAndQuestionId(middleRemembrance.getId(), 82L));
+        projectQnaList.add(projectQnaRepositoryCustom.findProjectQnaByProjectRemembranceAndQuestionId(finalRemembrance.getId(), 90L));
+
+        List<InitialProjectReportResponseDto.AnswerContentDto> answerContentDtoList = projectQnaList.stream().map(projectQna -> InitialProjectReportResponseDto.AnswerContentDto
+                .builder()
+                .choice(projectQna.getAnswerChoice())
+                .content(projectQna.getAnswerContent())
+                .remembranceType(projectQna.getProjectRemembrance().getType())
+                .build()).collect(Collectors.toList());
+
         InitialProjectReportResponseDto resultDto = InitialProjectReportResponseDto
                 .builder()
                 .projectReportInfoDto(projectReportInfoDto)
@@ -311,6 +330,7 @@ public class ProjectService {
                 .todayAnswerCount(projectRecordRepositoryCustom.countAllByProjectAndQuestionExists(retrievedProject.getId(), true))
                 .recordAnswerCount(projectRecordRepositoryCustom.countAllByProjectAndQuestionExists(retrievedProject.getId(), false))
                 .simpleRecordInfo(projectRecordRepositoryCustom.findThreeRandomSimpleRecordByProjectId(retrievedProject.getId()))
+                .answerContentList(answerContentDtoList)
                 .build();
 
         return resultDto;
