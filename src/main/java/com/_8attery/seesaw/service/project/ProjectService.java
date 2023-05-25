@@ -1,5 +1,9 @@
 package com._8attery.seesaw.service.project;
 
+import com._8attery.seesaw.domain.battery.Battery;
+import com._8attery.seesaw.domain.battery.BatteryRepositoryCustom;
+import com._8attery.seesaw.domain.charge.ChargeRepositoryCustom;
+import com._8attery.seesaw.domain.project.Intensity;
 import com._8attery.seesaw.domain.project.Project;
 import com._8attery.seesaw.domain.project.ProjectRepository;
 import com._8attery.seesaw.domain.project.ProjectRepositoryCustom;
@@ -21,6 +25,9 @@ import com._8attery.seesaw.domain.project_remembrance.ProjectRemembrance;
 import com._8attery.seesaw.domain.project_remembrance.ProjectRemembranceRepository;
 import com._8attery.seesaw.domain.project_remembrance.ProjectRemembranceRepositoryCustom;
 import com._8attery.seesaw.domain.project_remembrance.RemembranceType;
+import com._8attery.seesaw.domain.user.User;
+import com._8attery.seesaw.domain.value.Value;
+import com._8attery.seesaw.domain.value.ValueRepositoryCustom;
 import com._8attery.seesaw.dto.api.request.ProjectEmotionRequestDto;
 import com._8attery.seesaw.dto.api.request.ProjectQnaRequestDto;
 import com._8attery.seesaw.dto.api.request.ProjectRecordRequestDto;
@@ -48,6 +55,7 @@ import static com._8attery.seesaw.exception.BaseResponseStatus.*;
 @RequiredArgsConstructor
 @Slf4j
 public class ProjectService {
+    private static final long[] REPORT_FLOW = new long[]{77L, 83L, 78L, 84L, 80L, 88L, 81L, 89L, 82L, 90L};
     private final ProjectQuestionRepository projectQuestionRepository;
     private final ProjectRepository projectRepository;
     private final ProjectRepositoryCustom projectRepositoryCustom;
@@ -60,24 +68,54 @@ public class ProjectService {
     private final ProjectQnaRepository projectQnaRepository;
     private final ProjectQnaRepositoryCustom projectQnaRepositoryCustom;
     private final ProjectQuestionRepositoryCustom projectQuestionRepositoryCustom;
+    private final ValueRepositoryCustom valueRepositoryCustom;
+    private final BatteryRepositoryCustom batteryRepositoryCustom;
     private final ServiceUtils serviceUtils;
-
+    private final ChargeRepositoryCustom chargeRepositoryCustom;
     private static final int MIN = 46;
     private static final int MAX = 76;
 
     @Transactional
     public ProjectResponseDto addUserProject(Long userId, Long valueId, String projectName, LocalDateTime startedAt, LocalDateTime endedAt, String intensity, String goal) throws BaseException {
+        User retrievedUser = serviceUtils.retrieveUserById(userId);
+        Value retrievedValue = serviceUtils.retrieveValueById(valueId);
+//        try {
+//            projectRepository.addIngProject(userId, valueId, projectName, startedAt, endedAt, intensity, goal);
+//
+//            Optional<ProjectResponseDto> projectResponseDto = projectRepository.getProject(userId, valueId, projectName);
+//            return projectResponseDto.orElse(new ProjectResponseDto(0L, null, null, null, null, null, false));
+//
+//        } catch (Exception exception) {
+//            exception.printStackTrace();
+//            throw new BaseException(DATABASE_ERROR);
+//        }
 
-        try {
-            projectRepository.addIngProject(userId, valueId, projectName, startedAt, endedAt, intensity, goal);
+        Project newProject =
+                Project.builder()
+                        .user(retrievedUser)
+                        .value(retrievedValue)
+                        .projectName(projectName)
+                        .startedAt(startedAt)
+                        .endedAt(endedAt)
+                        .intensity(Intensity.valueOf(intensity))
+                        .goal(goal)
+                        .isFinished(false)
+                        .build();
 
-            Optional<ProjectResponseDto> projectResponseDto = projectRepository.getProject(userId, valueId, projectName);
-            return projectResponseDto.orElse(new ProjectResponseDto(0L, null, null, null, null, null, false));
+        projectRepository.save(newProject);
 
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            throw new BaseException(DATABASE_ERROR);
-        }
+        projectEmotionRepository.save(
+                ProjectEmotion.builder()
+                        .project(newProject)
+                        .likeCnt(0)
+                        .niceCnt(0)
+                        .idkCnt(0)
+                        .sadCnt(0)
+                        .angryCnt(0)
+                        .build()
+        );
+
+        return ProjectResponseDto.of(newProject);
     }
 
     @Transactional
@@ -186,10 +224,12 @@ public class ProjectService {
 
     public ProjectQuestionResponseDto getRandomRegularQuestion(Long userId) {
         serviceUtils.retrieveUserById(userId);
+        ProjectQuestion question = serviceUtils.retrieveProjectQuestionById(getTodayQuestionId());
 
         return ProjectQuestionResponseDto
                 .builder()
-                .contents(serviceUtils.retrieveProjectQuestionById(getTodayQuestionId()).getContents())
+                .id(question.getId())
+                .contents(question.getContents())
                 .build();
     }
 
@@ -288,25 +328,42 @@ public class ProjectService {
     public InitialProjectReportResponseDto getInitialProjectReport(Long userId, Long projectId) {
         serviceUtils.retrieveUserById(userId);
         Project retrievedProject = serviceUtils.retrieveProjectById(projectId);
-        ProjectReportInfoDto projectReportInfoDto = projectRepositoryCustom.getProjectReportInfo(projectId);
-        projectReportInfoDto.setJointProject(projectRepositoryCustom.getJointProject(userId, projectId, retrievedProject.getStartedAt(), retrievedProject.getEndedAt()));
         if (!projectRemembranceRepositoryCustom.existsByProjectIdAndType(projectId, RemembranceType.MIDDLE) || !projectRemembranceRepositoryCustom.existsByProjectIdAndType(projectId, RemembranceType.FINAL)) {
             throw new ConflictRequestException("중간 혹은 최종 회고록이 존재하지 않습니다.");
         }
+        ProjectReportInfoDto projectReportInfoDto = projectRepositoryCustom.getProjectReportInfo(projectId);
+        projectReportInfoDto.setJointProject(projectRepositoryCustom.getJointProject(userId, projectId, retrievedProject.getStartedAt(), retrievedProject.getEndedAt()));
         ProjectRemembrance middleRemembrance = projectRemembranceRepositoryCustom.getByProjectIdAndType(projectId, RemembranceType.MIDDLE);
         ProjectRemembrance finalRemembrance = projectRemembranceRepositoryCustom.getByProjectIdAndType(projectId, RemembranceType.FINAL);
 
         List<ProjectQna> projectQnaList = new ArrayList<>();
-        projectQnaList.add(projectQnaRepositoryCustom.findProjectQnaByProjectRemembranceAndQuestionId(middleRemembrance.getId(), 77L));
-        projectQnaList.add(projectQnaRepositoryCustom.findProjectQnaByProjectRemembranceAndQuestionId(finalRemembrance.getId(), 83L));
-        projectQnaList.add(projectQnaRepositoryCustom.findProjectQnaByProjectRemembranceAndQuestionId(middleRemembrance.getId(), 78L));
-        projectQnaList.add(projectQnaRepositoryCustom.findProjectQnaByProjectRemembranceAndQuestionId(finalRemembrance.getId(), 84L));
-        projectQnaList.add(projectQnaRepositoryCustom.findProjectQnaByProjectRemembranceAndQuestionId(middleRemembrance.getId(), 80L));
-        projectQnaList.add(projectQnaRepositoryCustom.findProjectQnaByProjectRemembranceAndQuestionId(finalRemembrance.getId(), 88L));
-        projectQnaList.add(projectQnaRepositoryCustom.findProjectQnaByProjectRemembranceAndQuestionId(middleRemembrance.getId(), 81L));
-        projectQnaList.add(projectQnaRepositoryCustom.findProjectQnaByProjectRemembranceAndQuestionId(finalRemembrance.getId(), 89L));
-        projectQnaList.add(projectQnaRepositoryCustom.findProjectQnaByProjectRemembranceAndQuestionId(middleRemembrance.getId(), 82L));
-        projectQnaList.add(projectQnaRepositoryCustom.findProjectQnaByProjectRemembranceAndQuestionId(finalRemembrance.getId(), 90L));
+
+//        projectQnaList.add(projectQnaRepositoryCustom.findProjectQnaByProjectRemembranceAndQuestionId(middleRemembrance.getId(), 77L));
+//        projectQnaList.add(projectQnaRepositoryCustom.findProjectQnaByProjectRemembranceAndQuestionId(finalRemembrance.getId(), 83L));
+//        projectQnaList.add(projectQnaRepositoryCustom.findProjectQnaByProjectRemembranceAndQuestionId(middleRemembrance.getId(), 78L));
+//        projectQnaList.add(projectQnaRepositoryCustom.findProjectQnaByProjectRemembranceAndQuestionId(finalRemembrance.getId(), 84L));
+//        projectQnaList.add(projectQnaRepositoryCustom.findProjectQnaByProjectRemembranceAndQuestionId(middleRemembrance.getId(), 80L));
+//        projectQnaList.add(projectQnaRepositoryCustom.findProjectQnaByProjectRemembranceAndQuestionId(finalRemembrance.getId(), 88L));
+//        projectQnaList.add(projectQnaRepositoryCustom.findProjectQnaByProjectRemembranceAndQuestionId(middleRemembrance.getId(), 81L));
+//        projectQnaList.add(projectQnaRepositoryCustom.findProjectQnaByProjectRemembranceAndQuestionId(finalRemembrance.getId(), 89L));
+//        projectQnaList.add(projectQnaRepositoryCustom.findProjectQnaByProjectRemembranceAndQuestionId(middleRemembrance.getId(), 82L));
+//        projectQnaList.add(projectQnaRepositoryCustom.findProjectQnaByProjectRemembranceAndQuestionId(finalRemembrance.getId(), 90L));
+
+        for (int i = 0; i < REPORT_FLOW.length; i++) {
+            ProjectQna retrievedQna = projectQnaRepositoryCustom.findProjectQnaByProjectRemembranceAndQuestionId(middleRemembrance.getId(), REPORT_FLOW[i]);
+            if (retrievedQna == null) {
+                log.info("{}번 질문이 존재하지 않음", REPORT_FLOW[i]);
+                throw new ConflictRequestException("중간 회고록이 유효하지 않습니다.");
+            }
+            projectQnaList.add(retrievedQna);
+            retrievedQna = projectQnaRepositoryCustom.findProjectQnaByProjectRemembranceAndQuestionId(finalRemembrance.getId(), REPORT_FLOW[++i]);
+            if (retrievedQna == null) {
+                log.info("{}번 질문이 존재하지 않음", REPORT_FLOW[i]);
+                throw new ConflictRequestException("최종 회고록이 유효하지 않습니다.");
+            }
+            projectQnaList.add(retrievedQna);
+        }
+
 
         List<InitialProjectReportResponseDto.AnswerContentDto> answerContentDtoList = projectQnaList.stream().map(projectQna -> InitialProjectReportResponseDto.AnswerContentDto
                 .builder()
@@ -340,5 +397,38 @@ public class ProjectService {
         String formattedDate = LocalDateTime.now().format(DateTimeFormatter.BASIC_ISO_DATE);
         int hashAsInt = Math.abs(formattedDate.hashCode());
         return (long) MIN + (hashAsInt % (MAX - MIN + 1));
+    }
+
+    public ProjectReportBatteryResponseDto getProjectReportBattery(Long userId, Long projectId) {
+        User retrievedUser = serviceUtils.retrieveUserById(userId);
+        Project retrievedProject = serviceUtils.retrieveProjectById(projectId);
+        Battery retrievedBattery = serviceUtils.retrieveBatteryById(retrievedUser.getBattery().getId());
+
+        LocalDateTime startedAt = retrievedProject.getStartedAt();
+        LocalDateTime startedAtToLocalDate = startedAt.toLocalDate().withDayOfYear(1).atStartOfDay();
+        LocalDateTime startedAtToLocalDatePlusOneYear = startedAtToLocalDate.plusYears(1).minus(1, ChronoUnit.SECONDS);
+
+        LocalDateTime endedAt = retrievedProject.getEndedAt();
+
+        ProjectReportBatteryResponseDto result = batteryRepositoryCustom.getProjectReportBatteryByTerm(retrievedBattery.getId(), startedAt, endedAt);
+        List<Value> valueInProjectYearList = valueRepositoryCustom.getValueInProjectYear(retrievedUser.getId(), startedAtToLocalDate, startedAtToLocalDatePlusOneYear);
+
+        List<ProjectReportBatteryResponseDto.ValueNameAndCount> valueNameAndCountList = valueInProjectYearList
+                .stream()
+                .map(value -> ProjectReportBatteryResponseDto.ValueNameAndCount
+                        .builder()
+                        .name(value.getValueName())
+                        .count(chargeRepositoryCustom.countChargeByValueIdAndTerm(value.getId(), startedAt, endedAt))
+                        .build()
+                ).collect(Collectors.toList());
+
+        result.setChargeReport(
+                ProjectReportBatteryResponseDto.ChargeReport
+                        .builder()
+                        .valueCountList(valueNameAndCountList)
+                        .build()
+        );
+
+        return result;
     }
 }

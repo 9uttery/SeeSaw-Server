@@ -8,10 +8,12 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ProjectQuestionResponseDto {
+    private Long id;
     private String contents;
 
     @Builder
-    public ProjectQuestionResponseDto(String contents) {
+    public ProjectQuestionResponseDto(Long id, String contents) {
+        this.id = id;
         this.contents = contents;
     }
 }

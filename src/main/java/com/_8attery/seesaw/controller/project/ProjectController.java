@@ -177,5 +177,10 @@ public class ProjectController {
         return ResponseEntity.ok().body(new BaseResponse<>(projectService.getInitialProjectReport(userAccount.getUserId(), projectId)));
     }
 
+    @GetMapping("/{projectId}/report/battery")
+    public ResponseEntity<?> getProjectReportBattery(@AuthenticationPrincipal UserAccount userAccount, @PathVariable("projectId") Long projectId) {
+
+        return ResponseEntity.ok().body(new BaseResponse<>(projectService.getProjectReportBattery(userAccount.getUserId(), projectId)));
+    }
 
 }

@@ -67,7 +67,7 @@ public class ProjectRepositoryCustomImpl implements ProjectRepositoryCustom {
                 .from(project)
                 .leftJoin(value).on(value.id.eq(project.value.id))
                 .fetchJoin()
-                .join(projectEmotion).on(project.id.eq(projectEmotion.project.id))
+                .leftJoin(projectEmotion).on(project.id.eq(projectEmotion.project.id))
                 .fetchJoin()
                 .where(project.id.eq(projectId))
                 .fetchOne();
