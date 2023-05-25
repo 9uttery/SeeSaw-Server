@@ -6,6 +6,8 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 import static com._8attery.seesaw.domain.project_qna.QProjectQna.projectQna;
 import static com._8attery.seesaw.domain.project_question.QProjectQuestion.projectQuestion;
 import static com._8attery.seesaw.domain.project_remembrance.QProjectRemembrance.projectRemembrance;
@@ -47,6 +49,16 @@ public class ProjectQnaRepositoryCustomImpl implements ProjectQnaRepositoryCusto
                 .fetchJoin()
                 .where(projectQuestion.id.eq(questionId), projectRemembrance.id.eq(projectRemembranceId))
                 .fetchOne();
+    }
+
+    @Override
+    public List<String> findProjectQnaContentsListByProjectRemembranceId(Long projectRemembranceId) {
+        return jpaQueryFactory
+                .select(projectQna.answerContent)
+                .from(projectQna)
+                .join(projectRemembrance).on(projectQna.projectRemembrance.id.eq(projectRemembrance.id))
+                .where(projectRemembrance.id.eq(projectRemembranceId))
+                .fetch();
     }
 
 
