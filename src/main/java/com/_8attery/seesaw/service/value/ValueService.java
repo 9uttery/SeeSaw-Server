@@ -2,13 +2,13 @@ package com._8attery.seesaw.service.value;
 
 import com._8attery.seesaw.domain.project.Project;
 import com._8attery.seesaw.domain.value.ValueRepository;
-import com._8attery.seesaw.dto.api.response.UserHistoryResponseDto;
 import com._8attery.seesaw.dto.api.response.ValueInfoResponseDto;
 import com._8attery.seesaw.dto.api.response.ValueResponseDto;
 import com._8attery.seesaw.dto.api.response.ValueYearResponseDto;
 import com._8attery.seesaw.exception.BaseException;
 import com._8attery.seesaw.exception.BaseResponseStatus;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,8 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com._8attery.seesaw.exception.BaseResponseStatus.DATABASE_ERROR;
-import static java.time.temporal.ChronoUnit.DAYS;
 
+@Slf4j
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -103,6 +103,7 @@ public class ValueService {
             return res;
 
         } catch (Exception exception) {
+            log.info(exception.getMessage());
             exception.printStackTrace();
             throw new BaseException(DATABASE_ERROR);
         }
@@ -142,6 +143,7 @@ public class ValueService {
             return res;
 
         } catch (Exception exception) {
+            log.info(exception.getMessage());
             exception.printStackTrace();
             throw new BaseException(DATABASE_ERROR);
         }

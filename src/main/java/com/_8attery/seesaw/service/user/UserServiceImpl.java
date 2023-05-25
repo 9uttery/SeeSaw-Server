@@ -40,6 +40,7 @@ public class UserServiceImpl implements UserService {
             userRepository.updateUserNickname(userId, nicknameRequestDto.getNickName());
 
         } catch (Exception exception) {
+            log.info(exception.getMessage());
             exception.printStackTrace();
             throw new BaseException(DATABASE_ERROR);
         }
@@ -52,6 +53,7 @@ public class UserServiceImpl implements UserService {
             return userRepository.findUserNickname(userId);
 
         } catch (Exception exception) {
+            log.info(exception.getMessage());
             exception.printStackTrace();
             throw new BaseException(DATABASE_ERROR);
         }
@@ -78,6 +80,7 @@ public class UserServiceImpl implements UserService {
             return res;
 
         } catch (Exception exception) {
+            log.info(exception.getMessage());
             exception.printStackTrace();
             throw new BaseException(DATABASE_ERROR);
         }

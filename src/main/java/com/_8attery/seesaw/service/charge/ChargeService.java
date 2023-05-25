@@ -5,15 +5,16 @@ import com._8attery.seesaw.domain.charge.ChargeRepository;
 import com._8attery.seesaw.dto.api.response.ChargeResponseDto;
 import com._8attery.seesaw.exception.BaseException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static com._8attery.seesaw.exception.BaseResponseStatus.DATABASE_ERROR;
 
+@Slf4j
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -49,6 +50,7 @@ public class ChargeService {
             return chargeResponseDto.orElse(new ChargeResponseDto(0L, null, null));
 
         } catch (Exception exception) {
+            log.info(exception.getMessage());
             exception.printStackTrace();
             throw new BaseException(DATABASE_ERROR);
         }
@@ -60,6 +62,7 @@ public class ChargeService {
 
             return chargeRepository.findTodayCharge(userId);
         } catch (Exception exception) {
+            log.info(exception.getMessage());
             exception.printStackTrace();
             throw new BaseException(DATABASE_ERROR);
         }
