@@ -13,6 +13,7 @@ public class ProjectRecordRequestDto {
     @NotNull
     @Positive
     private Long projectId;
+
     private Long projectQuestionId;
     @NotNull
     private String contents;
