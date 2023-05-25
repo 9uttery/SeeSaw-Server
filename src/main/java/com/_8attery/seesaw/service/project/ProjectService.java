@@ -220,6 +220,18 @@ public class ProjectService {
             result.setIsHalfProgressed(LocalDateTime.now().toLocalDate().isAfter(middleDate.minusDays(1L)));
         }
 
+        if (result.getMiddleRemembranceId() != null && result.getFinalRemembranceId() != null) {
+            result.setIsProjectReport(true);
+            List<String> answerContentList = projectQnaRepositoryCustom.findProjectQnaContentsListByProjectRemembranceId(result.getMiddleRemembranceId());
+            answerContentList.addAll(projectQnaRepositoryCustom.findProjectQnaContentsListByProjectRemembranceId(result.getFinalRemembranceId()));
+            for (String s : answerContentList) {
+                if (s == null) {
+                    result.setIsProjectReport(false);
+                    break;
+                }
+            }
+        }
+
         return result;
     }
 

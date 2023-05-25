@@ -27,6 +27,7 @@ public class ProjectDetailsResponseDto {
     private Long middleRemembranceId;
     private Boolean isFinished;
     private Long finalRemembranceId;
+    private Boolean isProjectReport;
     private Long valueId;
     private String valueName;
     private Integer likeCnt;
@@ -48,6 +49,7 @@ public class ProjectDetailsResponseDto {
         this.middleRemembranceId = middleRemembranceId;
         this.isFinished = isFinished;
         this.finalRemembranceId = finalRemembranceId;
+        this.isProjectReport = false;
         this.valueId = valueId;
         this.valueName = valueName;
         this.likeCnt = likeCnt;
