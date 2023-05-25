@@ -180,6 +180,20 @@ public class ProjectService {
         }
     }
 
+    // 진행 중, 완료된 프로젝트 카운팅 조회
+    public ProjectCountResponseDto getUserProjectCount(Long userId) throws BaseException {
+        try {
+            Integer progressCount = projectRepository.getProgressCount(userId);
+            Integer completeCount = projectRepository.getCompleteCount(userId);
+
+            ProjectCountResponseDto res = new ProjectCountResponseDto(progressCount, completeCount);
+            return res;
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
     public ProjectDetailsResponseDto getProjectDetails(Long userId, Long projectId) {
         serviceUtils.retrieveUserById(userId);
         Project rerievedProject = serviceUtils.retrieveProjectById(projectId);
@@ -440,4 +454,5 @@ public class ProjectService {
 
         return result;
     }
+
 }

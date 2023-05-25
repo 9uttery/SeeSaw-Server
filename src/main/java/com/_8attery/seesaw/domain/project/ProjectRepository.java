@@ -1,6 +1,7 @@
 package com._8attery.seesaw.domain.project;
 
 import com._8attery.seesaw.dto.api.response.ProjectCardResponseDto;
+import com._8attery.seesaw.dto.api.response.ProjectCountResponseDto;
 import com._8attery.seesaw.dto.api.response.ProjectResponseDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -36,4 +37,11 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
 
     @Query(value = "select new com._8attery.seesaw.dto.api.response.ProjectCardResponseDto(p.id, p.projectName, p.startedAt, p.endedAt, p.intensity, v.valueName) from Project p join p.value v where p.user.id=:userId and p.isFinished=true")
     List<ProjectCardResponseDto> findCompleteProjectList(@Param("userId") Long userId);
+
+    // 진행 중, 완료된 프로젝트 카운팅 조회
+    @Query(value = "select count(*) from ss_project where user_id=:userId and is_finished=false", nativeQuery = true)
+    Integer getProgressCount(@Param("userId") Long userId);
+
+    @Query(value = "select count(*) from ss_project where user_id=:userId and is_finished=true", nativeQuery = true)
+    Integer getCompleteCount(@Param("userId") Long userId);
 }
