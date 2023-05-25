@@ -23,11 +23,11 @@ public class ProjectRecord {
     @Column(name = "project_record_id", nullable = false)
     private Long id;
 
-    @ManyToOne(fetch = LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "project_id", nullable = false)
     private Project project;
 
-    @ManyToOne(fetch = LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "project_question_id")
     private ProjectQuestion projectQuestion; // 기록 질문
 
