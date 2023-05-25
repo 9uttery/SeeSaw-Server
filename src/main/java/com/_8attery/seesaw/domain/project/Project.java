@@ -66,7 +66,9 @@ public class Project {
     private List<ProjectRemembrance> projectRemembrances;
 
     @Builder
-    public Project(String projectName, LocalDateTime startedAt, LocalDateTime endedAt, Intensity intensity, String goal, Boolean isFinished) {
+    public Project(User user, Value value, String projectName, LocalDateTime startedAt, LocalDateTime endedAt, Intensity intensity, String goal, Boolean isFinished) {
+        this.user = user;
+        this.value = value;
         this.projectName = projectName;
         this.startedAt = startedAt;
         this.endedAt = endedAt;
