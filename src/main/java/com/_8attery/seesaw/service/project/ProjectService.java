@@ -420,7 +420,7 @@ public class ProjectService {
                 .builder()
                 .projectReportInfoDto(projectReportInfoDto)
                 .emotion1(middleRemembrance.getEmotion())
-                .emotion2(middleRemembrance.getEmotion() == finalRemembrance.getEmotion() ? null : finalRemembrance.getEmotion())
+                .emotion2(finalRemembrance.getEmotion())
                 .projectMiddleFinalQnaDto(
                         ProjectMiddleFinalQnaDto
                                 .builder()
