@@ -57,6 +57,17 @@ import static com._8attery.seesaw.exception.BaseResponseStatus.POSTS_EMPTY_POST_
 @Slf4j
 public class ProjectService {
     private static final long[] REPORT_FLOW = new long[]{77L, 83L, 78L, 84L, 80L, 88L, 81L, 89L, 82L, 90L};
+
+    public static final Map<Emotion, String> emotionStringMap = new HashMap<>(
+            Map.of(
+                    Emotion.LIKE, "행복",
+                    Emotion.NICE, "뿌듯함",
+                    Emotion.IDK, "아쉬움",
+                    Emotion.ANGRY, "힘듦",
+                    Emotion.SAD, "슬픔"
+            )
+    );
+
     private final ProjectQuestionRepository projectQuestionRepository;
     private final ProjectRepository projectRepository;
     private final ProjectRepositoryCustom projectRepositoryCustom;
@@ -87,7 +98,7 @@ public class ProjectService {
 //            return projectResponseDto.orElse(new ProjectResponseDto(0L, null, null, null, null, null, false));
 //
 //        } catch (Exception exception) {
-//            exception.printStackTrace();
+//            log.info(exception.getMessage());exception.printStackTrace();
 //            throw new BaseException(DATABASE_ERROR);
 //        }
 
@@ -128,6 +139,7 @@ public class ProjectService {
             return projectResponseDto.orElse(new ProjectResponseDto(0L, null, null, null, null, null, false));
 
         } catch (Exception exception) {
+            log.info(exception.getMessage());
             exception.printStackTrace();
             throw new BaseException(DATABASE_ERROR);
         }
@@ -140,6 +152,7 @@ public class ProjectService {
                 throw new BaseException(POSTS_EMPTY_POST_ID);
             return userId;
         } catch (Exception exception) {
+            log.info(exception.getMessage());
             exception.printStackTrace();
             throw new BaseException(DATABASE_ERROR);
         }
@@ -153,7 +166,7 @@ public class ProjectService {
 //            if (result == 0)
 //                throw new BaseException(DELETE_FAIL_POST);
 //        } catch (Exception exception) {
-//            exception.printStackTrace();
+//            log.info(exception.getMessage());exception.printStackTrace();
 //            throw new BaseException(DATABASE_ERROR);
 //        }
         Project retrievedProject = serviceUtils.retrieveProjectById(projectId);
@@ -165,6 +178,7 @@ public class ProjectService {
             List<ProjectCardResponseDto> list = projectRepository.findProgressProjectList(userId);
             return list;
         } catch (Exception exception) {
+            log.info(exception.getMessage());
             exception.printStackTrace();
             throw new BaseException(DATABASE_ERROR);
         }
@@ -175,6 +189,7 @@ public class ProjectService {
             List<ProjectCardResponseDto> list = projectRepository.findCompleteProjectList(userId);
             return list;
         } catch (Exception exception) {
+            log.info(exception.getMessage());
             exception.printStackTrace();
             throw new BaseException(DATABASE_ERROR);
         }
@@ -189,6 +204,7 @@ public class ProjectService {
             ProjectCountResponseDto res = new ProjectCountResponseDto(progressCount, completeCount);
             return res;
         } catch (Exception exception) {
+            log.info(exception.getMessage());
             exception.printStackTrace();
             throw new BaseException(DATABASE_ERROR);
         }
@@ -258,7 +274,7 @@ public class ProjectService {
 
     @Transactional
     public ProjectRemembranceResponseDto addRemembranceToProject(Long userId, ProjectRemembranceRequestDto projectRemembranceRequestDto) {
-        serviceUtils.retrieveUserById(userId);
+        User retrievedUser = serviceUtils.retrieveUserById(userId);
         Project retrievedProject = serviceUtils.retrieveProjectById(projectRemembranceRequestDto.getProjectId());
 
         if (projectRemembranceRepositoryCustom.existsByProjectIdAndType(projectRemembranceRequestDto.getProjectId(), projectRemembranceRequestDto.getType())) {
@@ -273,6 +289,7 @@ public class ProjectService {
         emotionMap.put(Emotion.IDK, retrievedProjectEmotion.getIdkCnt());
         emotionMap.put(Emotion.ANGRY, retrievedProjectEmotion.getAngryCnt());
         emotionMap.put(Emotion.SAD, retrievedProjectEmotion.getSadCnt());
+
 
         ProjectRemembrance projectRemembrance = projectRemembranceRepository.save(
                 ProjectRemembrance.builder()
@@ -299,17 +316,21 @@ public class ProjectService {
                 .remembranceId(projectRemembrance.getId())
                 .qnaList(projectRemembranceRepositoryCustom.findQnaListByRemembranceId(projectRemembrance.getId()))
                 .remembranceType(projectRemembrance.getType())
+                .userName(retrievedUser.getNickName())
+                .emotion(emotionStringMap.get(projectRemembrance.getEmotion()))
                 .build();
     }
 
     public ProjectRemembranceResponseDto getProjectRemembrance(Long userId, Long remembranceId) {
-        serviceUtils.retrieveUserById(userId);
+        User retrievedUser = serviceUtils.retrieveUserById(userId);
         ProjectRemembrance retrievedRemembrance = serviceUtils.retrieveProjectRemembranceById(remembranceId);
 
         return ProjectRemembranceResponseDto
                 .builder()
                 .remembranceId(retrievedRemembrance.getId())
                 .qnaList(projectRemembranceRepositoryCustom.findQnaListByRemembranceId(remembranceId))
+                .userName(retrievedUser.getNickName())
+                .emotion(emotionStringMap.get(retrievedRemembrance.getEmotion()))
                 .remembranceType(retrievedRemembrance.getType())
                 .build();
     }

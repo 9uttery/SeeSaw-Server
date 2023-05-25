@@ -5,12 +5,14 @@ import com._8attery.seesaw.dto.auth.response.SignupResponseDto;
 import com._8attery.seesaw.exception.BaseException;
 import com._8attery.seesaw.exception.BaseResponseStatus;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Slf4j
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -53,6 +55,7 @@ public class SignupService {
 
             return res;
         } catch (Exception exception) {
+            log.info(exception.getMessage());
             exception.printStackTrace();
             throw new BaseException(BaseResponseStatus.DATABASE_ERROR);
         }
