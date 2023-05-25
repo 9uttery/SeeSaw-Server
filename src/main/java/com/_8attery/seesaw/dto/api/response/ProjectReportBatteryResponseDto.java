@@ -59,11 +59,15 @@ public class ProjectReportBatteryResponseDto {
 
     @Getter
     @NoArgsConstructor
-    @AllArgsConstructor
-    @Builder
     public static class ValueNameAndCount {
         private String name;
         private Long count;
+
+        @Builder
+        public ValueNameAndCount(String name, Long count) {
+            this.name = name;
+            this.count = count == null ? 0L : count;
+        }
     }
 
     @Getter
