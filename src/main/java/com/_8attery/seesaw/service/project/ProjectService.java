@@ -57,6 +57,17 @@ import static com._8attery.seesaw.exception.BaseResponseStatus.POSTS_EMPTY_POST_
 @Slf4j
 public class ProjectService {
     private static final long[] REPORT_FLOW = new long[]{77L, 83L, 78L, 84L, 80L, 88L, 81L, 89L, 82L, 90L};
+
+    public static final Map<Emotion, String> emotionStringMap = new HashMap<>(
+            Map.of(
+                    Emotion.LIKE, "행복",
+                    Emotion.NICE, "뿌듯함",
+                    Emotion.IDK, "아쉬움",
+                    Emotion.ANGRY, "힘듦",
+                    Emotion.SAD, "슬픔"
+            )
+    );
+
     private final ProjectQuestionRepository projectQuestionRepository;
     private final ProjectRepository projectRepository;
     private final ProjectRepositoryCustom projectRepositoryCustom;
@@ -258,7 +269,7 @@ public class ProjectService {
 
     @Transactional
     public ProjectRemembranceResponseDto addRemembranceToProject(Long userId, ProjectRemembranceRequestDto projectRemembranceRequestDto) {
-        serviceUtils.retrieveUserById(userId);
+        User retrievedUser = serviceUtils.retrieveUserById(userId);
         Project retrievedProject = serviceUtils.retrieveProjectById(projectRemembranceRequestDto.getProjectId());
 
         if (projectRemembranceRepositoryCustom.existsByProjectIdAndType(projectRemembranceRequestDto.getProjectId(), projectRemembranceRequestDto.getType())) {
@@ -273,6 +284,7 @@ public class ProjectService {
         emotionMap.put(Emotion.IDK, retrievedProjectEmotion.getIdkCnt());
         emotionMap.put(Emotion.ANGRY, retrievedProjectEmotion.getAngryCnt());
         emotionMap.put(Emotion.SAD, retrievedProjectEmotion.getSadCnt());
+
 
         ProjectRemembrance projectRemembrance = projectRemembranceRepository.save(
                 ProjectRemembrance.builder()
@@ -299,17 +311,21 @@ public class ProjectService {
                 .remembranceId(projectRemembrance.getId())
                 .qnaList(projectRemembranceRepositoryCustom.findQnaListByRemembranceId(projectRemembrance.getId()))
                 .remembranceType(projectRemembrance.getType())
+                .userName(retrievedUser.getNickName())
+                .emotion(emotionStringMap.get(projectRemembrance.getEmotion()))
                 .build();
     }
 
     public ProjectRemembranceResponseDto getProjectRemembrance(Long userId, Long remembranceId) {
-        serviceUtils.retrieveUserById(userId);
+        User retrievedUser = serviceUtils.retrieveUserById(userId);
         ProjectRemembrance retrievedRemembrance = serviceUtils.retrieveProjectRemembranceById(remembranceId);
 
         return ProjectRemembranceResponseDto
                 .builder()
                 .remembranceId(retrievedRemembrance.getId())
                 .qnaList(projectRemembranceRepositoryCustom.findQnaListByRemembranceId(remembranceId))
+                .userName(retrievedUser.getNickName())
+                .emotion(emotionStringMap.get(retrievedRemembrance.getEmotion()))
                 .remembranceType(retrievedRemembrance.getType())
                 .build();
     }
