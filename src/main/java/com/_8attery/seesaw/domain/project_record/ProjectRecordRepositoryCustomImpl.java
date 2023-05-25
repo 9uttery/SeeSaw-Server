@@ -34,7 +34,7 @@ public class ProjectRecordRepositoryCustomImpl implements ProjectRecordRepositor
                 .leftJoin(projectQuestion).on(projectRecord.projectQuestion.id.eq(projectQuestion.id))
                 .fetchJoin()
                 .where(projectRecord.project.id.eq(projectId))
-                .orderBy(projectRecord.id.desc())
+                .orderBy(projectRecord.createdAt.desc()) // 나중에 id로 수정 필요
                 .fetch();
     }
 
