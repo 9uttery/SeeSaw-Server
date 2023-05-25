@@ -77,7 +77,7 @@ public class AuthServiceImpl implements AuthService {
 
         if (existingIp == null) { // refreshToken이 같은 지 검증
             throw new InvalidTokenException("유효하지 않은 Refresh Token입니다.");
-        } else if (!existingIp.equals(refreshToken)) { // refreshToken이 같은 지 검증
+        } else if (!existingIp.equals(clientIp)) { // refreshToken이 같은 지 검증
             throw new InvalidTokenException("다른 IP에서 접속했습니다. 다시 로그인해주세요.");
         }
 
