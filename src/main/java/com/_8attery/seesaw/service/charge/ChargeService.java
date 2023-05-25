@@ -31,7 +31,7 @@ public class ChargeService {
             // 오늘 고속충전 여부 수정
             chargeRepository.updateIsCharged(userId);
 
-            Integer curBattery = batteryRepository.findUserCurActivity(userId);
+            Integer curBattery = batteryRepository.findUserCurBattery(userId);
             Integer varBattery = curBattery + 10;
             if (varBattery >= 100) {
                 batteryRepository.updateCurBattery100(userId);

@@ -38,6 +38,9 @@ public interface BatteryRepository extends JpaRepository<Battery, Long> {
     @Query(value = "select cur_activity from ss_battery where user_id=:userId", nativeQuery = true)
     Integer findUserCurActivity(@Param("userId") Long userId);
 
+    @Query(value = "select cur_battery from ss_battery where user_id=:userId", nativeQuery = true)
+    Integer findUserCurBattery(@Param("userId") Long userId);
+
     // 오늘 수면량 설정
     @Modifying(clearAutomatically = true)
     @Query(value = "update ss_battery set cur_sleep=:req where user_id=:userId", nativeQuery = true)
@@ -111,6 +114,7 @@ public interface BatteryRepository extends JpaRepository<Battery, Long> {
 
     @Query(value = "select value_name from ss_value where value_id=:valueId", nativeQuery = true)
     String findUserValue(@Param("valueId") Long valueId);
+
 
 
 }

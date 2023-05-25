@@ -85,7 +85,7 @@ public class BatteryService {
                 variation = 10;
             }
 
-            Integer curBattery = batteryRepository.findUserCurActivity(userId);
+            Integer curBattery = batteryRepository.findUserCurBattery(userId);
             Integer varBattery = curBattery + variation;
             if (varBattery >= 100) {
                 batteryRepository.updateCurBattery100(userId);
@@ -202,8 +202,10 @@ public class BatteryService {
                             activityRes.setColor(1);
                         } else if (result.getActivity() < activityGoal + 50 && result.getActivity() >= activityGoal) {
                             activityRes.setColor(2);
-                        } else if (result.getActivity() < activityGoal) {
+                        } else if (result.getActivity() < activityGoal && result.getActivity() != 0) {
                             activityRes.setColor(3);
+                        } else if (result.getActivity() == 0) {
+                            activityRes.setColor(0);
                         }
                         break;
                     } else {
@@ -257,6 +259,7 @@ public class BatteryService {
             int todayYear = date.getYear();       // Extract the year
             int todayMonth = date.getMonthValue();  // Extract the month as an integer (1-12)
             int todayDay = date.getDayOfMonth();  // Extract the day of the month
+            Integer curSleep = batteryRepository.findUserCurSleep(userId);
 
             for (SleepResponseDto sleepRes : res) {
 
@@ -283,8 +286,7 @@ public class BatteryService {
                     }
                 }
 
-                Integer curSleep = batteryRepository.findUserCurSleep(userId);
-                if (todayDay == sleepRes.getDay() && curSleep != null) {
+                if (todayMonth == month && todayDay == sleepRes.getDay() && curSleep != null) {
                     sleepRes.setSleep(curSleep);
                     // 오늘 수면량 입력했으면 따로 확인
                     if (curSleep < sleepGoal * 0.5) {
