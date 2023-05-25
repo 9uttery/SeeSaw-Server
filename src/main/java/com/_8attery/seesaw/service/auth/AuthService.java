@@ -14,13 +14,13 @@ public interface AuthService {
     User findUserById(Long userId);
 
     // 비즈니스 로직
-    LoginResponseDto appleLogin(LoginRequestDto loginRequestDto);
+    LoginResponseDto appleLogin(LoginRequestDto loginRequestDto, String clientIp);
 
-    LoginResponseDto regenerateAccessToken(RefreshTokenRequestDto refreshTokenRequestDto);
+    LoginResponseDto regenerateAccessToken(RefreshTokenRequestDto refreshTokenRequestDto, String clientIp);
 
-    LoginResponseDto kakaoLogin(LoginRequestDto loginRequestDto);
+    LoginResponseDto kakaoLogin(LoginRequestDto loginRequestDto, String clientIp);
 
-    LoginResponseDto getLoginResponseDto(User user);
+    LoginResponseDto getLoginResponseDto(User user, String clientIp);
 
     LoginResponseDto generateAccessTokenByUserId(Long userId);
 
