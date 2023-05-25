@@ -45,7 +45,7 @@ public class ProjectQnaRepositoryCustomImpl implements ProjectQnaRepositoryCusto
                 .fetchJoin()
                 .join(projectQuestion).on(projectQna.projectQuestion.id.eq(projectQuestion.id))
                 .fetchJoin()
-                .where(projectQna.projectQuestion.id.eq(questionId), projectRemembrance.id.eq(projectRemembranceId))
+                .where(projectQuestion.id.eq(questionId), projectRemembrance.id.eq(projectRemembranceId))
                 .fetchOne();
     }
 

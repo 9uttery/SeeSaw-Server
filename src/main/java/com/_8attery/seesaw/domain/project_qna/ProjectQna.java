@@ -23,10 +23,10 @@ public class ProjectQna {
     private Long id;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "projectRemembrance", nullable = false)
+    @JoinColumn(name = "project_remembrance_id", nullable = false)
     private ProjectRemembrance projectRemembrance;
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "project_question_id", nullable = false)
     private ProjectQuestion projectQuestion; // 질문 id
 

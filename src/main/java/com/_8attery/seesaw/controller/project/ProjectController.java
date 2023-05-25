@@ -126,7 +126,7 @@ public class ProjectController {
     @GetMapping("/question")
     public ResponseEntity<?> getRandomRegularQuestion(@AuthenticationPrincipal UserAccount userAccount) {
 
-        return ResponseEntity.ok().body(new BaseResponse<>(projectService.getRandomRegularQuestion(userAccount.getUserId())));
+        return ResponseEntity.ok().body(projectService.getRandomRegularQuestion(userAccount.getUserId()));
     }
 
     @PostMapping("/record")
@@ -176,5 +176,6 @@ public class ProjectController {
 
         return ResponseEntity.ok().body(new BaseResponse<>(projectService.getInitialProjectReport(userAccount.getUserId(), projectId)));
     }
+
 
 }
