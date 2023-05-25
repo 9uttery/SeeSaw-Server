@@ -1,12 +1,15 @@
 # ✳️ SeeSaw, 시소 ✳️
 
-<img src="https://user-images.githubusercontent.com/117328806/232042967-d24ef425-8630-4a9a-89d0-bbdb50603c01.png" width=800>
+![image](https://github.com/8attery/.github/assets/39361807/ed38220d-b143-470f-bc94-60505336e7ce)
 
 ### **일과 삶 사이의 균형 찾기, SeeSaw**
 
-한국 사회에서는 "일 중독"을 미덕으로 여길 만큼 우리는 바쁘게 살아야 한다는 강박에 사로잡혀 살아가고 있어요. 강박적으로 일에 매몰되다 보면 <일과 '삶' 사이의 균형을 상실>하게 되는 현상이 발생하게 됩니다. 이런 현상이 지속되다 보면, 일에 사로잡혀 진정으로 내가 무엇을 하고 싶은지 <목적>을 망각하게 되고, 일 자체가 수단이 아닌 삶의 목표가 되어버립니다.
+**나를 이루는 가치를 중심으로**
+<br>**일과 삶을 바라볼 수 있도록 하는 기록 서비스, 시소(SeeSaw)**
 
-SeeSaw(시소)는 프로젝트를 되돌아보면서 본인의 성장 포인트에 대해 회고할 수 있는 기회를 제공하는 서비스입니다. 시소를 통해 유저는 '자신이 되고 싶은 모습'으로 성장하고 있다는 것을 깨닫고, 그러한 성장 과정에서 일과 삶의 가치를 균형 있게 유지하며 발전시킬 수 있습니다.
+시소는 일과 삶 사이의 균형을 찾아주는 서비스입니다. 자신을 객관적으로 점검하고, 프로젝트를 정성적으로 기록하며, 가치를 중심으로 일과 삶이 하나의 방향으로 나아가 균형을 찾을 수 있도록 돕습니다.
+
+시소는 '나'를 아우를 수 있는 가치를 바탕으로 일과 삶을 같은 방향으로 정렬하여, 가치를 향해 나란히 나아갈 수 있도록 합니다. 또한 프로젝트를 주기적으로 돌아보며 처음의 목표, 처음의 마음가짐으로 꾸준히 프로젝트에 임하며 마무리할 수 있도록 합니다. 마지막으로 나의 에너지를 객관적으로 파악하며 본인이 감당 가능한 일의 수준을 점검하고, 일상 속 사소한 실천을 통해 에너지를 충전함으로써 지치지 않고 나아갈 수 있도록 합니다.
 
 <br>
 
@@ -20,70 +23,97 @@ SeeSaw(시소)는 프로젝트를 되돌아보면서 본인의 성장 포인트�
 
 | 분야 | 이름 | 포지션 |
 | --- | --- | --- |
-| 기획 | 김민혜 | 📈 서비스 기획, 사업 모델 구축 |
-| 기획 | 김서연 | 🔍 서비스 기획, 사업 모델 구축 |
-| 기획 | 박주아 | 📋 서비스 기획, 사업 모델 구축 |
-| 기획 | 양예인 | 🔐 기획 리드, 사업 모델 구축 |
-| 개발 | [이안진](https://github.com/anjiniii) | 🔦 프론트 리드, iOS 개발 담당 |
-| 개발 | [정태우](https://github.com/taewoojeong) | 📱 iOS 개발 담당 |
-| 개발 | [김민근](https://github.com/mingeun0507) | 💻 백엔드 리드, 서버 개발 담당 |
-| 개발 | [한호정](https://github.com/hojeong2747) | 🖥️ 서버 개발 담당 |
-| 디자인 | 한지원 | 📢 프로젝트 매니징, 서비스 디자인 담당 |
+| 기획 | 김민혜 | 📈 서비스 기획(서비스 정책 확립, 비즈니스 모델 구축) |
+| 기획 | 김서연 | 🔍 서비스 기획(와이어프레임 작성, UX writing) |
+| 기획 | 박주아 | 📋 서비스 기획(서비스 정책 확립, 비즈니스 모델 구축) |
+| 기획 | 양예인 | 🔐 서비스 기획(와이어프레임 작성, 랜딩 페이지 테스트) |
+| 개발 | [이안진](https://github.com/anjiniii) | 🔦 iOS 화면 UI 구현, 서버 연동 |
+| 개발 | [정태우](https://github.com/taewoojeong) | 📱 iOS 화면 UI 구현, 서버 연동 |
+| 개발 | [김민근](https://github.com/mingeun0507) | 💻 DB 및 API 구축, 서버 배포 |
+| 개발 | [한호정](https://github.com/hojeong2747) | 🖥️ DB 및 API 구축, 서버 배포 |
+| 디자인 | 한지원 | 📢 프로젝트 매니징, 서비스 디자인 |
 
 <br>
 
 ## 🔎 목적 및 필요성
 
-### **목적** 
+### **1️⃣ 목적** 
 
-**자기 자신에 대한 이해**를 바탕으로 **일이 삶에서 갖는 가치를 발견**할 수 있도록 하여 **‘일과 삶의 균형’** 을 찾아주고자 합니다. ‘시소’는 일에 쫓겨 정신없이 바쁜 생활을 보내는 ‘워커홀릭’이 **자신의 일을 즐기는 ‘워크마니아**’가 될 수 있도록 돕는 서비스입니다. 
+**1. 워커홀릭 실태**
+- 워커홀릭(Workholic)이란, '일과 생활 사이의 균형을 상실하고 강박적으로 일에 매몰되는 현상'을 지칭하는 말로, '과잉적응증후군', '일 중독' 등으로 불립니다.
+- OECD의 2021년 통계에 따르면 연간 노동시간이 다른 나라에 비해 많아 한국인이 외국인보다 더 많은 시간 일하고 있음을 알 수 있습니다.
 
-### **필요성**
+**2. 일과 삶의 균형에 대한 수요**
+- 워라밸(Work-life balance)이란 일과 삶의 균형을 지칭하는 말로, '업무 시간과 그 외의 개인 시간을 명확히 구분하자'라는 취지로 쓰이며 '시간의 균형'을 의미하는 경우가 많습니다.
+- 워라하(Work-life harmony)란 일과 삶의 조화를 지칭하는 말로, 일과 삶을 완전히 분리하기보다는 직업과 삶이라는 두 가지 영역 모두에서 만족감을 이끌어내는 라이프 스타일을 의미합니다.
 
-📑 **유저 리서치를 통한 프로젝트 수행 양상 파악**
+📍 따라서 본 서비스는 '시간의 균형'만 강조했던 기존의 워라밸 개념을 확장해 '가치의 균형을 지향하는 서비스를 제공하고자 합니다.
 
-8attery 팀은 워커홀릭의 구성요인을 세 가지로 분류한 Spence와 Robbins의 연구를 바탕으로 유저 리서치를 진행하여 2030 세대가 **프로젝트를 수행하는 양상**을 파악하고자 했습니다. 
+**3. 자체 필드 리서치를 통해 파악한 대학생의 수요**
+- 프로젝트 경험이 있는 20대 이상 369명을 대상으로 프로젝트 수행 양상에 관한 설문조사를 진행했습니다.
+> 1. 일 몰입: 일에 대한 극단적인 투자를 뜻합니다.
+> 2. 일 강박: 일을 하지 않고는 안 된다는 강한 내부적 압박감을 뜻합니다.
+> 3. 1점(매우 아니다)부터 5점(매우 그렇다)으로 리커트 5점 척도를 사용하였고, 점수가 높을 수록 해당 구성요인이 강력하게 작용한다고 해석하였습니다.
 
-> Spence와 Robbins의 **일중독 삼차원 구성요인** 분류
-> 1. **일몰입**(Work Involvement) = 일에 대한 극단적인 투자
-> 2. **일 강박**(Work Drive) = 일을 하지 않고는 안 된다는 강한 내부적 압박감
-> 3. **일 향유감**(Work Enjoyment) = 일을 통해 행복감과 즐거움을 느낌
-> 
+<img width="1083" alt="KakaoTalk_Photo_2023-05-26-05-33-19" src="https://github.com/8attery/.github/assets/39361807/cd2d5dc0-f0c9-41bf-b335-09a0ecc83303">
 
-프로젝트 경험이 있는 2-30대를 대상으로 일 몰입, 일 강박, 일 향유감에 관한 문항을 조사했습니다. 1점(매우 아니다)부터 5점(매우 그렇다)으로 리커트 5점 척도를 사용하였고, 점수가 높을수록 해당 구성요인이 강력하게 작용하고 있다고 해석했습니다.
 
-- 일몰입 및 일 강박 모두 3점(보통이다)보다 오른쪽에 많이 분포되어 있어 일몰입과 일 강박이 실제로 만연하다는 사실을 알 수 있었습니다.
-- 특히 일몰입보다 일 강박이 5점에 가깝게 분포되어 있음을 통해 **2030 세대의 일 강박 양상**이 더욱 두드러진다는 사실을 파악했습니다.
+- 자체 필드 리서치 결과, 대학생은 모두 일 몰입, 일 강박 양상이 높게 나타났습니다.
+- 일 몰입과 일 강박 모두 3점(보통이다)보다 오른쪽에 많이 분포하고 있어 20대 대학생의 프로젝트 수행에 있어 일 몰입, 일 강박이 실제로 만연하다는 것을 알 수 있었습니다.
 
-![그래프-02](https://user-images.githubusercontent.com/39361807/232278106-0780525a-585c-44f0-be53-648bae4ea3a7.png)
 
-### **따라서, 일에 시간과 노력을 극단적으로 투자하며 일하지 않으면 안 된다는 강한 내부적 압박감을 느끼고 있는 2030 워커홀릭을 위한 플랫폼이 필요하다고 느꼈습니다.**
+### **2️⃣ 문제점**
+워커홀릭을 겪고 있는 사람은 다음과 같은 문제를 경험합니다.
+
+**[문제 1] 무엇을 위해 일하는지 생각하지 않고 일 자체에만 몰두함**
+- 바쁘게 일하지만 지금 하고 있는 일의 목적을 상실하는 경우가 많습니다.
+- 특히 청년 세대의 경우 자아실현적 일의 의미를 찾지 못하는 사람이 많습니다.
+
+📍 따라서 어떤 목적 의식을 가지고 어떤 방향으로 자신의 일과 삶을 설계해 나갈지에 대해 점검하는 시간이 필요합니다.
+
+**[문제 2] 일을 가장 우선해 신체적/정신적 건강, 인간관계 등 다른 생활 영역을 신경쓰지 못함**
+- 여가,운동 부족으로 개인의 신체적/정신적 건강에 부정적인 영향을 끼치고 있습니다.
+- 가족관계, 사회적 관계에 무관심하고 미숙해져 관계 문제를 야기하고 있습니다.
+
+📍 워커홀릭을 겪고 있는 사람들의 문제를 해결하기 위해서는 일에서의 가치와 삶 전반에서의 가치를 모두 아우르는 가치를 설정하고, 이를 꾸준히 돌아볼 수 있게 하는 서비스가 필요합니다.
+
+
+### **3️⃣ 필요성**
+시소의 경쟁사로 정의되는 기존 기록 서비스는 다음과 같은 문제점을 가지고 있습니다.
+
+**1. 객관적 데이터 기록 서비스**
+- Garmin 웨어러블 기기를 통해 건강 정보를 제공하는 Garmin Conncet 앱은 배터리 기능을 통해 유저의 신체적 에너지를 정량적으로 보여줍니다.
+- 하지만 배터리 증감 기준과 내역을 공개하지 않아 다수의 유저가 측정 기준에 의문을 가지고 있습니다.
+- 또한 웨어러블 기기를 통해 수집되는 정량적 데이터를 바탕으로 신체적 에너지만 나타내어 삶 전반의 가치와 주관적 요소를 반영하지 못합니다.
+
+**2. 주관적 텍스트 기록 서비스**
+- 자체 리서치 결과에 따르면, 유저들은 텍스트 기반의 주관적 기록 서비스를 사용할 때 다음과 같은 페인 포인트를 느꼈습니다.
+    - 모아 보기 힘들어서 회고 이후, 자주 열람하지 않음
+    - 줄글로 정리하기 번거롭고, 템플릿을 직접 제작하는 것이 어려움
+
+📍  현재 객관적인 데이터 기록에서 시작하여 주관적인 텍스트 기록까지 이어지는 기록 서비스가 부재한 상황입니다. 삶 전반의 가치와 에너지를 모두 반영하고, 언제 어디서든 간편하게 기록 및 열람할 수 있는 기록 서비스가 필요합니다.
 
 <br>
 
-## 👀 리서치 및 시장조사
+## 👀 사용자 정의
+시소의 목표 타겟은 일과 삶 중 어느 한 쪽에 치우치지 않고, 일과 삶을 연결 지어 균형을 찾고자 하는 대학생입니다.
 
-### 경쟁사별 특징
+**1. 여가시간의 필요성은 인지하고 있으나 충분히 갖지 못하는 사람**
+- 대학생 129명을 대상으로 리서치를 진행한 결과, 평상시 프로젝트 외의 활동(여가, 취미 활동 등)에 시간을 할애할 필요성을 못 느낀다는 답변이 적었기 때문에 여가 시간의 필요성을 느끼고 있음을 파악했습니다.
+- 하지만 평상시 프로젝트 외의 활동보다 프로젝트에 할애하는 시간이 길다는 답변에 긍정적인 답변이 나타난 결과를 통해 여가 시간의 필요성은 느끼고 있으나 여가시간을 충분히 갖지 못한다는 문제점을 도출할 수 있습니다.
 
-|  | 시소 | 투두 메이트 | 노션 | 무다 |
-| --- | --- | --- | --- | --- |
-| 서비스 분야 | 프로젝트 회고 서비스 | 목표 설정 및 일정 관리 서비스 | Task 관리 서비스 | 감정 기록 서비스 |
-| 서비스 한줄 소개 | “일과 삶 사이의 균형 찾기” | “할 일을 작성, 계획, 관리하세요.” | “일상과 업무의 생산성을 높이는 효율적인 앱” | “내 안의 나와 마주하는 시간” |
-| 핵심 기능 | 프로젝트 회고, 장기적인 로드맵 설정, 에너지 잔량 확인 | 할 일 관리, 일기 작성, 하루의 감정 기록, 다른 유저의 목표 응원하기 | 프로젝트/문서/지식 관리, 실시간 협업, 작업 자동화 AI | 하루의 감정 기록, 일기 작성 |
-| 회고 방법 | 프로젝트 회고 가이드라인에 따라 프로젝트별 회고 진행 | 메인 화면의 일기 버튼을 통해 하루의 감정, 일기, 기분 온도 기록 | 유저가 직접 테이블을 생성하여 자유롭게 기록 | 메인 화면의 + 버튼을 통해 감정을 기록하고, 간단한 일기 작성 |
-| 회고 유형 | 프로젝트와 나의 삶을 연결지을 수 있는 회고 진행 | 유저가 기록한 일기를 보면서 나에 대한 회고 진행 | 나에 대한 회고, 프로젝트 회고, 장기적인 로드맵 설정 등 다양하게 활용가능 | 유저가 기록한 월별 감정을 보면서 나에 대한 회고 진행 |
+**2. 프로젝트를 통해 배운 것을 인생의 성장으로 연결 짓지 못하는 사람**
+- ‘청년세대는 자신의 발전에 일의 의미를 두고 있으나, 그것이 자신의 꿈, 사명과는 아직 거리가 있다고 볼 수 있다.’ 라는 전문가의 의견처럼, 여러 학생들이 프로젝트 진행 중 또는 종료 후에 관련된 회고를 진행하지 않아 프로젝트를 통해 배운 것을 인생의 성장으로 연결 짓지 못한다는 문제가 있습니다.
 
 <br>
 
-### 📊 시장조사
-
-> 앱 다운로드 건 수 4만 건(수익시장의 10%) 확보를 시작으로, 점차 시장을 넓혀갈 예정입니다.
+## 📊 목표 사용자
+> 앱 다운로드 건 수 7.7만 건(수익시장의 13.8%) 확보를 시작으로, 점차 시장을 넓혀갈 예정입니다.
 > 
-
 | TAM | SAM | SOM |
 | --- | --- | --- |
 | 전국 대학생 | 하나 이상의 프로젝트에 참여하는 대학생 | 프로젝트에 강박감을 느끼는 대학생 |
-| 247만명 | 106만명 | 39만명|
+| 247만명 | 106만명 | 56만명|
 
 ```TAM``` 전국 대학생 수 2,457,354만명
 <br>
@@ -91,245 +121,63 @@ SeeSaw(시소)는 프로젝트를 되돌아보면서 본인의 성장 포인트�
 ```SAM``` 대학생 중 43.1%가 하나 이상의 프로젝트에 참여함 : 1,059,120명
 <br>
 
-```SOM``` 프로젝트에 참여하는 대학생 중 37.2%가 프로젝트에 강박감을 느끼고 있음 : 393,992명
-
-![그래프-03](https://user-images.githubusercontent.com/39361807/232277320-11fa2ac4-bd40-43ba-98af-54450a3eebfe.png)
-
-
-일 강박 문항에 대한 20대 재학생, 휴학생, 취준생(졸업유예생) 등 대학생 129명의 답변을 종합해본 결과, ‘보통이다’인 3점을 기준으로 오른쪽에 분포해 있다는 것을 알 수 있었습니다. 이는 프로젝트 진행 시 일 강박을 느끼냐는 답변에 ‘그렇다’, ‘매우 그렇다’를 답한 대학생이 많다는 의미로, 3.73으로 계산된 평균 역시 20대 대학생 일 강박 양상을 나타내고 있습니다. 저희는 20대 대학생 응답자 중 평균인 3.73보다 높은 점수를 가진 응답자의 비율을 계산하여 프로젝트에 참여하는 대학생 중 37.2% 정도가 프로젝트에 강박감을 느끼고 있다고 파악했습니다. 
+```SOM``` 프로젝트에 참여하는 대학생 중 37.2%가 프로젝트에 강박감을 느끼고 있음 : 558,156명
 
 <br>
 
-### 📋 사용자 조사
+## 💡 서비스 소개
+**'나'를 이루는 가치를 중심으로**
+<br><b>일과 삶을 바라볼 수 있도록 하는 기록 서비스, 시소(SeeSaw)</b>
 
-💡 **워커홀릭이란?**
+### **개요**
+![KakaoTalk_Photo_2023-05-26-05-35-00](https://github.com/8attery/.github/assets/39361807/aae8e29a-f8b9-46ca-af66-c6158f712eae)
+- 시소(SeeSaw)의 핵심 가치는 Align, Review, Remind로, 유저가 일의 가치와 자신이 추구하는 가치의 괴리에서 오는 공허함을 줄이고, ‘나의 삶의 가치’ 라는 큰 틀 안에서 프로젝트와 삶이 동행할 수 있도록 얼라인을 맞추는 것이 목표입니다.
+- 얼라인을 맞춰나가기 위해선 목표를 설정하고, 목표를 향해 달려가는 과정 속에서 끊임없이 점검하는 절차가 필수적입니다.
+- 따라서 시소는 ‘가치’를 목표로 설정하고, 프로젝트와 삶을 ‘가치’ 중심으로 바라보고 점검할 수 있는 흐름을 제공하여 일과 삶이 하나의 방향을 향해 나아갈 수 있도록 도와줍니다.
 
-**워커홀릭**은 ‘일과 생활 사이의 균형을 상실하고 강박적으로 일에 매몰되는 현상’을 지칭하는 말로, 과잉적응증후군, 일 중독 등으로도 불립니다. 
+### **핵심 기능**
 
-처음 이 단어를 사용한 Oates는 워커홀릭이 알코올 중독과 성격이 매우 흡사하며 끊임없이 일하려는 내적 충동과 일에 집착하는 습성으로 건강, 대인관계, 행복감, 일상생활 영위에 심각한 문제를 가진 사람이라고 묘사했습니다. 
+**1. ValueLog: 가치 설계도**
+- 프로젝트와 일상 속에서 각각의 가치를 실현한 내역을 확인할 수 있습니다.
+- 최근 5년 간 설정한 가치와 가치 실현 내역을 확인할 수 있습니다.
 
-<br>
+**2. ProjectLog: 프로젝트 회고**
+- 프로젝트 기간, 강도, 관련된 가치, 목표를 설정함으로써 프로젝트별 회고를 진행할 수 있습니다.
+- '상시 회고'와 '오늘의 질문'을 통해 프로젝트를 진행하며 느꼈던 생각과 감정을 상시 기록할 수 있습니다.
+- 설정한 프로젝트 기간에 따라 진행되는 ‘중간 회고’와 ‘마지막 회고’를 통해 프로젝트와 삶을 연결 지어 되돌아볼 수 있습니다.
+- 프로젝트가 종료된 후, 유저가 작성한 회고를 바탕으로 프로젝트별 리포트를 제공합니다.
 
-😫 **한국을 대표하는 키워드, ‘워커홀릭’** 
-
-몇 년 전 코트라에서 발표한 아세안 마케팅 지표에 따르면, 한국을 대표하는 이미지 1위가 ‘워커홀릭 · 일중독’이었다고 합니다. 사회 · 경제의 급속 성장으로부터 남들보다 더 윤택한 삶을 살기 위해서는 경쟁에서 뒤처지지 않아야 한다는 사고가 생겨난 것입니다. 성과만이 강조되는 현대 사회에 사는 현대인들은 개개인의 삶에 집중하기보다는 사회에 의해 정해진 ‘성공’이라는 기준에 도달하고자 끊임없이 바쁘게 살아갑니다. 이때 현대인의 삶은 주체성을 상실하게 되고 그 자리는 무력감으로 채워집니다. 
-
-<br>
-
-🧐 **워커홀릭, 순기능은 없을까?**
-
-그렇다면 워커홀릭은 부정적인 결과만 야기하는 걸까요? 저희는 데스크 리서치를 통해 워커홀릭의 순기능을 파악할 수 있었습니다. 
-
-> **일중독의 유형**을 세 가지로 나누면 다음과 같습니다. <br>
-> **1. 강박적 일중독자** <br>
-> 2. 완벽주의적 일중독자 <br>
-> **3. 성취지향적 일중독자**
-> 
-
-여기서 강박적 일중독자와 완벽주의적 일중독자는 스트레스 수준, 신체 및 심리적 문제, 대인관계 등과 부정적 관련 가지며 워커홀릭의 역기능을 나타내는 유형이라고 볼 수 있습니다. 
-
-그런데 성취지향적 일중독자는 직무 및 삶에 대한 만족도, 신체, 심리적 건강과 긍정적 관련을 가진다고 합니다. 저희는 데스크 리서치를 통해 일에 대한 강박이나 완벽주의 때문에 뚜렷한 목표 없이 일을 하는 사람들뿐만 아니라 **성취를 지향하기 때문에 열정적으로 일에 몰입하는 사람들**도 있다는 것을 파악했습니다.
+**3. LifeLog: 에너지 배터리**
+- 자신의 에너지 상태를 파악할 수 있는 배터리 잔량을 확인할 수 있습니다.
+- 유저의 수면시간과 활동량 데이터를 바탕으로 에너지 배터리가 충전/소모 되어 자신의 전반적인 에너지 상태를 확인할 수 있습니다.
+- 유저가 설정한 가치와 관련된 실천을 할 경우, 에너지 배터리가 충전되어 바쁜 일상 속에서도 중요한 가치를 잊지 않게끔 도와줍니다.
 
 <br>
 
-❓ **워커홀릭(일중독)의 원인**
+## 📊 서비스 비즈니스 모델
 
-1. **부적응적 평가 염려**
-    - 타인보다 더 나은 성과를 내지 못하면 사회에서 거부당할 것이라는 두려움
-    - 타인(부모, 동료 등)의 기대에 대한 부담감과 타인의 비난에 대한 두려움
-2. **긍정적 성취 욕구**
-    - 나의 활동에 대한 스스로의 기준이 높아서 이를 충족시키기 위해
-    - 나의 활동에 대한 주변인의 기준이 높아서 이를 충족시키기 위해
+**[Phase 1] 광고료 수익**
+- 광고 업체의 배너 광고를 앱 내 노출하여 광고료 수익을 얻습니다.
 
-<br>
-
-📍**워라밸, 시간의 균형을 넘어 가치의 균형으로**
-
-**워라밸(Work-Life Balance)** 은 **‘일과 삶의 균형’** 을 뜻하는 말로, 많은 사람들이 구직, 이직 시 우선적으로 고려하는 요소입니다. 그렇다면 사람들이 흔히 말하는 워라밸은 무엇이고, 어떤 형태의 균형을 지향하고 있을까요? 
-
-워라밸을 지향하는 사람들은 업무 시간과 그 외의 개인 시간을 명확히 구분하자고 말합니다. 주로 많은 업무량으로 인한 잦은 야근, 퇴근 후 이어지는 업무 연락 등으로부터 벗어나고자 합니다. 그런데 일과 삶을 분리하여 ‘시간’이라는 요소를 바탕으로 정량적으로 균형을 맞추는 것이 가능할까요? 
-
-이러한 의문에서 시작된 것이 **워라하(Work-Life Harmony)** 개념입니다. 일과 삶을 완전히 분리하기보다는 **‘일과 삶의 조화’** 를 추구하며 직업과 삶이라는 두 가지 영역 모두에서 만족감을 이끌어내는 라이프 스타일입니다. 워라하는 끊임없는 자기 계발과 이를 통한 가치 실현을 꿈꾸는 Z세대로부터 생겨난 신조어라고 합니다. 
-
-8attery 팀은 ‘시간의 균형’만을 강조했던 기존의 워라밸 개념에서 벗어나 **‘시간의 균형’** 과 더불어 **‘가치의 균형’** 을 지향하고자 합니다. 
-
-- 에너지 잔량 확인 기능: 프로젝트와 삶의 정량적 균형을 맞출 수 있게 함 (시간의 균형)
-- 로드맵 설정 기능 · 프로젝트 회고 기능: 프로젝트를 통한 나의 성장을 기록하고 이로부터 삶에서 갖는 가치를 발견할 수 있게 함 (가치의 균형)
+**[Phase 2] 프리미엄 구독 상품**
+- 프리미엄 구독 상품을 통해 수익을 창출하고, 유저 편의성을 제공하여 충성 고객을 확보하고자 합니다.
+- 프리미엄 구독 상품을 통해 제공되는 기능은 다음과 같습니다.
+    1. 앱 내 배너 광고 제거
+    2. 고급 프로젝트 리포트 제공
+    3. 프로젝트별 회고록 문서화 다운로드
+    4. 마이페이지 내 키워드 검색 기능
+ 
+**[Phase 3] 플랫폼 사업으로의 확장을 통한 수수료 수익**
+- 회고 모임, 북 클럽과 같이 소규모의 커뮤니티의 수요가 높아지는 시장 트렌드를 고려하여 시소는 비슷한 가치를 추구하는 유저들이 모일 수 있는 커뮤니티 플랫폼으로의 도약을 시도합니다.
+- 서비스를 적극적으로 사용하는 유저를 대상으로 커뮤니티 내 모임 개설 권한을 부여합니다.
+- 모임 개설 유저는 하나의 가치를 설정하고, '일과 삶의 균형'에 대한 자신의 노하우와 지식을 공유할 수 있는 모임을 개설할 수 있으며, 일반 유저는 참가비를 지불하고 모임에 참여할 수 있습니다.
+- 유저들간의 네트워킹을 통해 서로의 삶에 긍정적이고 의미있는 관계를 만들어나갈 수 있도록 돕습니다.
 
 <br>
-
-💡 **해결법에 대한 근거**
-
-1️⃣ **프로젝트 회고**
-
->>***Q. 회고를 진행하지 않는 이유가 무엇인가요?***
->
->A. 회고할 시간이 없어서(37.8%), 귀찮아서(37%)
->
->→ 접근성이 높은 모바일 앱 서비스에서 회고 템플릿을 제공하여 쉽고 빠르게 회고를 진행할 수 있도록 함
-
-<br>
-
-2️⃣ **장기적 로드맵 설정**
-
->>***Q. 장기적 로드맵을 그리지 않는 이유는 무엇인가요?***
->
->A. 장기적 로드맵의 필요성을 모르겠어서(55%)
->
->→ ‘청년세대들은 자신의 발전에 일의 의미를 두고 있으나, 그것이 자신의 꿈, 사명과는 아직 거리가 있다고 볼 수 있다.’는  
-문제를 해결하기 위해 장기적 로드맵 서비스를 제공함으로써 장기적 로드맵 설정의 필요성을 인식하고, 일을 통한 경력 발달을 나의 성장과 연관짓도록 함
-
-
-<br>
-
-3️⃣ **목표 상기**
-
->>***Q. 프로젝트를 진행하며 목표를 상기함으로써 얻을 수 있는 점은 무엇이었나요?***
->
->A. 동기부여, 성취감, 일의 효율, 올바른 방향성
->
->→ 프로젝트 진행 중에 목적과 방향을 명확히 인식하도록 하여 해당 효과들을 얻을 수 있도록 함
-
-<br>
-
-4️⃣ **건강 데이터를 통한 신체적 상태 인식**
-
->>***일과 삶의 균형의 정의***
->
->: 일과 일 이외의 영역 예를 들어, 가족, 여가, 개인의 성장 및 자기계발 등에 시간과 **심리적, 신체적 에너지를 적절히 분배**함으로써 삶을 스스로 통제하고 조절할 수 있으며, 이를 통해 삶에 대해 만족스러워하는 상태
->
->→ 정량적으로 제공되는 건강 데이터를 통해 신체적 에너지를 점검하도록 하여 에너지를 균형 있게 분배할 수 있도록 함
-
-<br>
-
-## 👥 서비스 타겟층 정의
-
-
-서비스 타겟층은 일과 삶 사이의 균형을 상실하고, 강박적으로 일에 매몰되는 사람입니다. 
-’프로젝트를 통한 나의 성장’을 기록하고, 이를 삶의 의미와 연결시키고자 하는 대학생을 
-첫 타겟 고객으로 설정합니다. 
-
-> 타겟층 확장 계획
-> 
-
-| 분류 | 1차 타겟 유저 | 2차 타겟 유저 |
-| --- | --- | --- |
-| 타겟설정 | 주체적으로 프로젝트를 진행하는 대학생 및 취준생 | 주체적으로 프로젝트를 진행하는 프리랜서 직장인 |
-| 관련 기능 | 프로젝트 회고 작성, 장기적인 로드맵 설정 | 직장인을 위한 회고 가이드라인 제공, 업무 협업툴과 연동|
-
-<br>
-
-## 📌 핵심기능
-
-### 핵심 기능 overview
-
-| 기능 | 설명 |
-| --- | --- |
-| 🛣️ 로드맵 설정 기능 | ’청년세대들은 자신의 발전에 일의 의미를 두고 있으나, 그것이 자신의 꿈, 사명과는 아직 거리가 있다고 볼 수 있다.’ <br> : 유저가 삶에 대한 목표를 정의하고, 이에 맞춰 자신만의 로드맵을 설정합니다. 현재 자신이 로드맵 중 어디까지 왔는지 확인할 수 있습니다. |
-| ⏪ 프로젝트 기록 기능 | ‘프로젝트가 나의 삶과 연결될 수 있도록’ <br> : 프로젝트 시작 전 - 진행 중 - 마무리 단계에서 프로젝트를 ‘삶’과 연결지어 회고할 수 있도록 합니다. 또한, 프로젝트를 진행하며 느끼는 다양한 생각들을 쉽게 남겨둘 수 있습니다. |
-| ✅ 에너지 잔량 확인 기능 | ‘프로젝트와 삶의 에너지 균형을 맞추다’ <br> : 수면시간, 칼로리와 같은 객관적인 데이터와 자신이 설정한 루틴 2가지의 실행 여부를 바탕으로 ‘나만의 배터리’를 측정합니다. |
-
-<br>
-
-### 1️⃣ 로드맵 설정 기능 주요 point
-
-> 해당 기능을 통해 유저는 스스로 정의한 목표 아래 자신만의 템포에 맞춰 삶을 살아갈 수 있도록 합니다.
-> 
-- **로드맵 관리**
-    - 6개월 단위로 최대 2년 간의 로드맵을 그릴 수 있습니다.
-    - 2년 초과의 로드맵에 해당되는 경우 <기타 로드맵>으로 추가할 수 있습니다.
-    - 로드맵 속 자신의 목표가 어떤 유형인지 직접 생성하고 분류할 수 있습니다.
-- **로드맵 표시**
-    - 유저가 그린 2년 간의 로드맵을 확인할 수 있습니다.
-    - 유저가 그린 기타 로드맵을 확인할 수 있습니다.
-
-<br>
-
-### 2️⃣ 프로젝트 기록 기능 주요 point
-
-> 해당 기능을 통해 유저는 기존 프로젝트 자체에만 집중했던 회고에서 벗어나 ‘프로젝트’와 ‘나’를 연결 지을 수 있습니다.  삶과 프로젝트를 연결지어 생각해봄으로 둘의 가치의 균형을 맞춘다.
-> 
-- **프로젝트 대시보드**
-    - 진행하고 있는 프로젝트 목록을 확인할 수 있습니다.
-      - 프로젝트 목록 view : 기간, 프로젝트명, 프로젝트 진행률, 서브 프로젝트
-- **프로젝트 추가**
-    - 예정된 혹은 진행하고 있는 프로젝트를 추가할 수 있습니다.
-- **기록하기**
-    - 프로젝트 시작 전, 프로젝트 목표를 설정할 수 있습니다.
-    - 프로젝트 진행 중과 후에는 <자신의 삶>과 연결지어 생각해볼 수 있는 회고를 진행할 수 있습니다.
-    - 기록한 모든 내용을 카드 형태의 리포트로 한 눈에 확인할 수 있습니다.
-- **프로젝트 관리**
-    - 프로젝트 안에서 진행된 서브 프로젝트를 추가할 수 있습니다.
-      - (main 프로젝트) 큐시즘 >> (sub 프로젝트) 큐커톤, 밋업데이 등..
-    - 프로젝트의 기본 정보를 수정할 수 있습니다.
-
-<br>
-
-### 3️⃣ 에너지 잔량 확인 기능 주요 point
-
-> 해당 기능을 통해 유저는 현재 자신의 상태가 어떤지 확인할 수 있고, 프로젝트와 삶의 균형을 유지하는 데 도움을 받을 수 있습니다.
-> 
-- **배터리의 표시**
-    - 배터리는 유저의 에너지량을 표현합니다.
-    - 배터리 증가 요소
-      - 기준에 부합한 수면 시간, 기준에 부합한 운동량, 급속 충전 요소(루틴) 실시
-    - 배터리 감소 요소
-      - 기준 이하의 수면 시간, 기준 이하의 운동량, 급속 충전 요소(루틴) 미실시
-    - 원하는 날짜를 클릭하면 해당 날짜의 배터리와 수면/운동/루틴 데이터를 확인할 수 있습니다.
-    - 수면시간 및 운동량은 휴대폰 내 건강 데이터와 연동합니다.
-    - 수면시간 및 운동량의 기준은 마이페이지 내에서 수정할 수 있습니다.
-- **개인 맞춤형 루틴 추가**
-    - 사용자가 자신의 삶의 균형을 찾는 데 필요한 요소(ex.산책가기, 책 읽기 등)를 최대 2가지까지 설정할 수 있습니다.
-- **개인 맞춤형 루틴 확인**
-    - 해당 요소를 실천한 경우 체크를 할 수 있습니다.
-    - 체크된 경우 유저의 에너지량을 나타내는 ‘나만의 배터리’가 ‘급속 충전’이 됩니다.
-
-<br>
-
-### 메뉴 구조도
-![메뉴 구조도](https://user-images.githubusercontent.com/39361807/232277539-a1e35146-a41a-4768-8873-1e644269f444.png)
-
-<br>
-
-## 🧩 비즈니스 모델 설계
-
-> ‘시소’는 앱은 무료로 제공되며 프리미엄 서비스를 구독할 시 부가기능을 이용할 수 있습니다. 
-아래의 같은 형태로 수익을 창출할 수있습니다.
-> 
-
-|  | 관련 파트너1 | 관련 파트너2 | 내용 |
-| --- | --- | --- | --- |
-| STEP 1 | 시소 | 기업 | 광고 제공 ⇔ 광고료 |
-| STEP 2 | 시소 | 유저 | 프리미엄 기능 제공  ⇔  구독료 <br> Option1. 광고제거 <br> Option2. 서비스 내 통계 제공 <br> Option3. 고도화 회고 템플릿 제공 <br> Option4. 앱 스킨 디자인 템플릿 제공  |
-
-
-<br>
-
-## 🎁 가치 제안
-
-> 프로젝트의 목적 및 방향성 확립
-> 
-- 유저는 로드맵 설정을 통해 프로젝트의 목표를 상기하고, 프로젝트 진행률을 파악함으로써 프로젝트와 삶의 균형을 유지하는데 도움을 받을 수 있습니다
-
-> ‘나’의 시선에서 바라본 프로젝트 회고
-> 
-- 유저는 ‘프로젝트’와 ‘나’를 연결지을 수 있는 회고를 통해서 삶과 일에 대한 진정한 의미를 찾아갈 수 있습니다. 시소만의 프로젝트 회고 가이드라인을 통해서 유저는 회고를 쉽고 빠르게 작성할 수 있으며 보다 깊고 의미있는 회고를 진행할 수 있습니다.
-
-> ‘나’를 돌볼 수 있는 프로젝트 관리
-> 
-- 현재 내가 하고 있는 프로젝트를 한 눈에 확인할 수 있습니다.
-- 삶의 균형을 유지하는데 중요하다고 생각하는 ‘개인별 루틴’을 설정하고, 이를 배터리 계산에 포함하여 자신에게 맞춤화 된 에너지량 파악이 가능해요. 이를 바탕으로 유저는 프로젝트를 효율적으로 관리하고 프로젝트와 삶의 균형을 유지하는데 도움을 받을 수 있습니다.
-
-<br>
-<br>
-
-
-
-
 
 ## 🎨 디자인 무드보드
 
-![무드보드](https://user-images.githubusercontent.com/39361807/232277610-e16ad9bf-985c-4674-8c6a-1e42257fb1de.png)
+![KakaoTalk_Photo_2023-05-26-05-32-57](https://github.com/8attery/.github/assets/39361807/4c886abb-3555-466b-9f7e-4f9909123504)
 
 
 <br>
@@ -348,36 +196,39 @@ SeeSaw(시소)는 프로젝트를 되돌아보면서 본인의 성장 포인트�
 
 ## :computer: Technology
 - iOS
-    - ![Xcode](https://img.shields.io/badge/Xcode-007ACC?style=for-the-badge&logo=Xcode&logoColor=white)
-      ![Swift](https://img.shields.io/badge/swift-F54A2A?style=for-the-badge&logo=swift&logoColor=white)
-    - `SwiftUI` `Alamofire` `KeychainSwift` `HealthKit`
+    - ![Xcode](https://img.shields.io/badge/Xcode-007ACC?style=flat-square&logo=Xcode&logoColor=white)
+      ![Swift](https://img.shields.io/badge/Swift-F54A2A?style=flat-square&logo=swift&logoColor=white)
+    - ![SwiftUI](https://img.shields.io/badge/SwiftUI-FF7F50?style=flat-square&logo=swift&logoColor=white)
+      ![AlamoFire](https://img.shields.io/badge/Alamofire-DB5C3F?style=flat-square&logo=swift&logoColor=white)
+      ![KeychainSwift](https://img.shields.io/badge/KeychainSwift-5F5EFF?style=flat-square&logo=swift&logoColor=white) 
+      ![HealthKit](https://img.shields.io/badge/HealthKit-86D8D9?style=flat-square&logo=swift&logoColor=white)
 - Server
-    - ![IntelliJ IDEA](https://img.shields.io/badge/IntelliJ%20IDEA-000000.svg?style=for-the-badge&logo=intellij-idea&logoColor=white)
-      ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=java&logoColor=white)
-      ![Springboot](https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white)
-      ![Spring Security](https://img.shields.io/badge/Spring%20Security-6DB33F?style=for-the-badge&logo=Spring%20Security&logoColor=white)
-      ![Shell Script](https://img.shields.io/badge/shell_script-%23121011.svg?style=for-the-badge&logo=gnu-bash&logoColor=white)
-      ![JWT](https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens)
-      ![Gradle](https://img.shields.io/badge/Gradle-02303A.svg?style=for-the-badge&logo=Gradle&logoColor=white)
-      ![Swagger](https://img.shields.io/badge/-Swagger-%23Clojure?style=for-the-badge&logo=swagger&logoColor=white)
-    - `Spring Data JPA`
-      `QueryDSL`
-    - ![MySQL](https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white)
-      ![Redis](https://img.shields.io/badge/redis-%23DD0031.svg?style=for-the-badge&logo=redis&logoColor=white)
-      ![RDS](https://img.shields.io/badge/AWS%20RDS-527FFF?style=for-the-badge&logo=Amazon%20RDS&logoColor=white)
-      ![ElastiCache](https://img.shields.io/badge/AWS%20ElastiCache-4053D6?style=for-the-badge&logo=Amazon)
-      ![AWS Lambda](https://img.shields.io/badge/AWS%20Lambda-FF9900?style=for-the-badge&logo=AWS%20Lambda&logoColor=white)
-      ![Amazon CloudWatch](https://img.shields.io/badge/Amazon%20CloudWatch-FF4F8B?style=for-the-badge&logo=Amazon%20CloudWatch&logoColor=white)
-      ![Hibernate](https://img.shields.io/badge/Hibernate-59666C?style=for-the-badge&logo=Hibernate&logoColor=white)
-    - ![GitHub Actions](https://img.shields.io/badge/github%20actions-%232671E5.svg?style=for-the-badge&logo=githubactions&logoColor=white)
-      ![EC2](https://img.shields.io/badge/AWS%20EC2-FF9900?style=for-the-badge&logo=Amazon%20EC2&logoColor=white)
-      ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
-      ![Nginx](https://img.shields.io/badge/nginx-%23009639.svg?style=for-the-badge&logo=nginx&logoColor=white)
+    - ![IntelliJ IDEA](https://img.shields.io/badge/IntelliJ%20IDEA-000000.svg?style=flat-square&logo=intellij-idea&logoColor=white)
+      ![Java](https://img.shields.io/badge/Java-%23ED8B00.svg?style=flat-square&logo=Java&logoColor=white)
+      ![Springboot](https://img.shields.io/badge/Springboot-6DB33F?style=flat-square&logo=springboot&logoColor=white)
+      ![Spring Security](https://img.shields.io/badge/Spring%20Security-6DB33F?style=flat-square&logo=Spring%20Security&logoColor=white)
+      ![Shell Script](https://img.shields.io/badge/Shell_Script-%23121011.svg?style=flat-square&logo=gnu-bash&logoColor=white)
+      ![JWT](https://img.shields.io/badge/JWT-black?style=flat-square&logo=JSON%20web%20tokens)
+      ![Gradle](https://img.shields.io/badge/Gradle-02303A.svg?style=flat-square&logo=Gradle&logoColor=white)
+      ![Swagger](https://img.shields.io/badge/-Swagger-%23Clojure?style=flat-square&logo=swagger&logoColor=white)
+    - ![Spring Data JPA](https://img.shields.io/badge/Spring%20Data%20JPA-6DB33F?style=flat-square&logo=spring&logoColor=white)
+      ![QueryDSL](https://img.shields.io/badge/QueryDSL-007ACC?style=flat-square&logo=kotlin&logoColor=white)
+    - ![MySQL](https://img.shields.io/badge/MySQL-%2300f.svg?style=flat-square&logo=mysql&logoColor=white)
+      ![Redis](https://img.shields.io/badge/Redis-%23DD0031.svg?style=flat-square&logo=redis&logoColor=white)
+      ![RDS](https://img.shields.io/badge/AWS%20RDS-527FFF?style=flat-square&logo=Amazon%20RDS&logoColor=white)
+      ![ElastiCache](https://img.shields.io/badge/AWS%20ElastiCache-4053D6?style=flat-square&logo=Amazon)
+      ![AWS Lambda](https://img.shields.io/badge/AWS%20Lambda-FF9900?style=flat-square&logo=AWS%20Lambda&logoColor=white)
+      ![Amazon CloudWatch](https://img.shields.io/badge/Amazon%20CloudWatch-FF4F8B?style=flat-square&logo=Amazon%20CloudWatch&logoColor=white)
+      ![Hibernate](https://img.shields.io/badge/Hibernate-59666C?style=flat-square&logo=Hibernate&logoColor=white)
+    - ![GitHub Actions](https://img.shields.io/badge/Github%20Actions-%232671E5.svg?style=flat-square&logo=githubactions&logoColor=white)
+      ![EC2](https://img.shields.io/badge/AWS%20EC2-FF9900?style=flat-square&logo=Amazon%20EC2&logoColor=white)
+      ![Docker](https://img.shields.io/badge/Docker-%230db7ed.svg?style=flat-square&logo=docker&logoColor=white)
+      ![Nginx](https://img.shields.io/badge/Nginx-%23009639.svg?style=flat-square&logo=nginx&logoColor=white)
 - Co-working Tool
-    - ![Notion](https://img.shields.io/badge/Notion-%23000000.svg?style=for-the-badge&logo=notion&logoColor=white)
-      ![Jira](https://img.shields.io/badge/jira-%230A0FFF.svg?style=for-the-badge&logo=jira&logoColor=white)
-      ![Postman](https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white)
-      ![Slack](https://img.shields.io/badge/Slack-4A154B?style=for-the-badge&logo=slack&logoColor=white)
+    - ![Notion](https://img.shields.io/badge/Notion-%23000000.svg?style=flat-square&logo=notion&logoColor=white)
+      ![Jira](https://img.shields.io/badge/Jira-%230A0FFF.svg?style=flat-square&logo=jira&logoColor=white)
+      ![Postman](https://img.shields.io/badge/Postman-FF6C37?style=flat-square&logo=postman&logoColor=white)
+      ![Slack](https://img.shields.io/badge/Slack-4A154B?style=flat-square&logo=slack&logoColor=white)
 
 ### **🐾 기술 스택 선정 이유**
 - 유저 입장에 편한 회고가 가능하도록 하기 위해 접근성을 높이고자 했고, 이를 위해 언제나 간편하게 접근할 수 있는 모바일 앱을 선정하였습니다. 일반적인 PC 웹이나 모바일 웹에서는 구현하기 힘든 푸시 알림 기능, 그리고 스마트폰 내에 기본으로 제공되는 건강 API가 사용 가능하다는 차별성이 있습니다.
