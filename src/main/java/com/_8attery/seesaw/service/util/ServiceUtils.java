@@ -1,5 +1,7 @@
 package com._8attery.seesaw.service.util;
 
+import com._8attery.seesaw.domain.battery.Battery;
+import com._8attery.seesaw.domain.battery.BatteryRepository;
 import com._8attery.seesaw.domain.project.Project;
 import com._8attery.seesaw.domain.project.ProjectRepository;
 import com._8attery.seesaw.domain.project_emotion.ProjectEmotion;
@@ -32,6 +34,7 @@ public class ServiceUtils {
     private final ProjectRemembranceRepository projectRemembranceRepository;
     private final ProjectEmotionRepositoryCustom projectEmotionRepositoryCustom;
     private final ProjectQnaRepository projectQnaRepository;
+    private final BatteryRepository batteryRepository;
 
     public boolean validateUser(Long userId) {
         return userRepository.existsById(userId);
@@ -91,5 +94,11 @@ public class ServiceUtils {
 
     public static String LocalDateTimetoLocalDateString(LocalDateTime localDateTime) {
         return localDateTime.toLocalDate().format(java.time.format.DateTimeFormatter.ofPattern("yyyy.MM.dd"));
+    }
+
+    public Battery retrieveBatteryById(Long batteryId) {
+        return batteryRepository.findById(batteryId).orElseThrow(
+                () -> new ResourceNotFoundException("batteryId로 battery를 찾을 수 없습니다.")
+        );
     }
 }
