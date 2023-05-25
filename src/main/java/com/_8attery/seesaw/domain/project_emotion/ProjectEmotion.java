@@ -21,7 +21,7 @@ public class ProjectEmotion {
     @Column(name = "project_emotion_id")
     private Long id;
 
-    @OneToOne(fetch = LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "project_id")
     private Project project;
 
