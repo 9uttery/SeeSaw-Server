@@ -201,7 +201,12 @@ public class ProjectService {
     public ProjectRecordResponseDto addRecordToProject(Long userId, ProjectRecordRequestDto projectRecordRequestDto) {
         serviceUtils.retrieveUserById(userId);
         Project retrievedProject = serviceUtils.retrieveProjectById(projectRecordRequestDto.getProjectId());
-        ProjectQuestion retrievedQuestion = serviceUtils.retrieveProjectQuestionById(projectRecordRequestDto.getProjectQuestionId());
+        ProjectQuestion retrievedQuestion = null;
+        if (projectRecordRequestDto.getProjectQuestionId() != null) {
+            retrievedQuestion = serviceUtils.retrieveProjectQuestionById(projectRecordRequestDto.getProjectQuestionId());
+        } else {
+            retrievedQuestion = serviceUtils.retrieveProjectQuestionById(1L);
+        }
 
         return ProjectRecordResponseDto.from(projectRecordRepository.save(
                         ProjectRecord.builder()

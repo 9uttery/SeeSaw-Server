@@ -130,7 +130,7 @@ public class ProjectController {
     }
 
     @PostMapping("/record")
-    public ResponseEntity<?> addRecordToProject(@AuthenticationPrincipal UserAccount userAccount, @Valid @RequestBody ProjectRecordRequestDto projectRecordRequestDto) {
+    public ResponseEntity<?> addRecordToProject(@AuthenticationPrincipal UserAccount userAccount, @RequestBody ProjectRecordRequestDto projectRecordRequestDto) {
 
         return ResponseEntity.ok().body(new BaseResponse<>(projectService.addRecordToProject(userAccount.getUserId(), projectRecordRequestDto)));
     }
