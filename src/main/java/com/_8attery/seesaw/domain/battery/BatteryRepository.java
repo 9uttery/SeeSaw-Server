@@ -67,7 +67,7 @@ public interface BatteryRepository extends JpaRepository<Battery, Long> {
     // 배터리 수준 조회 (7일 퍼센트)
     @Query(value = "select distinct new com._8attery.seesaw.dto.api.response.BatteryPercentResponseDto(b1.createdAt, b1.batteryPercentage) from BatteryHistory b1 join b1.battery b2 " +
             "where b2.user.id=:userId " +
-            "and DATE(b1.createdAt) between :startDate and :endDate " +
+            "and b1.createdAt between :startDate and :endDate " +
             "order by b1.createdAt desc")
     List<BatteryPercentResponseDto> findUserBatteryHistory(@Param("userId") Long userId, @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 
