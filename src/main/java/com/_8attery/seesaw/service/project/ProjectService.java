@@ -98,7 +98,7 @@ public class ProjectService {
 //            return projectResponseDto.orElse(new ProjectResponseDto(0L, null, null, null, null, null, false));
 //
 //        } catch (Exception exception) {
-//            exception.printStackTrace();
+//            log.info(exception.getMessage());exception.printStackTrace();
 //            throw new BaseException(DATABASE_ERROR);
 //        }
 
@@ -139,6 +139,7 @@ public class ProjectService {
             return projectResponseDto.orElse(new ProjectResponseDto(0L, null, null, null, null, null, false));
 
         } catch (Exception exception) {
+            log.info(exception.getMessage());
             exception.printStackTrace();
             throw new BaseException(DATABASE_ERROR);
         }
@@ -151,6 +152,7 @@ public class ProjectService {
                 throw new BaseException(POSTS_EMPTY_POST_ID);
             return userId;
         } catch (Exception exception) {
+            log.info(exception.getMessage());
             exception.printStackTrace();
             throw new BaseException(DATABASE_ERROR);
         }
@@ -164,7 +166,7 @@ public class ProjectService {
 //            if (result == 0)
 //                throw new BaseException(DELETE_FAIL_POST);
 //        } catch (Exception exception) {
-//            exception.printStackTrace();
+//            log.info(exception.getMessage());exception.printStackTrace();
 //            throw new BaseException(DATABASE_ERROR);
 //        }
         Project retrievedProject = serviceUtils.retrieveProjectById(projectId);
@@ -176,6 +178,7 @@ public class ProjectService {
             List<ProjectCardResponseDto> list = projectRepository.findProgressProjectList(userId);
             return list;
         } catch (Exception exception) {
+            log.info(exception.getMessage());
             exception.printStackTrace();
             throw new BaseException(DATABASE_ERROR);
         }
@@ -186,6 +189,7 @@ public class ProjectService {
             List<ProjectCardResponseDto> list = projectRepository.findCompleteProjectList(userId);
             return list;
         } catch (Exception exception) {
+            log.info(exception.getMessage());
             exception.printStackTrace();
             throw new BaseException(DATABASE_ERROR);
         }
@@ -200,6 +204,7 @@ public class ProjectService {
             ProjectCountResponseDto res = new ProjectCountResponseDto(progressCount, completeCount);
             return res;
         } catch (Exception exception) {
+            log.info(exception.getMessage());
             exception.printStackTrace();
             throw new BaseException(DATABASE_ERROR);
         }
