@@ -48,7 +48,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public LoginResponseDto appleLogin(LoginRequestDto loginRequestDto) {
+    public LoginResponseDto appleLogin(LoginRequestDto loginRequestDto, String clientIp) {
         String email = appleOAuthUserProvider.getEmailFromToken(loginRequestDto.getIdToken());
         log.info("Apple Login Request Email : {}", email);
         Optional<User> existingUser = userRepository.findByEmail(email);
@@ -67,24 +67,26 @@ public class AuthServiceImpl implements AuthService {
                     .build());
         }
 
-        return getLoginResponseDto(targetUser);
+        return getLoginResponseDto(targetUser, clientIp);
     }
 
     @Override
-    public LoginResponseDto regenerateAccessToken(RefreshTokenRequestDto refreshTokenRequestDto) {
+    public LoginResponseDto regenerateAccessToken(RefreshTokenRequestDto refreshTokenRequestDto, String clientIp) {
         String refreshToken = refreshTokenRequestDto.getRefreshToken();
-        Long userId = jwtTokenUtil.getUserIdFromRefreshToken(refreshToken);
-        String existingRefreshToken = redisTemplate.opsForValue().get(userId.toString()); // Redis에 저장된 refreshToken인지 확인
+        String existingIp = redisTemplate.opsForValue().get(refreshToken); // Redis에 저장된 refreshToken인지 확인
 
-        if (existingRefreshToken != null && !existingRefreshToken.equals(refreshToken)) { // refreshToken이 같은 지 검증
+        if (existingIp == null) { // refreshToken이 같은 지 검증
             throw new InvalidTokenException("유효하지 않은 Refresh Token입니다.");
+        } else if (!existingIp.equals(refreshToken)) { // refreshToken이 같은 지 검증
+            throw new InvalidTokenException("다른 IP에서 접속했습니다. 다시 로그인해주세요.");
         }
 
+        Long userId = jwtTokenUtil.getUserIdFromRefreshToken(refreshToken);
         User existingUser = findUserById(userId);
         String newAccessToken = jwtTokenUtil.generateAccessToken(existingUser.getId(), existingUser.getEmail(), existingUser.getRole());
         String newRefreshToken = jwtTokenUtil.generateRefreshToken(existingUser.getId(), existingUser.getEmail());
 
-        redisTemplate.opsForValue().set(userId.toString(), newRefreshToken, REFRESH_TOKEN_EXPIRE_TIME, TimeUnit.SECONDS); // Redis에 저장 (key: userId, value: refreshToken)
+        redisTemplate.opsForValue().set(newRefreshToken, clientIp, REFRESH_TOKEN_EXPIRE_TIME, TimeUnit.SECONDS); // Redis에 저장 (key: userId, value: refreshToken)
 
         return LoginResponseDto.builder()
                 .accessToken(newAccessToken)
@@ -92,8 +94,30 @@ public class AuthServiceImpl implements AuthService {
                 .build();
     }
 
+//    @Override
+//    public LoginResponseDto regenerateAccessToken(RefreshTokenRequestDto refreshTokenRequestDto) {
+//        String refreshToken = refreshTokenRequestDto.getRefreshToken();
+//        Long userId = jwtTokenUtil.getUserIdFromRefreshToken(refreshToken);
+//        String existingRefreshToken = redisTemplate.opsForValue().get(userId.toString()); // Redis에 저장된 refreshToken인지 확인
+//
+//        if (existingRefreshToken != null && !existingRefreshToken.equals(refreshToken)) { // refreshToken이 같은 지 검증
+//            throw new InvalidTokenException("유효하지 않은 Refresh Token입니다.");
+//        }
+//
+//        User existingUser = findUserById(userId);
+//        String newAccessToken = jwtTokenUtil.generateAccessToken(existingUser.getId(), existingUser.getEmail(), existingUser.getRole());
+//        String newRefreshToken = jwtTokenUtil.generateRefreshToken(existingUser.getId(), existingUser.getEmail());
+//
+//        redisTemplate.opsForValue().set(userId.toString(), newRefreshToken, REFRESH_TOKEN_EXPIRE_TIME, TimeUnit.SECONDS); // Redis에 저장 (key: userId, value: refreshToken)
+//
+//        return LoginResponseDto.builder()
+//                .accessToken(newAccessToken)
+//                .refreshToken(newRefreshToken)
+//                .build();
+//    }
+
     @Override
-    public LoginResponseDto kakaoLogin(LoginRequestDto loginRequestDto) {
+    public LoginResponseDto kakaoLogin(LoginRequestDto loginRequestDto, String clientIp) {
         String email = oAuthOidcHelper.getPayloadFromIdToken(loginRequestDto.getIdToken()).getEmail();
         log.info("Kakao Login Request Email : {}", email);
 
@@ -113,14 +137,14 @@ public class AuthServiceImpl implements AuthService {
                     .build());
         }
 
-        return getLoginResponseDto(targetUser);
+        return getLoginResponseDto(targetUser, clientIp);
     }
 
     @Override
-    public LoginResponseDto getLoginResponseDto(User targetUser) {
+    public LoginResponseDto getLoginResponseDto(User targetUser, String clientIp) {
         String accessToken = jwtTokenUtil.generateAccessToken(targetUser.getId(), targetUser.getEmail(), targetUser.getRole());
         String refreshToken = jwtTokenUtil.generateRefreshToken(targetUser.getId(), targetUser.getEmail());
-        redisTemplate.opsForValue().set(targetUser.getId().toString(), refreshToken, REFRESH_TOKEN_EXPIRE_TIME, TimeUnit.SECONDS); // Redis에 저장 (key: userId, value: refreshToken)
+        redisTemplate.opsForValue().set(refreshToken, clientIp, REFRESH_TOKEN_EXPIRE_TIME, TimeUnit.SECONDS); // Redis에 저장 (key: userId, value: refreshToken)
 
         return LoginResponseDto.builder()
                 .accessToken(accessToken)
