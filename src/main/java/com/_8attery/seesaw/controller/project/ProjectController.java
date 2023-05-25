@@ -3,6 +3,7 @@ package com._8attery.seesaw.controller.project;
 import com._8attery.seesaw.domain.user.account.UserAccount;
 import com._8attery.seesaw.dto.api.request.*;
 import com._8attery.seesaw.dto.api.response.ProjectCardResponseDto;
+import com._8attery.seesaw.dto.api.response.ProjectCountResponseDto;
 import com._8attery.seesaw.dto.api.response.ProjectResponseDto;
 import com._8attery.seesaw.exception.BaseException;
 import com._8attery.seesaw.exception.BaseResponse;
@@ -109,6 +110,16 @@ public class ProjectController {
         } catch (BaseException exception) {
             return new BaseResponse<>((exception.getStatus()));
         }
+    }
+
+    // 진행 중, 완료된 프로젝트 카운팅 조회
+    @GetMapping("/count")
+    public BaseResponse<ProjectCountResponseDto> getProjectCount(@AuthenticationPrincipal UserAccount userAccount) throws BaseException {
+        Long userId = userService.resolveUserById(userAccount.getUserId()).getId();
+
+        ProjectCountResponseDto res = projectService.getUserProjectCount(userId);
+
+        return new BaseResponse<>(res);
     }
 
     @GetMapping("/{projectId}")
