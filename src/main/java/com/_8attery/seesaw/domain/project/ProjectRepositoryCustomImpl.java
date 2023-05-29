@@ -80,10 +80,13 @@ public class ProjectRepositoryCustomImpl implements ProjectRepositoryCustom {
 
         return jpaQueryFactory.select(project.projectName)
                 .from(project)
-                .where(project.user.id.eq(userId), project.id.ne(projectId), project.startedAt.between(startedAt, endedAt).or(project.endedAt.between(startedAt, endedAt)))
+                .where(project.user.id.eq(userId), project.id.ne(projectId),
+                        project.startedAt.before(Expressions.asDateTime(endedAt)).and(project.endedAt.after(Expressions.asDateTime(startedAt)))
+                                .or(project.startedAt.before(Expressions.asDateTime(endedAt)).and(project.endedAt.after(Expressions.asDateTime(startedAt)))))
                 .limit(3)
                 .orderBy(project.id.desc())
                 .fetch();
+
     }
 
     @Override
